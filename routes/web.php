@@ -20,4 +20,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//Auth Contol
+Route::group(['middleware' => ['auth','isRole']], function () {
+
+
+Route::get('/home/index', [App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
+
+Route::get('/tasks', [App\Http\Controllers\Teacher\Task\TaskController::class, 'index'])->name('index.task');
+Route::get('/create', [App\Http\Controllers\Teacher\Task\TaskController::class, 'create'])->name('create.task');
+Route::post('/store', [App\Http\Controllers\Teacher\Task\TaskController::class, 'store'])->name('store.task');
+
+
+});
+
+
+
+

@@ -21,9 +21,7 @@
 
     <!-- Begin page -->
     <div id="layout-wrapper">
-
-        @include('layouts.includes.header')
-   
+        @auth @include('layouts.includes.header') @endauth
         <div class="hori-overlay"></div>
 
 
@@ -40,8 +38,7 @@
             </div>
             <!-- End Page-content -->
 
-
-            @include('layouts.includes.footer')
+            @auth @include('layouts.includes.footer') @endauth
         </div>
         <!-- end main content-->
 
@@ -49,18 +46,18 @@
     <!-- END layout-wrapper -->
 
     <!-- Right Sidebar -->
-    @include('layouts.includes.right-bar')
-    <!-- /Right-bar -->
+    @auth @include('layouts.includes.right-bar')@endauth
+        <!-- /Right-bar -->
 
-    <!-- Right bar overlay-->
-    <div class="rightbar-overlay"></div>
-
-
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
 
 
 
-    @include('layouts.includes.script')
 
-</body>
 
-</html>
+        @include('layouts.includes.script')
+
+    </body>
+
+    </html>
