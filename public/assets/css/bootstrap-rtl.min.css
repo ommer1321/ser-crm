@@ -14541,6 +14541,7 @@ a {
   -webkit-transform: scale(0);
           transform: scale(0);
 }
+/* hata:basic nav-tabs-custom renk düzenlenecek */
 .nav-tabs-custom .nav-item .nav-link.active {
   color: #776acf;
 }

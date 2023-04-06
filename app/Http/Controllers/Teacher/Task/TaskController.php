@@ -16,13 +16,35 @@ class TaskController extends Controller
     public function index()
     {
          $taskList = $this->listTask();
-         return view('task.create');
+         return view('task.create',compact('taskList'));
     }
-    public function create()
+
+
+
+    public function detail($task_id)
+    { 
+
+          $task = $this->getTask($task_id);
+       
+          return view('task.details',compact('task'));
+    }
+
+
+
+
+    public function update(TaskFormRequest $request ,$task_id)
     {
-         $taskList = $this->listTask();
-         return  view('task.create',compact('taskList'));
+    
+          $validatedData =  $request->validated();
+          $task = $this->getTask($task_id);
+
+        return $this->updateTask($validatedData, $task);
+        
     }
+
+
+
+
 
     public function store(TaskFormRequest $request)
     {
@@ -32,6 +54,12 @@ class TaskController extends Controller
         
     }
 
+
+    public function delete($task_id)
+    {
+      return  $this->deleteTask($task_id);
+    //    $this->formControlTask($request,$task,$task_id);
+    }
 
 
     public function test()

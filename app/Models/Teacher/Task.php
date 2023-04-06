@@ -23,7 +23,7 @@ class Task extends Model
 // Casts
 
     protected $casts = [
-        // hata:orta burası çalışmıyor
+        // hata:orta burası çalışmıyor alpaya sor
         // 'id' => 'uuid',
     ];
 

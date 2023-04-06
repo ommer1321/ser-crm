@@ -10,17 +10,41 @@ trait TaskTrait
 {
 
 
-    public function listTask()
+    public function redirectBackTask($taskResult)
     {
-        $task = Task::where('teacher_id', Auth::user()->id)->OrderBy('finished_at','asc')->get();
-
-        return ($task);
+        if ($taskResult) {
+            return redirect()->back()->with('success', 'Başarılı Bir Şekilde Tamamlandı');
+        } else {
+            return redirect()->back()->with('failed', 'Maalesef Başarısız');
+        }
     }
 
-public function differenceTaskDate()
-{
-  
-}
+
+    public function redirectToTasks($taskResult)
+    {
+        if ($taskResult) {
+
+            return redirect()->route('index.task')->with('success', 'Başarılı Bir Şekilde Tamamlandı');
+        
+        } else {
+
+            return redirect()->route('index.task')->with('failed', 'Maalesef Başarısız');
+        
+        }
+    }
+
+    
+    public function listTask()
+    {
+        $tasks = Task::where('teacher_id', Auth::user()->id)->OrderBy('finished_at', 'asc')->get();
+
+        return ($tasks);
+    }
+
+    public function getTask($task_id)
+    {
+        return  $task = Task::where('task_id', $task_id)->first();
+    }
 
 
 
@@ -59,6 +83,24 @@ public function differenceTaskDate()
     }
 
 
+    public function updateTask($validatedData, $task)
+    {
+
+        $task->title = $validatedData['title'];
+        $task->note = $validatedData['note'];
+        $task->status = $validatedData['status'];
+        $task->finished_at = $validatedData['finished_at'];
+
+        $taskResult = $task->update([
+            'title' => $validatedData['title'],
+            'note' => $validatedData['note'],
+            'status' => $validatedData['status'],
+            'finished_at' => $validatedData['finished_at'],
+
+        ]);
+
+        return   $this->redirectBackTask($taskResult);
+    }
 
 
     public function storeTask($validatedData, $task)
@@ -70,19 +112,31 @@ public function differenceTaskDate()
         $task->finished_at = $validatedData['finished_at'];
 
         $taskResult = $task->save();
-        
-        return   $this->routeTask($taskResult);
+
+        return   $this->redirectBackTask($taskResult);
     }
 
-    public function routeTask($taskResult)
+
+    public function deleteTask($task_id)
     {
-        if ($taskResult) {
-            return redirect()->back()->with('success', 'Başarılı Bir Şekilde Oluşturuldu');
-        } else {
-            return redirect()->back()->with('failed', 'Maalesef Başarısız');
+        $task = Task::where('task_id', $task_id)->first();
+
+        $deletedTask = $task->delete();
+        
+        return  $this->redirectToTasks($deletedTask);
+
+      
+    }
+
+
+    public function formControlTask(TaskFormRequest $validatedData, $task, $task_id)
+    {
+        if ($validatedData->has('deleteTaskButton')) {
+
+            return $this->deleteTask($task_id);
+        } elseif ($validatedData->has('updateTaskButton')) {
+
+            return $this->updateTask($validatedData, $task);
         }
     }
-
-    
-
 }
