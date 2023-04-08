@@ -26,14 +26,30 @@ Auth::routes();
 Route::group(['middleware' => ['auth','isRole']], function () {
 
 
-Route::get('/home/index', [App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
 
-Route::get('/tasks', [App\Http\Controllers\Teacher\Task\TaskController::class, 'index'])->name('index.task');
+Route::get('/calendar', function () {
+    return view('calendar.index');
+});
+
+
+
+
+
+
+
+
+// Task Route
+Route::group(['prefix' => 'tasks'], function () {
+
+Route::get('/', [App\Http\Controllers\Teacher\Task\TaskController::class, 'index'])->name('index.task');
 Route::get('/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'detail'])->name('details.task');
-
 Route::post('/store', [App\Http\Controllers\Teacher\Task\TaskController::class, 'store'])->name('store.task');
 Route::put('/delete/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'delete'])->name('delete.task');
 Route::put('/update/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'update'])->name('update.task');
+
+});
+
 
 });
 

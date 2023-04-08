@@ -16,7 +16,7 @@ class TaskController extends Controller
     public function index()
     {
          $taskList = $this->listTask();
-         return view('task.create',compact('taskList'));
+         return view('task.index',compact('taskList'));
     }
 
 

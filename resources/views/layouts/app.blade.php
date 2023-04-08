@@ -21,7 +21,10 @@
 
     <!-- Begin page -->
     <div id="layout-wrapper">
-        @auth @include('layouts.includes.header') @endauth
+        @auth
+            
+        @include('layouts.includes.header') 
+        @endauth
         <div class="hori-overlay"></div>
 
 
@@ -38,7 +41,7 @@
             </div>
             <!-- End Page-content -->
 
-            @auth @include('layouts.includes.footer') @endauth
+          @include('layouts.includes.footer') 
         </div>
         <!-- end main content-->
 
@@ -46,7 +49,9 @@
     <!-- END layout-wrapper -->
 
     <!-- Right Sidebar -->
-    @auth @include('layouts.includes.right-bar')@endauth
+  {{-- 
+    hata:basic dosyalama isim kodlarını bozuyor ekleyınce
+    @include('layouts.includes.right-bar') --}}
         <!-- /Right-bar -->
 
         <!-- Right bar overlay-->
