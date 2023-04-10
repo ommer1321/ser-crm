@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Teacher\Calendar\CalendarController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,12 +28,19 @@ Route::group(['middleware' => ['auth','isRole']], function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
 
-Route::get('/calendar', function () {
-    return view('calendar.index');
+
+
+
+
+
+
+// Calendar Route
+Route::group(['prefix' => 'calendar'], function () {
+
+Route::get('/', [App\Http\Controllers\Teacher\Calendar\CalendarController::class, 'index'])->name('index.calendar');
+Route::get('/api', [App\Http\Controllers\Teacher\Calendar\CalendarController::class, 'api'])->name('api.calendar');
+
 });
-
-
-
 
 
 
@@ -49,6 +56,23 @@ Route::put('/delete/{task_id}', [App\Http\Controllers\Teacher\Task\TaskControlle
 Route::put('/update/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'update'])->name('update.task');
 
 });
+
+
+
+
+
+
+
+
+// Grup Route
+Route::group(['prefix' => 'grup'], function () {
+
+    Route::get('/', [App\Http\Controllers\Teacher\Task\TaskController::class, 'index'])->name('index.grup');
+
+});
+
+
+
 
 
 });
