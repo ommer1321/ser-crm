@@ -1,4 +1,3 @@
-
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
@@ -36,121 +35,53 @@
                     <div class="collapse navbar-collapse" id="topnav-menu-content">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link dropdown-toggle arrow-none" href="index.html" id="topnav-dashboard"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle arrow-none" href="{{ route('index.home') }}"
+                                    id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
                                     <i class="bx bx-home-circle icon"></i>
-                                    <span data-key="t-dashboard">Dashboard</span>
+                                    <span data-key="t-dashboard">Anasayfa</span>
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link dropdown-toggle arrow-none" href="index.html" id="topnav-dashboard"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="bx bx-home-circle icon"></i>
-                                    <span data-key="t-dashboard">Dashboard</span>
-                                </a>
-                            </li>
 
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages"
                                     role="button">
                                     <i class="bx bx-customize icon"></i>
-                                    <span data-key="t-apps">Apps</span>
+                                    <span data-key="t-apps">Uygulamalar</span>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
 
-                                    <a href="apps-calendar.html" class="dropdown-item"
-                                        data-key="t-calendar">Calendar</a>
-                                    <a href="apps-chat.html" class="dropdown-item" data-key="t-chat">Chat</a>
-                                    <a href="apps-kanban-board.html" class="dropdown-item" data-key="t-kanban">Kanban
-                                        Board</a>
-                                    <a href="apps-file-manager.html" class="dropdown-item"
-                                        data-key="t-filemanager">File Manager</a>
+                                    <a href="{{ route('index.calendar') }}" class="dropdown-item"
+                                        data-key="t-calendar">Takvim</a>
 
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                            id="topnav-ecommerce" role="button">
-                                            <span data-key="t-ecommerce">Ecommerce</span>
-                                            <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
-                                            <a href="ecommerce-products.html" class="dropdown-item"
-                                                data-key="t-products">Products</a>
-                                        
-                                        </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                            id="topnav-email" role="button">
-                                            <span data-key="t-email">Email</span>
-                                            <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                            <a href="email-inbox.html" class="dropdown-item"
-                                                data-key="t-inbox">Inbox</a>
-                                            <a href="email-read.html" class="dropdown-item"
-                                                data-key="t-read-email">Read Email</a>
-                                        </div>
-                                    </div>
+                                    <a href="{{ route('index.task') }}" class="dropdown-item"
+                                        data-key="t-calendar">Görevler</a>
 
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                            id="topnav-contact" role="button">
-                                            <span data-key="t-contacts">Contacts</span>
-                                            <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-contact">
-                                            <a href="contacts-grid.html" class="dropdown-item"
-                                                data-key="t-user-grid">User Grid</a>
-                                         
-                                        </div>
-                                    </div>
 
-                                    <a href="apps-gallery.html" class="dropdown-item"
-                                        data-key="t-gallery">Gallery</a>
+
+
 
 
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#"
                                             id="topnav-projects" role="button">
-                                            <span data-key="t-projects">Projects</span>
+                                            <span data-key="t-projects">Gruplar</span>
                                             <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-projects">
-                                            <a href="projects-grid.html" class="dropdown-item"
-                                                data-key="t-p-grid">Projects Grid</a>
-                                            <a href="projects-list.html" class="dropdown-item"
-                                                data-key="t-p-list">Projects List</a>
-                                            <a href="projects-overview.html" class="dropdown-item"
-                                                data-key="t-p-overview">Project Overview</a>
-                                            <a href="projects-create.html" class="dropdown-item"
-                                                data-key="t-create-new">Create New</a>
+                                            <a href="{{ route('index.grup') }}" class="dropdown-item"
+                                                data-key="t-p-grid">Grup Listesi</a>
+                                            <a href="{{ route('create.grup') }}" class="dropdown-item"
+                                                data-key="t-p-list">Grup Oluştur</a>
+
                                         </div>
                                     </div>
                                 </div>
                             </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components"
-                                    role="button">
-                                    <i class="bx bx-layer icon"></i>
-                                    <span data-key="t-components">Components</span>
-                                    <div class="arrow-down"></div>
-                                </a>
-                                
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more"
-                                    role="button">
-                                    <i class="bx bx-file icon"></i>
-                                    <span data-key="t-pages">Pages</span>
-                                    <div class="arrow-down"></div>
-                                </a>
-                            
-                            </li>
 
                         </ul>
                     </div>
@@ -161,8 +92,8 @@
 
         <div class="d-flex">
             <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
                     <i class="bx bx-search icon-sm"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0">
@@ -179,8 +110,8 @@
             </div>
 
             <div class="dropdown d-inline-block language-switch">
-                <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
                     <img id="header-lang-img" src="assets/images/flags/us.jpg" alt="Header Language" height="16">
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
@@ -332,10 +263,10 @@
                 <button type="button" class="btn header-item user text-start d-flex align-items-center"
                     id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{asset('assets/images/users/avatar-3.jpg')}}"
-                        alt="Header Avatar">
+                    <img class="rounded-circle header-profile-user"
+                        src="{{ asset('assets/images/users/avatar-3.jpg') }}" alt="Header Avatar">
                     <span class="ms-2 d-none d-xl-inline-block user-item-desc">
-                        <span class="user-name">{{Auth::user()->name}}<i class="mdi mdi-chevron-down"></i></span>
+                        <span class="user-name">{{ Auth::user()->name }}<i class="mdi mdi-chevron-down"></i></span>
                     </span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end pt-0">
@@ -376,7 +307,7 @@
                         @csrf
                     </form>
 
-                    
+
                 </div>
             </div>
         </div>

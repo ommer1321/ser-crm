@@ -23,6 +23,7 @@ return new class extends Migration
             $table->longText('address')->nullable();
             $table->enum('role',['teacher','student','admin']); 
             $table->longText('user_detail')->nullable();
+            $table->string('profile_photo_path')->nullable();
             $table->string('email')->unique()->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

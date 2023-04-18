@@ -67,8 +67,9 @@ Route::put('/update/{task_id}', [App\Http\Controllers\Teacher\Task\TaskControlle
 // Grup Route
 Route::group(['prefix' => 'grup'], function () {
 
-    Route::get('/', [App\Http\Controllers\Teacher\Task\TaskController::class, 'index'])->name('index.grup');
-
+    Route::get('/', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'index'])->name('index.grup');
+    Route::get('/create', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'create'])->name('create.grup');
+    Route::get('/settings/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'settings'])->name('settings.grup');
 });
 
 

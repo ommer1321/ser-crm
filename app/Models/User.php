@@ -20,8 +20,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
+        'user_name',
+        'user_detail',
         'email',
+        'user_id',
+        'phone',
+        'address',
+        'role',
         'password',
+        
     ];
 
     /**
@@ -51,9 +59,13 @@ class User extends Authenticatable
 
 
 
+    protected  $appends = ['first_letter'];
 
 
-
+    public function getFirstLetterAttribute()
+    {
+        return  $this->attributes['first_letter'] =   Str::title(Str::substr($this->attributes['name'], 0, 1));
+    }
 
     protected static function boot()
     {
