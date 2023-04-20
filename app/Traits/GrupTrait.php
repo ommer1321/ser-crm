@@ -51,9 +51,9 @@ trait GrupTrait
             $user = User::where('user_id', $member_uuid)->first();
             if ($user) {
 
-                $member->member_id = $user->id;
+                $member->user_id = $user->id;
                 $member->grup_id = $grup_id;
-                $member->member_uuid = $user->user_id;
+          
                 $member->save();
             }
           

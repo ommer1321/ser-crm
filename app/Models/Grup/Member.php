@@ -16,14 +16,14 @@ class Member extends Model
 
 
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
+    protected static function boot()
+    {
+        parent::boot();
 
-    //     static::creating(function ($model) {
-    //         $model->member_uuid = Str::uuid();
-    //     });
-    // }
+        static::creating(function ($model) {
+            $model->member_uuid = Str::uuid();
+        });
+    }
 // hata veriyor yukleme esnasında 
 
     // Relationship Functions 
@@ -35,7 +35,7 @@ class Member extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'member_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 
