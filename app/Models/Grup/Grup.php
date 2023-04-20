@@ -15,7 +15,15 @@ class Grup extends Model
     protected $fillable = ['teacher_id', 'grup_id', 'status', 'branch','name','details'];
     protected  $appends = ['first_letter'];
 
-    
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->grup_id = Str::uuid();
+        });
+    }
+
 
     // Relationship Functions 
 

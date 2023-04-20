@@ -45,4 +45,3 @@ return new class extends Migration
 };
 
 // user
-// INSERT INTO `users` (`id`, `user_id`, `name`, `surname`, `user_name`, `phone`, `address`, `role`, `user_detail`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (NULL, '32bd9142-d323-11ed-b70f-8c8caa20f3ca', 'Ömer Faruk', 'Çetin', 'ommer1453', '05422249930', 'asdsadsadsdsadsadsdsads', 'teacher', 'sadasdsadsadsadsdsads', '1321o.faruk@gmail.com', NULL, '$2y$10$SnPfgFK4Aqw9nA5nd7AqROTjWfKDW2HYrr8E/HnBXp37YX1e6ZCT2', NULL, NULL, NULL);
