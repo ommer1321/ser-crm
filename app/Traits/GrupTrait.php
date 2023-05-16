@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Http\Requests\Requests\GrupFormRequest;
+use App\Http\Requests\GrupFormRequest;
 use App\Http\Requests\TaskFormRequest;
 use App\Models\Grup\Grup;
 use App\Models\Grup\Member;
@@ -67,12 +67,12 @@ trait GrupTrait
         $grup->name = $validatedData['name'];
         $grup->details = $validatedData['details'];
         $grup->branch = $validatedData['branch'];
-       
-        // $photo =  $this->storeProfilePhoto($validatedData, $grup);
-      
-        // if ($photo) {
-        //     $grup->logo_path = $photo;
-        // }
+
+        $photo =  $this->storeProfilePhoto($validatedData, $grup);
+
+        if ($photo) {
+            $grup->logo_path = $photo;
+        }
 
 
         $grupResult = $grup->save();
@@ -87,7 +87,17 @@ trait GrupTrait
     }
 
 
+    public function updateGrup($validatedData, $grup)
+    {
 
+
+        
+        $grup->name = $validatedData['name'];
+        $grup->details = $validatedData['details'];
+        $grup->branch = $validatedData['branch'];
+
+
+    }
 
     public function storeProfilePhoto($validatedData, $grup)
     {

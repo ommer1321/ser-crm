@@ -33,6 +33,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
+// Friend Route
+Route::get('/friend', [App\Http\Controllers\Friend\FriendController::class, 'friend'])->name('index.friend');
+
+Route::get('/friend/edit', [App\Http\Controllers\Friend\FriendController::class, 'edit'])->name('edit.friend');
+
+
+
+
+
+
+
+
 
 // Calendar Route
 Route::group(['prefix' => 'calendar'], function () {
@@ -71,6 +83,7 @@ Route::group(['prefix' => 'grup'], function () {
     Route::get('/create', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'create'])->name('create.grup');
     Route::get('/settings/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'settings'])->name('settings.grup');
     Route::post('/store', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'store'])->name('store.grup');
+    Route::put('/update/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'update'])->name('update.grup');
 
 });
 

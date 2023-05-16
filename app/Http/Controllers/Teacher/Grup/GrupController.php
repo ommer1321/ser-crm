@@ -30,23 +30,35 @@ class GrupController extends Controller
 
     public function store(GrupFormRequest $request)
     {
-        $grup = new Grup();
-      
-    
-        
 
-          $validetedData = $request->validated();
-    
-    
+ 
+        $grup = new Grup();
+
+         $validetedData = $request->validated();
+
         return     $this->storeGrup($validetedData, $grup);
     }
 
 
+    public function update(GrupFormRequest $request, $id)
+    {
+     return 1; 
+        $grup =  Grup::where('grup_id', $id)->first();
+
+        $validetedData = $request->validated();
+        if (isset($grup) && isset($validetedData)) {
+return 1;
+            $this->updateGrup($validetedData, $grup);
+        }
+    }
+
+
+
     public function settings($grup_id)
     {
-
-
+        $users = $this->students();
         $grup =    $this->listGrupDetails($grup_id);
-        return view('grup.settings', compact('grup'));
+
+        return view('grup.settings', compact(['grup','users']));
     }
 }
