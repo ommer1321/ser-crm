@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{ route('store.grup') }}" class="dropzone" method="post" enctype="multipart/form-data">
+        <form action="{{ route('store.grup') }}" method="post" class="dropzone dz-clickable" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div>
@@ -52,19 +52,28 @@
                             <div class="mb-3">
                                 <label for="grup_name" class="form-label">Grup Adı</label>
                                 <input id="grup_name" type="text" name="name" class="form-control"
-                                    placeholder="Grup Adını Giriniz..">
+                                    value="{{ old('name') }}" placeholder="Grup Adını Giriniz..">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="grup_detail" class="form-label">Grup Detayı</label>
                                 <textarea class="form-control" name="details" id="projectdesc" rows="3"
-                                    placeholder="Enter Project Description..."></textarea>
+                                    placeholder="Enter Project Description...">{{ old('details') }}</textarea>
+                                @error('details')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="grup_branch" class="form-label">Branş Adı</label>
                                 <input id="grup_branch" type="text" name="branch" class="form-control"
-                                    placeholder="Grup Adını Giriniz..">
+                                    value="{{ old('branch') }}" placeholder="Grup Adını Giriniz..">
+                                @error('branch')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
 
@@ -109,105 +118,46 @@
 
 
                                                     <div>
-                                                        {{-- <div class="p-3 fw-semibold font-size-12 text-muted">
-                                                            A
-                                                        </div> --}}
+
 
                                                         <ul class="list-group list-group-flush contact-list">
-                                                            
-                                                            
-                                                            
-                                                           
+                                                            @error('user')
+                                                                <small class="text-danger">{{ $message }}</small>
+                                                            @enderror
                                                             @foreach ($users as $user)
-                                                            <li class="list-group-item">
+                                                                <li class="list-group-item">
 
-                                                                <div class="avatar-group-item">
-                                                                    <a href="javascript: void(0);" class=""
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title="Janna Johnson">
-                                                                        <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
-                                                                            alt="" class="rounded-circle avatar-sm">
-                                                                    </a>
+                                                                    <div class="avatar-group-item">
+                                                                        <a href="javascript: void(0);" class=""
+                                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                            title="Janna Johnson">
+                                                                            <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
+                                                                                alt=""
+                                                                                class="rounded-circle avatar-sm">
+                                                                        </a>
 
-
-
-                                                                    <label class="form-check-label mx-2" for="memberCheck1">
-                                                                        {{$user->name}}
-                                                                    </label>
-
-                                                                    
-                                                                    <input class="form-check-input   mt-2" name="user[]" type="checkbox"
-                                                                    value="{{$user->user_id}}" id="memberCheck1">
-
-
-                                                                </div>
-
-                                                            </li>
-                                                            @endforeach
-                                                            {{-- <li class="list-group-item">
-
-
-                                                                <div class="avatar-group-item">
-                                                                    <a href="javascript: void(0);" class=""
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title="Janna Johnson">
-                                                                        <img src="{{ asset('assets/images/users/avatar-3.jpg') }}"
-                                                                            alt=""
-                                                                            class="rounded-circle avatar-sm">
-                                                                    </a>
-                                                               
 
 
                                                                         <label class="form-check-label mx-2"
                                                                             for="memberCheck1">
-                                                                            Janna Johnson
+                                                                            {{ $user->name }}
                                                                         </label>
 
-                                                                        <input class="form-check-input   mt-2" type="checkbox"
-                                                                            value="" id="memberCheck1" >
-                                                             
 
-                                                                </div>
+                                                                        <input class="form-check-input   mt-2"
+                                                                            name="user[]" type="checkbox"
+                                                                            value="{{ $user->user_id }}"
+                                                                            id="memberCheck1">
+                                                                    </div>
 
-                                                            </li> --}}
+                                                                </li>
+                                                            @endforeach
+
 
                                                         </ul><!-- end ul -->
                                                     </div>
 
-                                                    {{-- <div>
-                                                        <div class="p-3 fw-semibold font-size-12 text-muted">
-                                                            B
-                                                        </div>
 
-                                                        <ul class="list-group list-group-flush contact-list">
-                                                            <li class="list-group-item">
-
-
-                                                                <div class="avatar-group-item">
-                                                                    <a href="javascript: void(0);" class=""
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title="Janna Johnson">
-                                                                        <img src="{{ asset('assets/images/users/avatar-2.jpg') }}"
-                                                                            alt=""
-                                                                            class="rounded-circle avatar-sm">
-                                                                    </a>
-
-
-
-                                                                    <label class="form-check-label mx-2"
-                                                                        for="memberCheck1">
-                                                                        Janna Johnson
-                                                                    </label>
-
-                                                                    <input class="form-check-input   mt-2" type="checkbox"
-                                                                        value="" id="memberCheck1">
-
-
-                                                                </div>
-
-                                                            </li>
-                                                        </ul><!-- end ul -->
-                                                    </div> --}}
 
 
                                                 </div>
@@ -216,7 +166,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-light w-sm"
                                                     data-bs-dismiss="modal">Tamamla</button>
-                                            
+
                                             </div>
                                         </div>
                                     </div>
@@ -234,8 +184,13 @@
                             <p>Fotoğraf Yüklemek İsteğe Bağlıdır Grup Fotoğrafı Yok ise Otomatik Oluşur<b></b></p>
                         </div>
 
-                        <div class="fallback">
-                            <input name="photo" type="file" multiple />
+                        <input class="form-control form-control-lg" name="photo" id="formFileLg" type="file">
+
+                        @error('photo')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                        {{-- <div class="fallback">
+                            <input name="photo" type="file"  />
                         </div>
 
                         <div class="dz-message needsclick">
@@ -244,7 +199,7 @@
                             </div>
 
                             <h5 class="font-size-16">Buraya Yükleyiniz</h5>
-                        </div>
+                        </div> --}}
                         <button type="submit" class="btn btn-success  w-sm ms-auto">Kaydet</button>
                     </div>
                     <!-- wizard-tab -->

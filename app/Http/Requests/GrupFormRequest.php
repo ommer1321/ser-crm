@@ -25,7 +25,7 @@ class GrupFormRequest extends FormRequest
             'name' => 'required|max:75|string',
             'details' =>'required|max:500|string',
             'branch' => 'required|string|max:75',
-            'photo' => 'image|',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
             'user'=> 'nullable',
             ];
     }

@@ -25,21 +25,20 @@ class GrupController extends Controller
     public function create()
     {
         $users = $this->students();
-        return view('grup.create',compact('users'));
+        return view('grup.create', compact('users'));
     }
 
     public function store(GrupFormRequest $request)
     {
         $grup = new Grup();
-   
-        $validetedData = $request->validated();
-     
-      return     $this->storeGrup($validetedData , $grup);
-
+      
+    
         
-   
 
-  
+          $validetedData = $request->validated();
+    
+    
+        return     $this->storeGrup($validetedData, $grup);
     }
 
 

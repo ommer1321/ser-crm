@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->uuid('member_uuid');
+            $table->uuid('member_uuid')->unique();
             $table->unsignedBigInteger('grup_id');
             $table->enum('status',['1','0'])->default('1')->comment('1 = Aktif - 0 = Pasif');
 

@@ -43,9 +43,9 @@ trait GrupTrait
         return      $users;
     }
 
-    public function storeGrupMembers($grup_id,$newMembersArray)
+    public function storeGrupMembers($grup_id, $newMembersArray)
     {
-   
+
         foreach ($newMembersArray  as $member_uuid) {
             $member = new Member();
             $user = User::where('user_id', $member_uuid)->first();
@@ -53,12 +53,10 @@ trait GrupTrait
 
                 $member->user_id = $user->id;
                 $member->grup_id = $grup_id;
-          
+
                 $member->save();
             }
-          
-        }  
-
+        }
     }
 
 
@@ -69,17 +67,43 @@ trait GrupTrait
         $grup->name = $validatedData['name'];
         $grup->details = $validatedData['details'];
         $grup->branch = $validatedData['branch'];
-        // $grup->user =  $validatedData['user'];  
+       
+        // $photo =  $this->storeProfilePhoto($validatedData, $grup);
+      
+        // if ($photo) {
+        //     $grup->logo_path = $photo;
+        // }
+
 
         $grupResult = $grup->save();
 
         $grup_id = $grup->id;
         $newMembersArray = $validatedData['user'];
 
-     $this->storeGrupMembers($grup_id,  $newMembersArray);
+        $this->storeGrupMembers($grup_id,  $newMembersArray);
 
-  
+
         return   $this->redirectToGrups($grupResult);
+    }
+
+
+
+
+    public function storeProfilePhoto($validatedData, $grup)
+    {
+
+        if ($validatedData->hasFile('photo')) {
+            // hata:orta "Call to a member function hasFile() on array" ahtası döndürüyor
+            $file = $validatedData->file('photo');
+            $ext = $file->getClientOriginalExtension();
+            $fileName = 'pp' . time() . '.' . $ext;
+
+            if ($file->move('uploads/grup/', $fileName)) {
+
+                return $fileName;
+                // $grup->logo_path = $fileName;
+            }
+        }
     }
 
     public function redirectBackGrup($grupResult)
