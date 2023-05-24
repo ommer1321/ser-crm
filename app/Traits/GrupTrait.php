@@ -68,11 +68,13 @@ trait GrupTrait
         $grup->details = $validatedData['details'];
         $grup->branch = $validatedData['branch'];
 
-        $photo =  $this->storeProfilePhoto($validatedData, $grup);
 
-        if ($photo) {
-            $grup->logo_path = $photo;
-        }
+        // hata:basic burası açılacak
+        // $photo =  $this->storeProfilePhoto($validatedData, $grup);
+
+        // if ($photo) {
+        //     $grup->logo_path = $photo;
+        // }
 
 
         $grupResult = $grup->save();

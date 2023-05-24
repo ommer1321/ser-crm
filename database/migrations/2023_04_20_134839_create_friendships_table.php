@@ -20,6 +20,10 @@ return new class extends Migration
 
             $table->foreign('first_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('second_user_id')->references('id')->on('users')->onDelete('cascade');
+ 
+            // İndekslerin oluşturulması
+            $table->index('first_user_id');
+            $table->index('second_user_id');
 
             $table->timestamps();
         });

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('role',['teacher','student','admin']); 
             $table->longText('user_detail')->nullable();
             $table->string('profile_photo_path')->nullable();
+            $table->enum('friend_allow',[1,0])->default('0')->comment('1 = istekler acık ,0 = istekler kapalı');
             $table->string('email')->unique()->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

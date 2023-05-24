@@ -184,7 +184,7 @@
                             <p>Fotoğraf Yüklemek İsteğe Bağlıdır Grup Fotoğrafı Yok ise Otomatik Oluşur<b></b></p>
                         </div>
 
-                        {{-- <input class="form-control form-control-lg" name="photo" id="formFileLg" type="file"> --}}
+                        <input class="form-control form-control-lg" name="photo" id="formFileLg" type="file">
 
                         @error('photo')
                         <small class="text-danger">{{ $message }}</small>

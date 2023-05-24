@@ -33,14 +33,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-// Friend Route
-Route::get('/friend', [App\Http\Controllers\Friend\FriendController::class, 'friend'])->name('index.friend');
+// Friendship Route
+Route::get('/friend', [App\Http\Controllers\Friendship\FriendshipController::class, 'index'])->name('index.friendship');
+Route::post('/friend/add', [App\Http\Controllers\Friendship\FriendshipController::class, 'add'])->name('add.friendship');
+Route::get('/my-friends', [App\Http\Controllers\Friendship\FriendshipController::class, 'myFriends'])->name('myfriends.friendship');
+Route::delete('/friend/delete/{user_name}', [App\Http\Controllers\Friendship\FriendshipController::class, 'delete'])->name('delete.friendship');
 
-Route::get('/friend/edit', [App\Http\Controllers\Friend\FriendController::class, 'edit'])->name('edit.friend');
-
-
-
-
+Route::get('/request-box', [App\Http\Controllers\Friendship\FriendshipController::class, 'requestBox'])->name('request-box.friendship');
+Route::post('/request-box/add', [App\Http\Controllers\Friendship\FriendshipController::class, 'requestBoxCheck'])->name('request-box-check.friendship');
 
 
 

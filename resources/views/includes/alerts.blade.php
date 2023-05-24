@@ -15,7 +15,19 @@
         </div>
 @endif
 
-
+@if (session('warning'))
+ 
+        <div class="card-body">
+       
+            <div class="alert alert-warning alert-top-border alert-dismissible fade show" role="alert">
+                <i class="uil uil-exclamation-octagon font-size-16 text-warning me-2"></i>
+                    {{session('warning')}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+             
+    
+        </div>
+@endif
 
 
 
