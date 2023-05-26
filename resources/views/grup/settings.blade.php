@@ -33,7 +33,7 @@
                                             </a>
 
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Üye Sınırını Arttır</a></li>
                                                 <li><a class="dropdown-item" href="#">Another action</a>
                                                 </li>
                                                 <li><a class="dropdown-item" href="#">Something else
@@ -130,29 +130,39 @@
         <!-- end col -->
 
         <div class="col-xxl-9 col-lg-8">
+
+            {{-- İncludes --}}
+
+            @include('includes.alerts')
+
+            @include('includes.errors')
+
+            {{-- İncludes --}}
+
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-4">Grup Ayarları</h5>
 
-                    <form action="{{ route('update.grup', $grup->grup_id) }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        @method('put')
 
-                        <div class="card border shadow-none mb-5">
-                            <div class="card-header d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                            01
-                                        </div>
+
+                    <div class="card border shadow-none mb-5">
+                        <div class="card-header d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar">
+                                    <div class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                        01
                                     </div>
                                 </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="card-title">Genel Grup Bilgisi</h5>
-                                </div>
                             </div>
-                            <div class="card-body">
-
+                            <div class="flex-grow-1">
+                                <h5 class="card-title">Genel Grup Bilgisi</h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('update.info.grup', $grup->grup_id) }}" name="grup-settings"
+                                method="post" enctype="multipart/form-data">
+                                @csrf
+                                @method('put')
 
                                 <div>
                                     <div class="mb-3">
@@ -187,264 +197,56 @@
                                     </div>
 
 
-
+                                    <div class="text-end m-4">
+                                        <button type="submit" {{-- value="true" name="grup-settings_btn" --}}
+                                            class="btn btn-primary w-sm">Güncelle</button>
+                                    </div>
                                 </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end card -->
+
+                    <div class="card border shadow-none mb-5">
+                        <div class="card-header d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="avatar">
+                                    <div class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                        02
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="card-title">Grup Üye Ayarları</h5>
                             </div>
                         </div>
-                        <!-- end card -->
+                        <div class="card-body">
 
-                        <div class="card border shadow-none mb-5">
-                            <div class="card-header d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                            02
-                                        </div>
+
+                            <div>
+                                <div class="mb-4">
+                                    <label></label>
+                                    <div class="mb-3">
+                                        <a href="{{ route('members.grup', $grup->grup_id) }}" class="btn btn-light w-100"
+                                            type="button">
+                                            Üye Eklemek İçin Tıklayınız!
+                                        </a>
                                     </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="card-title">Grup Üye Ayarları</h5>
+
+
                                 </div>
                             </div>
-                            <div class="card-body">
 
 
-                                <div>
-                                    <div class="mb-4">
-                                        <label></label>
-                                        <div class="mb-3">
-                                            <button class="btn btn-light w-100" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#selectmembermodal">
-                                                Üye Eklemek İçin Tıklayınız!
-                                            </button>
-                                        </div>
-        
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="selectmembermodal" tabindex="-1"
-                                            aria-labelledby="selectmembermodalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="selectmembermodalLabel">Üyeleri Seçiniz</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-        
-        
-        
-                                                        <div data-simplebar style="max-height: 200px;">
-        
-        
-                                                            <div>
-        
-        
-                                                                <ul class="list-group list-group-flush contact-list">
-                                                                    @error('user')
-                                                                        <small class="text-danger">{{ $message }}</small>
-                                                                    @enderror
-                                                                    @foreach ($users as $user)
-                                                                        <li class="list-group-item">
-        
-                                                                            <div class="avatar-group-item">
-                                                                                <a href="javascript: void(0);" class=""
-                                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                                    title="Janna Johnson">
-                                                                                    <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
-                                                                                        alt=""
-                                                                                        class="rounded-circle avatar-sm">
-                                                                                </a>
-        
-        
-        
-                                                                                <label class="form-check-label mx-2"
-                                                                                    for="memberCheck1">
-                                                                                    {{ $user->name }}
-                                                                                </label>
-        
-        
-                                                                                <input class="form-check-input   mt-2"
-                                                                                    name="user[]" type="checkbox"
-                                                                                    value="{{ $user->user_id }}"
-                                                                                    id="memberCheck1">
-                                                                            </div>
-        
-                                                                        </li>
-                                                                    @endforeach
-        
-        
-                                                                </ul><!-- end ul -->
-                                                            </div>
-        
-        
-        
-        
-                                                        </div>
-                                                        <!-- end simplebar -->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-light w-sm"
-                                                            data-bs-dismiss="modal">Tamamla</button>
-        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Modal -->
-                                    </div>
-                                </div>
-
-
-
-
-                                {{-- <div>
-                                    <div class="mb-4">
-                                        <label></label>
-                                        <div class="mb-3">
-                                            <button class="btn btn-light w-100" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#selectmembermodal">
-                                                Üye Eklemek İçin Tıklayınız!
-                                            </button>
-                                        </div>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="selectmembermodal" tabindex="-1"
-                                            aria-labelledby="selectmembermodalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="selectmembermodalLabel">Üyeleri
-                                                            Seçiniz</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-
-
-
-                                                        <div data-simplebar style="max-height: 200px;">
-                                                            <div>
-                                                                <div class="p-3 fw-semibold font-size-12 text-muted">
-                                                                    A
-                                                                </div>
-
-                                                                <ul class="list-group list-group-flush contact-list">
-                                                                    <li class="list-group-item">
-
-
-                                                                        <div class="avatar-group-item">
-                                                                            <a href="javascript: void(0);" class=""
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                title="Janna Johnson">
-                                                                                <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
-                                                                                    alt=""
-                                                                                    class="rounded-circle avatar-sm">
-                                                                            </a>
-
-
-
-                                                                            <label class="form-check-label mx-2"
-                                                                                for="memberCheck1">
-                                                                                Janna Johnson
-                                                                            </label>
-
-                                                                            <input class="form-check-input   mt-2"
-                                                                                type="checkbox" value=""
-                                                                                id="memberCheck1">
-
-
-                                                                        </div>
-
-                                                                    </li>
-
-                                                                    <li class="list-group-item">
-
-
-                                                                        <div class="avatar-group-item">
-                                                                            <a href="javascript: void(0);" class=""
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                title="Janna Johnson">
-                                                                                <img src="{{ asset('assets/images/users/avatar-3.jpg') }}"
-                                                                                    alt=""
-                                                                                    class="rounded-circle avatar-sm">
-                                                                            </a>
-
-
-
-                                                                            <label class="form-check-label mx-2"
-                                                                                for="memberCheck1">
-                                                                                Janna Johnson
-                                                                            </label>
-
-                                                                            <input class="form-check-input   mt-2"
-                                                                                type="checkbox" value=""
-                                                                                id="memberCheck1">
-
-
-                                                                        </div>
-
-                                                                    </li>
-                                                                </ul><!-- end ul -->
-                                                            </div>
-
-                                                            <div>
-                                                                <div class="p-3 fw-semibold font-size-12 text-muted">
-                                                                    B
-                                                                </div>
-
-                                                                <ul class="list-group list-group-flush contact-list">
-                                                                    <li class="list-group-item">
-
-
-                                                                        <div class="avatar-group-item">
-                                                                            <a href="javascript: void(0);" class=""
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                title="Janna Johnson">
-                                                                                <img src="{{ asset('assets/images/users/avatar-2.jpg') }}"
-                                                                                    alt=""
-                                                                                    class="rounded-circle avatar-sm">
-                                                                            </a>
-
-
-
-                                                                            <label class="form-check-label mx-2"
-                                                                                for="memberCheck1">
-                                                                                Janna Johnson
-                                                                            </label>
-
-                                                                            <input class="form-check-input   mt-2"
-                                                                                type="checkbox" value=""
-                                                                                id="memberCheck1">
-
-
-                                                                        </div>
-
-                                                                    </li>
-                                                                </ul><!-- end ul -->
-                                                            </div>
-
-
-                                                        </div>
-                                                        <!-- end simplebar -->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-light w-sm"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary w-sm">Save</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Modal -->
-                                    </div>
-                                </div> --}}
-
-                            </div>
                         </div>
-                        <!-- end card -->
+                    </div>
+                    <!-- end card -->
+
+                    <form action="{{ route('update.profile-photo.grup', $grup->grup_id) }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
 
                         <div class="card border shadow-none">
                             <div class="card-header d-flex align-items-center">
@@ -464,15 +266,26 @@
                                 <div class="row">
                                     <div class="col-md-3 my-4">
                                         <div class="mt-4 mt-md-0">
-                                            <img class="img-thumbnail rounded-circle avatar-xl" alt="200x200"
-                                                src="{{ asset($grup->logo_path) }}" data-holder-rendered="true">
+                                            @if ($grup->logo_path)
+                                                <img class="img-thumbnail rounded-circle avatar-xl" alt="200x200"
+                                                    src="{{ asset($grup->logo_path) }}" data-holder-rendered="true">
+                                            @else
+                                                <div class="avatar-xl">
+                                                    <span
+                                                        class="avatar-title rounded-circle avatar-xl  fs-1 rounded-circle img-thumbnail">
+                                                        {{ $grup->first_letter }}
+                                                    </span>
+                                                </div>
+                                            @endif
+
 
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
 
-                                        <input class="form-control form-control-lg" id="formFileLg" type="file">
+                                        <input class="form-control form-control-lg" name="photo" id="formFileLg"
+                                            type="file">
                                     </div>
 
                                 </div>
@@ -480,16 +293,139 @@
                             <!-- end card -->
 
                             <div class="text-end m-4">
-                                <button type="submit" class="btn btn-primary w-sm">Güncelle</button>
-                            </div>
+                                <button type="submit" name="profile_photo" value="true"
+                                    class="btn btn-primary w-sm">Güncelle</button>
                     </form>
-                    <!-- end form -->
+
+                    <button type="button" class="btn btn-danger " data-bs-toggle="modal"
+                        data-bs-target="#kapatBackdrop">
+
+                        Profile Fotoğrafını Kaldır</button>
                 </div>
-                <!-- end card body -->
+
+                <!-- end form -->
+            </div>
+
+
+            <!-- end card body -->
+
+
+            <div class="card border shadow-none mb-5">
+                <div class="card-header d-flex align-items-center">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="avatar">
+                            <div class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                04
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="card-title">Grup Durum Ayarları</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+
+
+                    <div>
+                        <div class="mb-4">
+                            <label></label>
+                            <div class="mb-3">
+
+
+
+                                <!-- Button trigger modal -->
+                                <button style="float: right;" type="button" class="btn btn-danger mx-2 "
+                                    data-bs-toggle="modal" data-bs-target="#kapatBackdrop">
+
+                                    Grubu Tamamen Kapat</button>
+                                <!-- Button trigger modal -->
+                                <button style="float: right;" type="button" class="btn btn-warning "
+                                    data-bs-toggle="modal" data-bs-target="#pasifBackdrop">
+                                    Grubu Pasif Yap
+                                </button>
+
+                                <!-- KapatBackdrop Modal -->
+                                <div class="modal fade" id="kapatBackdrop" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" role="dialog"
+                                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Grubu Kapat</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                </button>
+                                            </div>
+                                            <!-- end modalheader -->
+                                            <div class="modal-body">
+                                                <p>Bu Grubu Tamamen
+                                                    Kapatmak istediğinize eminmisiniz ?<br>İşlem geri alınamaz ve
+                                                    tüm veriler
+                                                    silinecektir <span
+                                                        class=" d-inline text-primary">Onaylıyormusunuz</span> ?
+                                                </p>
+                                            </div>
+                                            <!-- end modalbody -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light"
+                                                    data-bs-dismiss="modal">İptal</button>
+                                                <button type="button" class="btn btn-primary">Onayla</button>
+                                            </div>
+                                            <!-- end modalfooter -->
+                                        </div>
+                                    </div>
+                                </div><!-- end modal -->
+
+
+
+
+
+                                <!-- PasifBackdrop Modal -->
+                                <div class="modal fade" id="pasifBackdrop" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" role="dialog"
+                                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Grubu Pasife Yap
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                </button>
+                                            </div>
+                                            <!-- end modalheader -->
+                                            <div class="modal-body">
+                                                <p>Bu grubu pasif yaparsanız sadece grubu siz göreceksiniz diğer
+                                                    katılımcılar göremiyecek ve veriler
+                                                    silinmeyecektir <span
+                                                        class=" d-inline text-primary">Onaylıyormusunuz</span> ?
+                                                </p>
+                                            </div>
+                                            <!-- end modalbody -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light"
+                                                    data-bs-dismiss="modal">İptal</button>
+                                                <button type="button" class="btn btn-primary">Onayla</button>
+                                            </div>
+                                            <!-- end modalfooter -->
+                                        </div>
+                                    </div>
+                                </div><!-- end modal -->
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
             <!-- end card -->
+
         </div>
-        <!-- end col -->
+        <!-- end card -->
+    </div>
+    <!-- end col -->
     </div>
 @endsection
 

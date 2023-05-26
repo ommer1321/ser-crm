@@ -10,6 +10,14 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+                 {{-- İncludes --}}
+
+        @include('includes.alerts')
+
+        @include('includes.errors')
+
+        {{-- İncludes --}}
+
             <div class="row">
                 <div class="col-md-3">
                     <div class="mb-3">
@@ -83,8 +91,7 @@
                                                             {{ $grup->first_letter }}
                                                         </span>
                                                     @else
-                                                        <img src="{{ asset($grup->logo_path) }} " alt=""
-                                                            class="avatar">
+                                                        <img src="{{ asset($grup->logo_path) }} " alt="" class=" rounded-circle avatar">
                                                     @endif
 
                                                 </div>

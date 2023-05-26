@@ -9,6 +9,7 @@ use App\Models\Grup\Member;
 use App\Models\Teacher\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 trait GrupTrait
 {
@@ -60,30 +61,25 @@ trait GrupTrait
     }
 
 
-    public function storeGrup($validatedData, $grup)
+    public function storeGrup($request, $grup)
     {
+        $validatedData = $request->validated();
 
         $grup->teacher_id = Auth::user()->id;
         $grup->name = $validatedData['name'];
         $grup->details = $validatedData['details'];
         $grup->branch = $validatedData['branch'];
+        $newMembersArray = $validatedData['user'] ?? [];
 
+        $photo =  $this->storeProfilePhoto($request, $grup);
 
-        // hata:basic burası açılacak
-        // $photo =  $this->storeProfilePhoto($validatedData, $grup);
-
-        // if ($photo) {
-        //     $grup->logo_path = $photo;
-        // }
-
+        if ($photo) {
+            $grup->logo_path = $photo;
+        }
 
         $grupResult = $grup->save();
 
-        $grup_id = $grup->id;
-        $newMembersArray = $validatedData['user'];
-
-        $this->storeGrupMembers($grup_id,  $newMembersArray);
-
+        $this->storeGrupMembers($grup->id,  $newMembersArray);
 
         return   $this->redirectToGrups($grupResult);
     }
@@ -92,28 +88,138 @@ trait GrupTrait
     public function updateGrup($validatedData, $grup)
     {
 
-
-        
         $grup->name = $validatedData['name'];
         $grup->details = $validatedData['details'];
         $grup->branch = $validatedData['branch'];
 
+        if ($grup->save()) {
 
+            return true;
+        } else {
+
+            return false;
+        }
     }
 
-    public function storeProfilePhoto($validatedData, $grup)
+
+
+    public function updateProfilePhoto($request, $grup)
     {
 
-        if ($validatedData->hasFile('photo')) {
-            // hata:orta "Call to a member function hasFile() on array" ahtası döndürüyor
-            $file = $validatedData->file('photo');
+        if ($request->hasFile('photo')) {
+
+            $file = $request->file('photo');
             $ext = $file->getClientOriginalExtension();
             $fileName = 'pp' . time() . '.' . $ext;
 
-            if ($file->move('uploads/grup/', $fileName)) {
+            if (File::exists($grup->logo_path)) {
 
-                return $fileName;
-                // $grup->logo_path = $fileName;
+                if (File::delete($grup->logo_path)) {
+                    if ($filePath = $file->move('uploads/grup/', $fileName)) {
+                        $grup->logo_path = $filePath;
+
+                        if ($grup->save()) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+            } else {
+
+                if ($filePath = $file->move('uploads/grup/', $fileName)) {
+                    $grup->logo_path = $filePath;
+
+                    if ($grup->save()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+// 
+    public function checkUserAndGrup($validatedUserAndGrup)
+    {
+
+
+        if (!$user = User::where('user_id', $validatedUserAndGrup['user'])->first()) {
+            return redirect()->back()->with('failed', 'Böyle Bir Kullanıcı Bulunanamadı');
+        }
+
+        if (!$grup = Grup::where('grup_id', $validatedUserAndGrup['grup'])->first()) {
+            return redirect()->back()->with('failed', 'Böyle Bir Grup Bulunanamadı');
+        }
+
+        return $data = ['user' => $user, 'grup' => $grup];
+    }
+
+
+    public function storeMember($validatedData)
+    {
+
+        $data = $this->checkUserAndGrup($validatedData);
+
+        $user =  $data['user'];
+        $grup =  $data['grup'];
+
+        if (!Member::where('grup_id', $grup->id)->where('user_id', $user->id)->exists()) {
+
+            $member = new Member();
+
+            $member->user_id = $user->id;
+            $member->grup_id = $grup->id;
+            $res = $member->save();
+
+            if ($res) {
+                return redirect()->back()->with('success', 'Başarılı Bir Şekilde Eklendi');
+            } else {
+                return redirect()->back()->with('failed', 'Opss! Bir Hata Oluştu');
+            }
+        } else {
+
+            return redirect()->back()->with('failed', 'Bu Grupta Böyle Bir Kullanıcı Zaten Bulunmakta');
+        }
+    }
+
+    public function destroyMember($validatedData)
+    {
+
+        $data = $this->checkUserAndGrup($validatedData);
+
+        $user =  $data['user'];
+        $grup =  $data['grup'];
+
+
+        if ($member = Member::where('grup_id', $grup->id)->where('user_id', $user->id)->first()) {
+
+            if ($member->delete()) {
+                return redirect()->back()->with('success', 'Başarılı Bir Şekilde Gruptan Çıkarıldı');
+            } else {
+                return redirect()->back()->with('failed', 'Opss! Bir Hata Oluştu');
+            }
+        } else {
+
+            return redirect()->back()->with('failed', 'Bu Grupta Böyle Bir Kullanıcı Bulunanamadı');
+        }
+    }
+
+// 
+
+    public function storeProfilePhoto($request, $grup)
+    {
+
+        if ($request->hasFile('photo')) {
+            // hata:solved  "Call to a member function hasFile() on array" hatası döndürüyordu validated() func. olmaması lazım  
+            $file = $request->file('photo');
+            $ext = $file->getClientOriginalExtension();
+            $fileName = 'pp' . time() . '.' . $ext;
+
+            if ($filePath = $file->move('uploads/grup/', $fileName)) {
+
+
+                return $grup->logo_path = $filePath;
             }
         }
     }

@@ -78,6 +78,39 @@ trait Friendship
     }
 
 
+    public function myFriendshipsWithoutGrupMembers($grup_members)
+    {
+        $myFriendships = ModelFriendship::where('first_user_id', auth()->user()->id)->orWhere('second_user_id', auth()->user()->id)->get();
+        $friendship_list = [];
+        $data = [];
+        foreach ($myFriendships as $myFriend) {
+
+            if ($myFriend->first_user_id != auth()->user()->id) {
+                $friendship_list[] = $myFriend->first_user_id;
+            }
+
+            if ($myFriend->second_user_id != auth()->user()->id) {
+                $friendship_list[] = $myFriend->second_user_id;
+            }
+        }
+
+        foreach ($grup_members as $member) {
+
+            foreach ($friendship_list as $key => $friendship) {
+
+                if ($friendship == $member->user_id) {
+                    unset($friendship_list[$key]);
+                }
+            }
+        }
+        foreach ($friendship_list as $item) {
+
+            $data[] = User::where('id', $item)->first();
+        }
+
+        return $data;
+    }
+
     public function isFriend($validatedUserId, $userId)
     {
 
@@ -226,15 +259,15 @@ trait Friendship
 
 
 
-public function allRequestHistory()
-{
-    return $allRequestes =   FriendshipAllowStatus::where('who_get', auth()->user()->id)
-    ->whereNot('status', 'pending')
-    ->where('is_deleted', '1')
-    ->with('takenRequestHistory')
-    ->orderBy('updated_at','desc')
-    ->get();
-}
+    public function allRequestHistory()
+    {
+        return $allRequestes =   FriendshipAllowStatus::where('who_get', auth()->user()->id)
+            ->whereNot('status', 'pending')
+            ->where('is_deleted', '1')
+            ->with('takenRequestHistory')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+    }
 
 
 

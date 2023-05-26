@@ -45,7 +45,7 @@
                     <div class="wizard-tab">
                         <div class="text-center mb-4">
                             <h5>Grup Bilgileri</h5>
-                            <p class="card-title-desc">Aşağıdaki Tüm Alanları Doldurunuz</p>
+                            <p class="card-title-desc">Aşağıdaki Tüm Alanlar <b class="text-primary">Zorunludur</b></p>
                         </div>
 
                         <div>
@@ -85,9 +85,9 @@
                     <div class="wizard-tab">
 
                         <div class="text-center mb-3">
-                            <h5>Grup Üyesi Alanı <span class="text-danger">(friends db oluşturulup burası odan
-                                    çekilecek)</span></h5>
-                            <p class="card-title-desc">Üyeler Sadece Arkadaş Listenizdeki Kişiler Olabilir.<b></b></p>
+                            <h5>Grup Üyesi Alanı </h5>
+                            <p class="card-title-desc">Üyeler <b class="text-primary">Sadece </b>Arkadaş Listenizdeki
+                                Kişiler Olabilir.</p>
                         </div>
 
                         <div>
@@ -128,26 +128,82 @@
                                                                 <li class="list-group-item">
 
                                                                     <div class="avatar-group-item">
-                                                                        <a href="javascript: void(0);" class=""
-                                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                            title="Janna Johnson">
-                                                                            <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
-                                                                                alt=""
-                                                                                class="rounded-circle avatar-sm">
-                                                                        </a>
+
+
+                                                                        @if ($user->profile_photo_path)
+                                                                            <a href="javascript: void(0);" class=""
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="top"
+                                                                                title="{{ $user->name }} {{ $user->surname }}">
+
+                                                                                <img src="{{ asset($user->profile_photo_path) }}"
+                                                                                    alt="{{ $user->name }} {{ $user->surname }}"
+                                                                                    class="rounded-circle avatar-sm">
+
+                                                                            </a>
+
+
+                                                                            <label class="form-check-label mx-2"
+                                                                                for="memberCheck1">
+                                                                                {{ $user->user_name }}
+                                                                            </label>
+
+
+                                                                            <input class="form-check-input font-size-16"
+                                                                                name="user[]" type="checkbox"
+                                                                                value="{{ $user->user_id }}"
+                                                                                id="memberCheck1">
+                                                                        @else
+                                                                            <div class="d-flex align-items-center ">
+                                                                                <div class="avatar-group-item">
+                                                                                    <a href="javascript: void(0);"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-bs-placement="top"
+                                                                                        title=""
+                                                                                        data-bs-original-title="Ahmet">
+                                                                                        <div class="avatar-sm">
+                                                                                            <span
+                                                                                                class="avatar-title rounded-circle bg-soft-primary  text-white font-size-16">
+                                                                                                <div
+                                                                                                    class="rounded-circle avatar-sm    avatar-title  bg-soft-primary text-primary font-size-24">
+                                                                                                    <i
+                                                                                                        class="bx bx-user-circle text-primary"></i>
+                                                                                                </div>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <label class="form-check-label mx-2"
+                                                                                    for="memberCheck1">{{ $user->user_name }}</label>
 
 
 
-                                                                        <label class="form-check-label mx-2"
-                                                                            for="memberCheck1">
-                                                                            {{ $user->name }}
-                                                                        </label>
+                                                                                <input
+                                                                                    class="form-check-input font-size-16   "
+                                                                                    name="user[]" type="checkbox"
+                                                                                    value="{{ $user->user_id }}"
+                                                                                    id="memberCheck1">
+                                                                            </div>
 
 
-                                                                        <input class="form-check-input   mt-2"
-                                                                            name="user[]" type="checkbox"
-                                                                            value="{{ $user->user_id }}"
-                                                                            id="memberCheck1">
+                                                                            {{--                                                                           
+                                                                            <div class="avatar-sm align-self-center ">
+                                                                                <div
+                                                                                    class="rounded-circle avatar-sm    avatar-title  bg-soft-primary text-info font-size-24">
+                                                                                    <i class="bx bx-user-circle text-primary"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                     --}}
+                                                                        @endif
+
+
+
+
+
+
+
+
+
                                                                     </div>
 
                                                                 </li>
@@ -181,25 +237,25 @@
                     <div class="wizard-tab">
                         <div class="text-center mb-4">
                             <h5>Grup Profil Fotoğrafı </h5>
-                            <p>Fotoğraf Yüklemek İsteğe Bağlıdır Grup Fotoğrafı Yok ise Otomatik Oluşur<b></b></p>
+                            <p>Grup Fotoğrafı Yüklemek <b class="text-primary">İsteğe Bağlıdır</b></p>
                         </div>
 
                         <input class="form-control form-control-lg" name="photo" id="formFileLg" type="file">
 
                         @error('photo')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                        <div class="fallback">
-                            <input name="photo" type="file"  />
-                        </div>
-
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                        {{-- <div class="fallback">
+                            <input name="photo" type="file" />
+                        </div> --}}
+                        {{-- 
                         <div class="dz-message needsclick">
                             <div class="mb-3">
                                 <i class="display-4 text-light uil uil-upload-alt"></i>
                             </div>
 
                             <h5 class="font-size-16">Buraya Yükleyiniz</h5>
-                        </div>
+                        </div> --}}
                         <button type="submit" class="btn btn-success  w-sm ms-auto">Kaydet</button>
                     </div>
                     <!-- wizard-tab -->

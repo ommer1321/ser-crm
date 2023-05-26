@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Teacher\Grup;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GrupAddMemberFormRequest;
+use App\Http\Requests\GrupDeleteMemberFormRequest;
 use App\Http\Requests\GrupFormRequest;
+use App\Http\Requests\GrupUpdateInfoFormRequest;
 use App\Models\Grup\Grup;
 use App\Models\Grup\Member;
 use App\Models\User;
+use App\Traits\Friendship;
 use App\Traits\GrupTrait;
 use Illuminate\Http\Request;
 
 class GrupController extends Controller
 {
-    use GrupTrait;
+    use GrupTrait, Friendship;
 
     public function index()
     {
@@ -24,34 +28,50 @@ class GrupController extends Controller
 
     public function create()
     {
-        $users = $this->students();
+        $users =  $this->myFriendships();
+
         return view('grup.create', compact('users'));
     }
 
     public function store(GrupFormRequest $request)
     {
-
- 
         $grup = new Grup();
-
-         $validetedData = $request->validated();
-
-        return     $this->storeGrup($validetedData, $grup);
+        return     $this->storeGrup($request, $grup);
     }
 
 
-    public function update(GrupFormRequest $request, $id)
+    public function updateGroupInfo(GrupUpdateInfoFormRequest $request, $id)
     {
-     return 1; 
         $grup =  Grup::where('grup_id', $id)->first();
-
         $validetedData = $request->validated();
+
         if (isset($grup) && isset($validetedData)) {
-return 1;
-            $this->updateGrup($validetedData, $grup);
+
+            $res =    $this->updateGrup($validetedData, $grup);
+            if ($res) {
+
+                return redirect()->back()->with('success', 'Başarılı Bir Şekilde Güncellendi');
+            } else {
+
+                return redirect()->back()->with('failed', 'Opss! Bir Hata Oldu Güncellenmedi :(');
+            }
         }
     }
 
+    public function updateGroupPhoto(Request $request, $id)
+    {
+        $grup =  Grup::where('grup_id', $id)->first();
+
+        $res =  $this->updateProfilePhoto($request, $grup);
+
+        if ($res) {
+
+            return redirect()->back()->with('success', 'Başarılı Bir Şekilde Güncellendi');
+        } else {
+
+            return redirect()->back()->with('failed', 'Maalesef Güncellenmedi');
+        }
+    }
 
 
     public function settings($grup_id)
@@ -59,6 +79,33 @@ return 1;
         $users = $this->students();
         $grup =    $this->listGrupDetails($grup_id);
 
-        return view('grup.settings', compact(['grup','users']));
+        return view('grup.settings', compact(['grup', 'users']));
+    }
+
+
+    public function members($grup_id)
+    {
+        $users = $this->listMembers($grup_id);
+        $myFriends = $this->myFriendshipsWithoutGrupMembers($users);
+        $grup =    $this->listGrupDetails($grup_id);
+
+        return view('grup.grup-members', compact(['grup', 'myFriends', 'users']));
+    }
+
+
+    public function deleteMember(GrupDeleteMemberFormRequest $request)
+    {
+
+        $validetedData = $request->validated();
+
+        return $this->destroyMember($validetedData);
+    }
+
+
+    public function addMember(GrupAddMemberFormRequest $request)
+    {
+        $validetedData = $request->validated();
+
+        return $this->storeMember($validetedData);
     }
 }
