@@ -52,11 +52,14 @@ return [
     */
 
     'channels' => [
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
+
+
 
         'single' => [
             'driver' => 'single',
@@ -89,7 +92,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
@@ -126,6 +129,51 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+
+
+
+        // Custom Logs
+        'friendship' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/friendship.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        
+        'friendship_allow_status' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/friendship_allow_status.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+     'user' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/user.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+        
+        
+        'member' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/member.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+
+        'grup' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/grup.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+
+             'task' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/task.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
     ],
 
 ];
