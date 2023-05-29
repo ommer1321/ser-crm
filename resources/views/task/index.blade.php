@@ -85,6 +85,93 @@
                             </div>
 
 
+                            <div class="card">
+                                <a class="btn btn-light collapsed" data-bs-toggle="collapse" href="#collapseExample"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Kullanıcı Etiketle
+                                </a>
+                                <div class="card-body collapse" id="collapseExample">
+                                    <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
+
+
+                                    </div>
+
+                                    <div class="card card-body mb-0">
+                                        @foreach ($myFriends as $myFriend)
+                                            <ul class="list-unstyled chat-list">
+
+                                                <li class="">
+                                                    <a href="#">
+                                                        <div class="d-flex align-items-start">
+
+                                                            <div class="avatar align-self-center me-3">
+
+
+
+
+                                                                @if ($myFriend->profile_photo_path)
+                                                                    <div
+                                                                        class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                        <img src="{{ asset($myFriend->profile_photo_path) }}"
+                                                                            class="rounded-circle avatar-sm" alt="">
+
+
+                                                                    </div>
+                                                                @else
+                                                                    <div class="avatar">
+                                                                        <span
+                                                                            class="avatar-title rounded-circle bg-soft-primary font-size-16">
+                                                                            <div
+                                                                                class="rounded-circle avatar-sm    avatar-title  bg-soft-primary  font-size-26">
+                                                                                <i
+                                                                                    class="bx bx-user-circle text-primary"></i>
+                                                                            </div>
+                                                                        </span>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+
+
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <h5 class="text-truncate font-size-16 mb-1">
+                                                                    {{ $myFriend->user_name }}
+                                                                </h5>
+                                                                <small class=" text-truncate" style="opacity: 0.8">
+                                                                    {{ $myFriend->name }} {{ $myFriend->surname }}</small>
+                                                            </div>
+
+
+                                                            <div class="unread-message">
+
+
+
+
+
+
+                                                                <div class="form-check form-switch mb-2" dir="ltr">
+                                                                    <input type="checkbox" class="form-check-input"
+                                                                        name="user[]" value="{{ $myFriend->user_id }}"
+                                                                        id="customSwitchsizesm">
+                                                                </div>
+
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        @endforeach
+                                        <a class="btn btn-primary collapsed" data-bs-toggle="collapse"
+                                            href="#collapseExample" aria-expanded="false"
+                                            aria-controls="collapseExample">
+                                            Tamam
+                                        </a>
+                                    </div>
+
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
 
 
                         </div>
@@ -186,13 +273,16 @@
                         <div class="card-body">
                             <div class="">
                                 <div class="dropdown float-end">
-                                    <a class="text-muted dropdown-toggle font-size-16" href="{{route('details.task',$task->task_id)}}" role="button"
+                                    <a class="text-muted dropdown-toggle font-size-16"
+                                        href="{{ route('details.task', $task->task_id) }}" role="button"
                                         data-bs-toggle="dropdown" aria-haspopup="true">
                                         <i class="bx bx-dots-vertical-rounded font-size-20"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="{{route('details.task',$task->task_id)}}">Göster</a>
-                                        <a  class="dropdown-item" href="{{route('details.task',$task->task_id)}}#edit">Düzenle</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('details.task', $task->task_id) }}">Göster</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('details.task', $task->task_id) }}#edit">Düzenle</a>
 
                                         <form action="{{ route('delete.task', $task->task_id) }}" name="deleteTask"
                                             method="post">

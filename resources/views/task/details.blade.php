@@ -155,47 +155,72 @@
                                     <div class="col-lg-4">
                                         <div class="card h-100 mb-lg-0">
                                             <div class="card-body">
-                                                <h5 class="card-title mb-3">Etkilenenler</h5>
+                                                <h5 class="card-title mb-3">Tags</h5>
 
                                                 <div>
 
 
                                                     <div class="py-3">
+                                                        @if ($tagged_users)
+                                                            <div class="avatar-group ">
+                                                                @foreach ($tagged_users as $user)
+                                                                    @if ($user->profile_photo_path)
+                                                                        <div class="avatar-group-item">
+                                                                            <a href="javascript: void(0);" class="d-block"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="top" title=""
+                                                                                data-bs-original-title="{{ $user->name }} {{ $user->surname }}">
+                                                                                <div class="avatar">
+                                                                                    <img src="{{ asset($user->profile_photo_path) }}"
+                                                                                        alt=""
+                                                                                        class="img-fluid rounded-circle">
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="avatar-group-item">
 
-                                                        <div class="d-flex">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="font-size-14">Burası Boş</h5>
-                                                            </div>
-                                                            <div class="flex-shrink-0">
-                                                                <p class="text-muted mb-0">Burası Boş</p>
-                                                            </div>
-                                                        </div>
-                                                        {{-- User --}}
+                                                                            <a href="javascript: void(0);" class="d-block"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="top" title=""
+                                                                                data-bs-original-title="{{ $user->name }} {{ $user->surname }}">
 
-                                                        <div class="avatar-group mt-2">
-                                                            <div class="avatar-group-item">
-                                                                <a href="javascript: void(0);" class="d-block"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="" data-bs-original-title="James Scott">
-                                                                    <div class="avatar-sm">
-                                                                        <img src="assets/images/users/avatar-2.jpg"
-                                                                            alt=""
-                                                                            class="img-fluid rounded-circle">
-                                                                    </div>
-                                                                </a>
+                                                                                <div class="avatar">
+                                                                                    <div
+                                                                                        class="avatar-title rounded-circle bg-primary">
+                                                                                        {{ $user->first_letter }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
                                                             </div>
-                                                            <div class="avatar-group-item">
-                                                                <a href="javascript: void(0);" class="d-block"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="" data-bs-original-title="Lynn Hackett">
-                                                                    <div class="avatar-sm">
-                                                                        <div class="avatar-title rounded-circle bg-info">
-                                                                            E
+                                                            @else
+                                                            <div class="card border shadow-none mb-2">
+                                                                <a href="javascript: void(0);" class="text-body">
+                                                                    <div class="p-2">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="avatar align-self-center me-3">
+                                                                                <div class="avatar-title rounded bg-soft-{{$task->status_color}} text-{{$task->status_color}} font-size-24">
+                                                                                    <i class="uil-pricetag-alt                                                                                    "></i>
+                                                                                </div>
+                                                                            </div>
+                    
+                                                                            <div class="overflow-hidden me-auto">
+                                                                                <h5 class="font-size-15 text-truncate mt-2"><b>Kimse Etiketli Değil</b></h5>
+                                                                            
+                                                                            </div>
+                    
+                                                                          
                                                                         </div>
                                                                     </div>
                                                                 </a>
                                                             </div>
-                                                        </div>
+                                                        @endif
+
+                                                        
                                                     </div>
                                                     {{-- User --}}
 
@@ -226,14 +251,14 @@
 
                                             <ul class="dropdown-menu dropdown-menu-end">
 
-                                                <form action="{{ route('delete.task', $task->task_id) }}" name="deleteTask"
-                                                    method="post">
-                                                    {{-- sad
-     --}}
+                                                <form action="{{ route('delete.task', $task->task_id) }}"
+                                                    name="deleteTask" method="post">
+
                                                     @method('put')
                                                     @csrf
 
-                                                    <li><input type="submit" name="deleteTaskButton" class="dropdown-item" value="Sil"></li>
+                                                    <li><input type="submit" 
+                                                            class="dropdown-item" value="Sil"></li>
 
                                                 </form>
 
@@ -245,7 +270,8 @@
                                 <hr>
 
 
-                                <form action="{{ route('update.task', $task->task_id) }}" name="updateTask" method="post">
+                                <form action="{{ route('update.task', $task->task_id) }}" name="updateTask"
+                                    method="post">
                                     <!-- end modalheader -->
                                     <div class="modal-body">
 
@@ -256,8 +282,8 @@
                                                 class="col-sm-3 col-form-label">Başlık</label>
                                             <div class="col-sm-9">
                                                 <input type="text" name="title" class="form-control"
-                                                    value="{{ old('title') }}" id="horizontal-firstname-input"
-                                                    placeholder="Başlık Giriniz..">
+                                                    value="{{ old('title') ?? $task->title }}"
+                                                    id="horizontal-firstname-input" placeholder="Başlık Giriniz..">
                                                 @error('title')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -269,7 +295,8 @@
                                                 Tarih</label>
                                             <div class="col-md-9">
                                                 <input class="form-control" name="finished_at" type="date"
-                                                    value="{{ old('finished_at') }}" id="example-date-input">
+                                                    value="{{ old('finished_at') ?? $task->finished_at }}"
+                                                    id="example-date-input">
                                                 @error('finished_at')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -281,10 +308,15 @@
                                             <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Not
                                                 Önemi</label>
                                             <div class="col-md-9">
-                                                <select class="form-select" value="{{ old('status') }}" name="status">
-                                                    <option value="red">Kırmızı</option>
-                                                    <option value="yellow">Sarı</option>
-                                                    <option value="green">Yeşil</option>
+                                                {{-- hata:basic old() aktif değil --}}
+                                                <select class="form-select" value="{{ old('status') ?? $task->status }}"
+                                                    name="status">
+                                                    <option @if ($task->status == 'red') selected @endif
+                                                        value="red">Kırmızı</option>
+                                                    <option @if ($task->status == 'yellow') selected @endif
+                                                        value="yellow">Sarı</option>
+                                                    <option @if ($task->status == 'green') selected @endif
+                                                        value="green">Yeşil</option>
                                                 </select>
                                                 @error('status')
                                                     <small class="text-danger">{{ $message }}</small>
@@ -301,7 +333,7 @@
                                                 <div class="form-floating">
                                                     {{-- Ck Editör id="ckeditor-classic" --}}
                                                     <textarea class="form-control" name="note" placeholder="Leave a comment here" id="floatingTextarea2"
-                                                        style="height: 100px">{{ old('note') }}</textarea>
+                                                        style="height: 100px">{{ old('note') ?? $task->note }}</textarea>
 
                                                     @error('note')
                                                         <small class="text-danger">{{ $message }}</small>
@@ -312,12 +344,111 @@
 
 
 
+                                        <div class="card">
+                                            <a class="btn btn-light collapsed" data-bs-toggle="collapse"
+                                                href="#collapseExample" aria-expanded="false"
+                                                aria-controls="collapseExample">
+                                                Kullanıcı Etiketle
+                                            </a>
+                                            <div class="card-body collapse" id="collapseExample">
+                                                <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
+
+
+                                                </div>
+
+                                                <div class="card card-body mb-0">
+                                                    @foreach ($myFriends as $myFriend)
+                                                        <ul class="list-unstyled chat-list">
+
+                                                            <li class="">
+                                                                <a href="#">
+                                                                    <div class="d-flex align-items-start">
+
+                                                                        <div class="avatar align-self-center me-3">
+
+
+
+
+                                                                            @if ($myFriend->profile_photo_path)
+                                                                                <div
+                                                                                    class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                                    <img src="{{ asset($myFriend->profile_photo_path) }}"
+                                                                                        class="rounded-circle avatar-sm"
+                                                                                        alt="">
+
+
+                                                                                </div>
+                                                                            @else
+                                                                                <div class="avatar">
+                                                                                    <span
+                                                                                        class="avatar-title rounded-circle bg-soft-primary font-size-16">
+                                                                                        <div
+                                                                                            class="rounded-circle avatar-sm    avatar-title  bg-soft-primary  font-size-26">
+                                                                                            <i
+                                                                                                class="bx bx-user-circle text-primary"></i>
+                                                                                        </div>
+                                                                                    </span>
+                                                                                </div>
+                                                                            @endif
+                                                                        </div>
+
+
+                                                                        <div class="flex-grow-1 overflow-hidden">
+                                                                            <h5 class="text-truncate font-size-16 mb-1">
+                                                                                {{ $myFriend->user_name }}
+                                                                            </h5>
+                                                                            <small class=" text-truncate"
+                                                                                style="opacity: 0.8">
+                                                                                {{ $myFriend->name }}
+                                                                                {{ $myFriend->surname }}</small>
+                                                                        </div>
+
+
+                                                                        <div class="unread-message">
+
+
+
+
+
+
+                                                                            <div class="form-check form-switch mb-2"
+                                                                                dir="ltr">
+
+
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input"
+                                                                                    @if ($myFriend->is_task_taged == true) checked @endif
+                                                                                    name="user[]"
+                                                                                    value="{{ $myFriend->user_id }}"
+                                                                                    id="customSwitchsizesm">
+                                                                            </div>
+
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    @endforeach
+                                                    <a class="btn btn-primary collapsed" data-bs-toggle="collapse"
+                                                        href="#collapseExample" aria-expanded="false"
+                                                        aria-controls="collapseExample">
+                                                        Tamam
+                                                    </a>
+                                                </div>
+
+                                            </div><!-- end card body -->
+                                        </div><!-- end card -->
+
 
 
                                     </div>
                                     <!-- end modalbody -->
                                     <div class="modal-footer">
-                                        <input type="submit" name="updateTaskButton" class="btn btn-primary" value="Oluştur">
+                                        <input type="submit"  class="btn btn-primary"
+                                            value="Oluştur">
                                     </div>
                                     <!-- end modalfooter -->
                                 </form>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('teacher_id');
             $table->string('title');
             $table->longText('note');
+            $table->json('tagged_users')->nullable();
             $table->date('finished_at')->nullable();
             $table->enum('status',['red','yellow','green']);
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');

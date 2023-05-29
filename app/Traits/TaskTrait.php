@@ -3,7 +3,9 @@
 namespace App\Traits;
 
 use App\Http\Requests\TaskFormRequest;
+use App\Http\Requests\TaskMemberValidateFormRequest;
 use App\Models\Teacher\Task;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 trait TaskTrait
@@ -25,15 +27,13 @@ trait TaskTrait
         if ($taskResult) {
 
             return redirect()->route('index.task')->with('success', 'Başarılı Bir Şekilde Tamamlandı');
-        
         } else {
 
             return redirect()->route('index.task')->with('failed', 'Maalesef Başarısız');
-        
         }
     }
 
-    
+
     public function listTask()
     {
         $tasks = Task::where('teacher_id', Auth::user()->id)->OrderBy('finished_at', 'asc')->get();
@@ -43,9 +43,27 @@ trait TaskTrait
 
     public function getTask($task_id)
     {
-        return  $task = Task::where('task_id', $task_id)->first();
+        // hata:basic 404 hatası dönüyor kontrolsüz first atıldığı için
+        $task = Task::where('task_id', $task_id)->first() ?? abort('404');
+
+        $tagged_users =  $this->getTaggedUsers($task->tagged_users);
+
+        return $data = ['task' => $task, 'tagged_users' => $tagged_users];
     }
 
+
+    public function getTaggedUsers($tagged_users)
+    {
+        $usersId = json_decode($tagged_users);
+        $data = [];
+        if (!$tagged_users == null) {
+            foreach ($usersId as $userId) {
+                $data[] = User::where('user_id', $userId)->first();
+            }
+        }
+
+        return $data;
+    }
 
 
     public function resultCheck($functionResult)
@@ -83,13 +101,23 @@ trait TaskTrait
     }
 
 
-    public function updateTask($validatedData, $task)
+    public function updateTask($request, $task)
     {
+        $validatedData =  $request->validated();
 
+        $requestUsers =    $request->user;
         $task->title = $validatedData['title'];
         $task->note = $validatedData['note'];
         $task->status = $validatedData['status'];
         $task->finished_at = $validatedData['finished_at'];
+
+           $res_member =  $this->memberValidate($requestUsers);
+
+        if ($res_member == 'failed') {
+            return redirect()->back()->with('failed', 'Geçersiz Kullanıcı Mevcut');
+        }
+
+        $task->tagged_users = $res_member;
 
         $taskResult = $task->update([
             'title' => $validatedData['title'],
@@ -103,13 +131,21 @@ trait TaskTrait
     }
 
 
-    public function storeTask($validatedData, $task)
+    public function storeTask($validatedData, $task, $requestUsers)
     {
         $task->teacher_id = Auth::user()->id;
         $task->title = $validatedData['title'];
         $task->note = $validatedData['note'];
         $task->status = $validatedData['status'];
         $task->finished_at = $validatedData['finished_at'];
+
+        $res_member =  $this->memberValidate($requestUsers);
+
+        if ($res_member == 'failed') {
+            return redirect()->back()->with('failed', 'Geçersiz Kullanıcı Mevcut');
+        }
+
+        $task->tagged_users = $res_member ?? null;
 
         $taskResult = $task->save();
 
@@ -122,21 +158,38 @@ trait TaskTrait
         $task = Task::where('task_id', $task_id)->first();
 
         $deletedTask = $task->delete();
-        
-        return  $this->redirectToTasks($deletedTask);
 
-      
+        return  $this->redirectToTasks($deletedTask);
     }
 
 
-    public function formControlTask(TaskFormRequest $validatedData, $task, $task_id)
+    // public function formControlTask(TaskFormRequest $request, $task, $task_id)
+    // {
+    //     if ($request->has('deleteTaskButton')) {
+
+    //         return $this->deleteTask($task_id);
+    //     } elseif ($request->has('updateTaskButton')) {
+
+    //         return $this->updateTask($request, $task);
+    //     }
+    // }
+
+    public function memberValidate($users)
     {
-        if ($validatedData->has('deleteTaskButton')) {
+        $data = [];
 
-            return $this->deleteTask($task_id);
-        } elseif ($validatedData->has('updateTaskButton')) {
+        if ($users) {
 
-            return $this->updateTask($validatedData, $task);
+            foreach ($users as $userId) {
+                $user = User::where('user_id', $userId)->exists();
+
+                if (!$user) {
+                    return 'failed';
+                }
+                $data[] = $userId;
+            }
+            return json_encode($data);
+        } else {
         }
     }
 }

@@ -60,6 +60,31 @@ trait Friendship
         return $users;
     }
 
+    public function myFriendshipsWithTaggedUsers($task)
+    {
+        $myFriends = $this->myFriendships();
+        $tagged_users_uuıd = json_decode($task->tagged_users);
+
+        if ($tagged_users_uuıd) {
+            foreach ($myFriends as $friend) {
+                $friend->is_task_taged = false;
+
+                foreach ($tagged_users_uuıd as $tagged_user_uuıd) {
+
+                    if ($friend->user_id == $tagged_user_uuıd) {
+                        $friend->is_task_taged = true;
+                    }
+                }
+            }
+
+            return $myFriends;
+        
+        } else {
+
+            return $myFriends;
+        }
+        
+    }
 
     public function myFriendships()
     {
