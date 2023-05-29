@@ -11,11 +11,13 @@ use App\Models\User;
 use App\Traits\Friendship;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Log;
 
 class FriendshipController extends Controller
 {
 
     use Friendship;
+
 
     public function index(FriendshipSearchFormRequest $request)
     {
@@ -67,6 +69,7 @@ class FriendshipController extends Controller
                         return redirect()->back()->with('success', 'Artık Arkadaşsınız :)');
                     } else {
 
+                        // Log::channel('friendship_allow_status')->Notice("(Not Created)  who send user id : " . auth()->user()->id . " who get user id : $validatedFriend->id");
                         return redirect()->back()->with('failed', 'Opps! Bir Aksilik Çıktı..');
                     }
                 } else {
@@ -75,6 +78,7 @@ class FriendshipController extends Controller
                 }
             } else {
 
+                // Log::channel('friendship_allow_status')->info("(Already Friend)  who send user id : " . auth()->user()->id . " who get user id : $validatedFriend->id");
                 return redirect()->back()->with('failed', 'Bu Kullanıcı İle Zaten Arkadaşsınız');
             }
         }

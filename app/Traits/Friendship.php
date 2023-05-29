@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\Friendship as ModelFriendship;
 use App\Models\FriendshipAllowStatus;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 trait Friendship
@@ -199,7 +200,7 @@ trait Friendship
                 return redirect()->back()->with('failed', 'Opps. Bir Sorun Oluştu İstek Başarısız');
             }
         } elseif ($checkRequest == 'you_already_sended') {
-
+            // Log::channel('friendship_allow_status')->Notice("(Not Created)  who send user id : ".auth()->user()->id." who get user id : $uservalidatedData->id");
             return redirect()->back()->with('failed', 'Zaten Bu Kullanıcıya İstek Gönderildi');
         } elseif ($checkRequest == 'other_user_sended_you') {
 
