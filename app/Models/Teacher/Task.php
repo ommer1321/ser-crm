@@ -20,7 +20,7 @@ class Task extends Model
 
 
 
-// Casts
+    // Casts
 
     protected $casts = [
         // hata:orta burası çalışmıyor alpaya sor
@@ -47,8 +47,12 @@ class Task extends Model
     {
         $now = Carbon::parse(Carbon::now());
         $end = Carbon::parse($this->attributes['finished_at']);
+         
+        
+
         $diff = $now->diffInDays($end);
-        return   $diff;
+        if ($now > $end) { return 'Süre Bitti'; }
+        return   $diff . ' Gün Sonra';
     }
 
     public function getPercentTimeAttribute()
@@ -56,7 +60,7 @@ class Task extends Model
         $start = Carbon::parse($this->attributes['created_at']);
         $now = Carbon::parse(Carbon::now());
         $end = Carbon::parse($this->attributes['finished_at']);
-
+        if ($now > $end) { return 100; }
 
         $startdiff = $start->diffInDays($end);
         $nowdiff = $now->diffInDays($end);
@@ -159,7 +163,4 @@ class Task extends Model
 
         $this->attributes['title']  = Str::title($value);
     }
-
-
-
 }

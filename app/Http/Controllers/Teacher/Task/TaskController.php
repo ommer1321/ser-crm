@@ -6,18 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskFormRequest;
 use App\Models\Teacher\Task;
 use App\Traits\Friendship;
+use App\Traits\TaskCommentTrait;
 use App\Traits\TaskTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-  use TaskTrait, Friendship;
+  use TaskTrait , Friendship , TaskCommentTrait;
 
   public function index()
   {
     $myFriends = $this->myFriendships();
-    $taskList = $this->listTask();
+     $taskList = $this->listTask();
     return view('task.index', compact('taskList', 'myFriends'));
   }
 
@@ -29,9 +30,14 @@ class TaskController extends Controller
     $data  = $this->getTask($task_id);
     $task = $data['task'];
     $tagged_users = $data['tagged_users'];
+
+      $activeTaskComments = $this->getActiveTaskComments($task->id);
+     
+     $editableTaskComments = $this->getTaskComments($task->id);
+
     $myFriends = $this->myFriendshipsWithTaggedUsers($task);
 
-    return view('task.details', compact('task', 'tagged_users', 'myFriends'));
+    return view('task.details', compact('task', 'tagged_users', 'myFriends','activeTaskComments','editableTaskComments'));
   }
 
 

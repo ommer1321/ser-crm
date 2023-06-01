@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TaskFormRequest extends FormRequest
+class TaskCommentPimFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,7 @@ class TaskFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'note' => 'max:5000',
-        'finished_at' =>'date|nullable|after_or_equal:today',
-        'status' =>'in:yellow,red,green',
-        'title' => 'required|string|max:75',
-        
+            'comment' => ['required', 'exists:task_comments,comment_uuid'],
         ];
     }
 }

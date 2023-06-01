@@ -197,18 +197,16 @@
 
 
 
-
-
         <div class="card">
             <div class="card-body">
                 <div class="row g-2">
-                    <div class="col-lg-auto">
+                    <div class="col-lg-12">
                         <div class="d-flex">
-
+    
                             <div class="col-auto ms-sm-auto">
-
+    
                                 <div class="avatar-group justify-content-sm-end">
-
+    
                                     <div class="avatar-group-item">
                                         <a href="javascript: void(0);">
                                             <div class="avatar">
@@ -218,49 +216,49 @@
                                             </div>
                                         </a>
                                     </div>
-
-
+    
+    
                                 </div>
                             </div>
-
+    
                             <div class="flex-grow-1 mx-2">
                                 <h5 class="font-size-16 mb-1">Not Oluşturun </h5>
                                 <p class="text-muted mb-0">Lorem ipsum dolor sit amet adipiscing elit</p>
                             </div>
-
-                        </div>
-
-
-
-
-                    </div>
-
-                    <div class="col-auto ms-sm-auto">
-
-                        <div class="avatar-group justify-content-sm-end">
-
-                            <div class="avatar-group-item">
-                                <a href="javascript: void(0);" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                    class="d-block" data-bs-toggle="tooltip" data-placement="top">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded-circle bg-light text-primary">
-                                            <i class="mdi mdi-plus fs-5"></i>
+    
+    
+                            <div class="avatar-group justify-content-sm-end">
+    
+                                <div class="avatar-group-item">
+                                    <a href="javascript: void(0);" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                        class="d-block" data-placement="top">
+                                        <div class="avatar">
+                                            <div class="avatar-title rounded-circle bg-light text-primary">
+                                                <i class="mdi mdi-plus fs-5"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div>
-
-
-                        </div><!-- end avatar-group -->
+                                    </a>
+                                </div>
+    
+    
+                            </div><!-- end avatar-group -->
+    
+                        </div>
+    
+    
+    
+    
                     </div>
+    
+    
                     <!--end col-->
                 </div>
                 <!--end row-->
             </div>
             <!--end card-body-->
         </div>
-
-
+    
+        
 
 
 
@@ -332,7 +330,7 @@
                                 <div class="mt-3 pt-1">
                                     <div class="d-flex justify-content-between">
                                         <p class="text-muted font-size-13 mb-1">Kalan Süre</p>
-                                        <p class="text-muted font-size-13 mb-1">{{ $task->date_counter }} Gün</p>
+                                        <p class="text-muted font-size-13 mb-1">{{ $task->date_counter }} </p>
                                     </div>
                                     <div class="progress animated-progess custom-progress">
                                         <div class="progress-bar bg-gradient bg-{{ $task->status_color }}"

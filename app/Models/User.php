@@ -65,7 +65,10 @@ class User extends Authenticatable
 
     public function getFirstLetterAttribute()
     {
+        // hata::Undefined array key "first_letter" - 
+        // hata::Undefined array key "name"
         return  $this->attributes['first_letter'] =   Str::title(Str::substr($this->attributes['name'], 0, 1));
+
     }
 
     protected static function boot()

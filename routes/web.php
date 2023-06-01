@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Teacher\Calendar\CalendarController;
+use App\Http\Controllers\Teacher\Task\TaskCommentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,9 +29,7 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
-
-
-
+    
 
 
 
@@ -65,6 +65,17 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
         Route::post('/store', [App\Http\Controllers\Teacher\Task\TaskController::class, 'store'])->name('store.task');
         Route::put('/delete/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'delete'])->name('delete.task');
         Route::put('/update/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'update'])->name('update.task');
+
+
+        // Task Comment Route
+        Route::group(['prefix' => 'comment'], function () {
+            
+            Route::post('store', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'store'])->name('store.comment.task');
+            Route::post('delete', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'delete'])->name('delete.comment.task');
+            Route::post('pim', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'pim'])->name('pim.comment.task');
+
+            
+        });
     });
 
 
@@ -84,13 +95,12 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
         Route::put('/update/Profile-Photo/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'updateGroupPhoto'])->name('update.profile-photo.grup');
         Route::put('/update/Info/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'updateGroupInfo'])->name('update.info.grup');
 
-    //Member Route 
+        //Member Route 
         Route::group(['prefix' => 'member'], function () {
 
             Route::get('/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'members'])->name('members.grup');
             Route::post('/delete', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'deleteMember'])->name('delete.members.grup');
             Route::post('/add', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'addMember'])->name('add.members.grup');
-        
         });
     });
 });
