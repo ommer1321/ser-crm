@@ -23,26 +23,28 @@ Route::get('/', function () {
 Auth::routes();
 
 
-
 //Auth Contol
 Route::group(['middleware' => ['auth', 'isRole']], function () {
 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
-    
+
 
 
 
     // Friendship Route
-    Route::get('/friend', [App\Http\Controllers\Friendship\FriendshipController::class, 'index'])->name('index.friendship');
-    Route::post('/friend/add', [App\Http\Controllers\Friendship\FriendshipController::class, 'add'])->name('add.friendship');
-    Route::get('/my-friends', [App\Http\Controllers\Friendship\FriendshipController::class, 'myFriends'])->name('myfriends.friendship');
-    Route::delete('/friend/delete/{user_name}', [App\Http\Controllers\Friendship\FriendshipController::class, 'delete'])->name('delete.friendship');
+    Route::group(['prefix' => 'friend', 'middleware' => ['auth', 'role:teacher|student']], function () {
 
-    Route::get('/request-box', [App\Http\Controllers\Friendship\FriendshipController::class, 'requestBox'])->name('request-box.friendship');
-    Route::post('/request-box/add', [App\Http\Controllers\Friendship\FriendshipController::class, 'requestBoxCheck'])->name('request-box-check.friendship');
+        Route::get('/', [App\Http\Controllers\Friendship\FriendshipController::class, 'index'])->name('index.friendship');
+        Route::post('/add', [App\Http\Controllers\Friendship\FriendshipController::class, 'add'])->name('add.friendship');
+        Route::get('/my-friends', [App\Http\Controllers\Friendship\FriendshipController::class, 'myFriends'])->name('myfriends.friendship');
+        Route::delete('/delete/{user_name}', [App\Http\Controllers\Friendship\FriendshipController::class, 'delete'])->name('delete.friendship');
 
-
+        Route::group(['prefix' => 'istek-kutusu'], function () {
+            Route::get('/', [App\Http\Controllers\Friendship\FriendshipController::class, 'requestBox'])->name('request-box.friendship');
+            Route::post('/add', [App\Http\Controllers\Friendship\FriendshipController::class, 'requestBoxCheck'])->name('request-box-check.friendship');
+        });
+    });
 
 
 
@@ -58,7 +60,7 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
 
 
     // Task Route
-    Route::group(['prefix' => 'tasks'], function () {
+    Route::group(['prefix' => 'tasks', 'middleware' => ['auth', 'role:teacher|student']], function () {
 
         Route::get('/', [App\Http\Controllers\Teacher\Task\TaskController::class, 'index'])->name('index.task');
         Route::get('/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'detail'])->name('details.task');
@@ -69,13 +71,18 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
 
         // Task Comment Route
         Route::group(['prefix' => 'comment'], function () {
-            
+    
             Route::post('store', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'store'])->name('store.comment.task');
-            Route::post('delete', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'delete'])->name('delete.comment.task');
-            Route::post('pim', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'pim'])->name('pim.comment.task');
-
             
+            Route::group(['prefix' => 'comment', 'middleware' => ['auth', 'role:teacher']], function () {
+
+                Route::post('delete', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'delete'])->name('delete.comment.task');
+                Route::post('pim', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'pim'])->name('pim.comment.task');
+            
+            });
+        
         });
+    
     });
 
 
@@ -86,7 +93,7 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
 
 
     // Grup Route
-    Route::group(['prefix' => 'grup'], function () {
+    Route::group(['prefix' => 'grup', 'middleware' => ['auth', 'role:teacher']], function () {
 
         Route::get('/', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'index'])->name('index.grup');
         Route::get('/settings/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'settings'])->name('settings.grup');

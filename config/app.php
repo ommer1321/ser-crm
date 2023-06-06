@@ -186,6 +186,10 @@ return [
          * Package Service Providers...
          */
 
+         //Paket Providerları 
+         Spatie\Permission\PermissionServiceProvider::class,
+
+
         /*
          * Application Service Providers...
          */

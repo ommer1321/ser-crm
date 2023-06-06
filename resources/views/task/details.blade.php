@@ -82,13 +82,14 @@
                             <span class="d-none d-sm-block">Not Detayları</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#tasks" role="tab">
-                            <i class="mdi mdi-clipboard-edit-outline font-size-20"></i>
-                            <span class="d-none d-sm-block">Düzenle</span>
-                        </a>
-                    </li>
-
+                    @role('teacher')
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#tasks" role="tab">
+                                <i class="mdi mdi-clipboard-edit-outline font-size-20"></i>
+                                <span class="d-none d-sm-block">Düzenle</span>
+                            </a>
+                        </li>
+                    @endrole
                 </ul>
 
                 <div class="tab-content">
@@ -514,9 +515,9 @@
 
                                                                                     {{ $comment->comment }}
                                                                                 </p>
-                                                                            
-                                                                            
-{{--                                                                      
+
+
+                                                                                {{--                                                                      
     like icon       
                                                                                 <div class="d-flex align-items-start">
 
@@ -629,293 +630,293 @@
                             </div><!-- end card body -->
                         </div><!-- end card -->
                     </div><!-- end tab pane -->
+                    @role('teacher')
+                        <div class="tab-pane " id="tasks" role="tabpanel">
+                            <div class="card mb-0 border-0">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 id="edit" class="card-title">Notu Düzenle:</h5>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <div class="dropdown">
+                                                <a class="btn btn-link text-dark dropdown-toggle shadow-none" href="#"
+                                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="uil uil-ellipsis-h"></i>
+                                                </a>
 
-                    <div class="tab-pane " id="tasks" role="tabpanel">
-                        <div class="card mb-0 border-0">
-                            <div class="card-body">
-                                <div class="d-flex align-items-start">
-                                    <div class="flex-grow-1">
-                                        <h5 id="edit" class="card-title">Notu Düzenle:</h5>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+
+                                                    <form action="{{ route('delete.task', $task->task_id) }}"
+                                                        name="deleteTask" method="post">
+
+                                                        @method('put')
+                                                        @csrf
+
+                                                        <li><input type="submit" class="dropdown-item" value="Sil"></li>
+
+                                                    </form>
+
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex-shrink-0">
-                                        <div class="dropdown">
-                                            <a class="btn btn-link text-dark dropdown-toggle shadow-none" href="#"
-                                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="uil uil-ellipsis-h"></i>
-                                            </a>
 
-                                            <ul class="dropdown-menu dropdown-menu-end">
-
-                                                <form action="{{ route('delete.task', $task->task_id) }}"
-                                                    name="deleteTask" method="post">
-
-                                                    @method('put')
-                                                    @csrf
-
-                                                    <li><input type="submit" class="dropdown-item" value="Sil"></li>
-
-                                                </form>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr>
+                                    <hr>
 
 
-                                <form action="{{ route('update.task', $task->task_id) }}" name="updateTask"
-                                    method="post">
-                                    <!-- end modalheader -->
-                                    <div class="modal-body">
+                                    <form action="{{ route('update.task', $task->task_id) }}" name="updateTask"
+                                        method="post">
+                                        <!-- end modalheader -->
+                                        <div class="modal-body">
 
-                                        @method('put')
-                                        @csrf
-                                        <div class="row mb-4">
-                                            <label for="horizontal-firstname-input"
-                                                class="col-sm-3 col-form-label">Başlık</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" name="title" class="form-control"
-                                                    value="{{ old('title') ?? $task->title }}"
-                                                    id="horizontal-firstname-input" placeholder="Başlık Giriniz..">
-                                                @error('title')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                        </div><!-- end row -->
+                                            @method('put')
+                                            @csrf
+                                            <div class="row mb-4">
+                                                <label for="horizontal-firstname-input"
+                                                    class="col-sm-3 col-form-label">Başlık</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="title" class="form-control"
+                                                        value="{{ old('title') ?? $task->title }}"
+                                                        id="horizontal-firstname-input" placeholder="Başlık Giriniz..">
+                                                    @error('title')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                            </div><!-- end row -->
 
-                                        <div class="row mb-4 mt-3 mt-xl-0">
-                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Son
-                                                Tarih</label>
-                                            <div class="col-md-9">
-                                                <input class="form-control" name="finished_at" type="date"
-                                                    value="{{ old('finished_at') ?? $task->finished_at }}"
-                                                    id="example-date-input">
-                                                @error('finished_at')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row mb-4">
-                                            <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Not
-                                                Önemi</label>
-                                            <div class="col-md-9">
-                                                {{-- hata:basic old() aktif değil --}}
-                                                <select class="form-select" value="{{ old('status') ?? $task->status }}"
-                                                    name="status">
-                                                    <option @if ($task->status == 'red') selected @endif
-                                                        value="red">Kırmızı</option>
-                                                    <option @if ($task->status == 'yellow') selected @endif
-                                                        value="yellow">Sarı</option>
-                                                    <option @if ($task->status == 'green') selected @endif
-                                                        value="green">Yeşil</option>
-                                                </select>
-                                                @error('status')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="row mb-4">
-                                            <label for="horizontal-firstname-input"
-                                                class="col-sm-3 col-form-label">Notunuz: </label>
-                                            <div class="col-md-9">
-                                                <div class="form-floating">
-                                                    {{-- Ck Editör id="ckeditor-classic" --}}
-                                                    <textarea class="form-control" name="note" placeholder="Leave a comment here" id="floatingTextarea2"
-                                                        style="height: 100px">{{ old('note') ?? $task->note }}</textarea>
-
-                                                    @error('note')
+                                            <div class="row mb-4 mt-3 mt-xl-0">
+                                                <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Son
+                                                    Tarih</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control" name="finished_at" type="date"
+                                                        value="{{ old('finished_at') ?? $task->finished_at }}"
+                                                        id="example-date-input">
+                                                    @error('finished_at')
                                                         <small class="text-danger">{{ $message }}</small>
                                                     @enderror
                                                 </div>
                                             </div>
-                                        </div>
 
 
-
-                                        <div class="card">
-                                            <a class="btn btn-light collapsed" data-bs-toggle="collapse"
-                                                href="#collapseExample" aria-expanded="false"
-                                                aria-controls="collapseExample">
-                                                Kullanıcı Etiketle
-                                            </a>
-                                            <div class="card-body collapse" id="collapseExample">
-                                                <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
-
-
+                                            <div class="row mb-4">
+                                                <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Not
+                                                    Önemi</label>
+                                                <div class="col-md-9">
+                                                    {{-- hata:basic old() aktif değil --}}
+                                                    <select class="form-select" value="{{ old('status') ?? $task->status }}"
+                                                        name="status">
+                                                        <option @if ($task->status == 'red') selected @endif
+                                                            value="red">Kırmızı</option>
+                                                        <option @if ($task->status == 'yellow') selected @endif
+                                                            value="yellow">Sarı</option>
+                                                        <option @if ($task->status == 'green') selected @endif
+                                                            value="green">Yeşil</option>
+                                                    </select>
+                                                    @error('status')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
                                                 </div>
-
-                                                <div class="card card-body mb-0">
-
-                                                    @if ($myFriends)
-                                                        @foreach ($myFriends as $myFriend)
-                                                            <ul class="list-unstyled chat-list">
-
-                                                                <li class="">
-                                                                    <a href="#">
-                                                                        <div class="d-flex align-items-start">
-
-                                                                            <div class="avatar align-self-center me-3">
+                                            </div>
 
 
 
+                                            <div class="row mb-4">
+                                                <label for="horizontal-firstname-input"
+                                                    class="col-sm-3 col-form-label">Notunuz: </label>
+                                                <div class="col-md-9">
+                                                    <div class="form-floating">
+                                                        {{-- Ck Editör id="ckeditor-classic" --}}
+                                                        <textarea class="form-control" name="note" placeholder="Leave a comment here" id="floatingTextarea2"
+                                                            style="height: 100px">{{ old('note') ?? $task->note }}</textarea>
 
-                                                                                @if ($myFriend->profile_photo_path)
-                                                                                    <div
-                                                                                        class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
-                                                                                        <img src="{{ asset($myFriend->profile_photo_path) }}"
-                                                                                            class="rounded-circle avatar-sm"
-                                                                                            alt="">
-
-
-                                                                                    </div>
-                                                                                @else
-                                                                                    <div class="avatar">
-                                                                                        <span
-                                                                                            class="avatar-title rounded-circle bg-soft-primary font-size-16">
-                                                                                            <div
-                                                                                                class="rounded-circle avatar-sm    avatar-title  bg-soft-primary  font-size-26">
-                                                                                                <i
-                                                                                                    class="bx bx-user-circle text-primary"></i>
-                                                                                            </div>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                @endif
-                                                                            </div>
+                                                        @error('note')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
-                                                                            <div class="flex-grow-1 overflow-hidden">
-                                                                                <h5
-                                                                                    class="text-truncate font-size-16 mb-1">
-                                                                                    {{ $myFriend->user_name }}
-                                                                                </h5>
-                                                                                <small class=" text-truncate"
-                                                                                    style="opacity: 0.8">
-                                                                                    {{ $myFriend->name }}
-                                                                                    {{ $myFriend->surname }}</small>
-                                                                            </div>
+
+                                            <div class="card">
+                                                <a class="btn btn-light collapsed" data-bs-toggle="collapse"
+                                                    href="#collapseExample" aria-expanded="false"
+                                                    aria-controls="collapseExample">
+                                                    Kullanıcı Etiketle
+                                                </a>
+                                                <div class="card-body collapse" id="collapseExample">
+                                                    <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
 
 
-                                                                            <div class="unread-message">
+                                                    </div>
+
+                                                    <div class="card card-body mb-0">
+
+                                                        @if ($myFriends)
+                                                            @foreach ($myFriends as $myFriend)
+                                                                <ul class="list-unstyled chat-list">
+
+                                                                    <li class="">
+                                                                        <a href="#">
+                                                                            <div class="d-flex align-items-start">
+
+                                                                                <div class="avatar align-self-center me-3">
 
 
 
 
+                                                                                    @if ($myFriend->profile_photo_path)
+                                                                                        <div
+                                                                                            class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                                            <img src="{{ asset($myFriend->profile_photo_path) }}"
+                                                                                                class="rounded-circle avatar-sm"
+                                                                                                alt="">
 
 
-                                                                                <div class="form-check form-switch mb-2"
-                                                                                    dir="ltr">
-
-
-                                                                                    <input type="checkbox"
-                                                                                        class="form-check-input"
-                                                                                        @if ($myFriend->is_task_taged == true) checked @endif
-                                                                                        name="user[]"
-                                                                                        value="{{ $myFriend->user_id }}"
-                                                                                        id="customSwitchsizesm">
+                                                                                        </div>
+                                                                                    @else
+                                                                                        <div class="avatar">
+                                                                                            <span
+                                                                                                class="avatar-title rounded-circle bg-soft-primary font-size-16">
+                                                                                                <div
+                                                                                                    class="rounded-circle avatar-sm    avatar-title  bg-soft-primary  font-size-26">
+                                                                                                    <i
+                                                                                                        class="bx bx-user-circle text-primary"></i>
+                                                                                                </div>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    @endif
                                                                                 </div>
 
 
+                                                                                <div class="flex-grow-1 overflow-hidden">
+                                                                                    <h5
+                                                                                        class="text-truncate font-size-16 mb-1">
+                                                                                        {{ $myFriend->user_name }}
+                                                                                    </h5>
+                                                                                    <small class=" text-truncate"
+                                                                                        style="opacity: 0.8">
+                                                                                        {{ $myFriend->name }}
+                                                                                        {{ $myFriend->surname }}</small>
+                                                                                </div>
 
 
+                                                                                <div class="unread-message">
+
+
+
+
+
+
+                                                                                    <div class="form-check form-switch mb-2"
+                                                                                        dir="ltr">
+
+
+                                                                                        <input type="checkbox"
+                                                                                            class="form-check-input"
+                                                                                            @if ($myFriend->is_task_taged == true) checked @endif
+                                                                                            name="user[]"
+                                                                                            value="{{ $myFriend->user_id }}"
+                                                                                            id="customSwitchsizesm">
+                                                                                    </div>
+
+
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            @endforeach
+                                                        @else
+                                                            <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                                role="alert">
+                                                                <i class="uil uil-minus-circle text-primary font-size-14"></i>
+                                                                <span class="text-primary font-size-12"> Arkadaşınız Yok</span>
+                                                            </div>
+                                                        @endif
+
+
+                                                        <a class="btn btn-primary collapsed" data-bs-toggle="collapse"
+                                                            href="#collapseExample" aria-expanded="false"
+                                                            aria-controls="collapseExample">
+                                                            Tamam
+                                                        </a>
+                                                    </div>
+
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
+
+
+                                            {{-- Yorum Sil  --}}
+                                            <div class="card">
+                                                <a class="btn btn-light collapsed" data-bs-toggle="collapse"
+                                                    href="#commentsExample" aria-expanded="false"
+                                                    aria-controls="collapseExample">
+                                                    Yorum İşlemleri
+                                                </a>
+                                                <div class="card-body collapse" id="commentsExample">
+                                                    <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
+
+
+                                                    </div>
+
+                                                    {{-- Comment Form Forech --}}
+                                                    @if (count($editableTaskComments) > 0)
+                                                        @foreach ($editableTaskComments as $comment)
+                                                            <div class="border-bottom py-3">
+                                                                <p class="float-sm-end text-muted font-size-13">
+                                                                    {{ $comment->created_at->diffForHumans() }}
+                                                                </p>
+                                                                <div class="d-flex align-items-center mb-3">
+
+
+
+                                                                    @if ($comment->who_comment_user->profile_photo_path)
+                                                                        <div class="avatar align-self-center me-3">
+
+
+                                                                            <div
+                                                                                class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                                <img src="{{ asset($comment->who_comment_user->profile_photo_path) }}"
+                                                                                    class="rounded-circle avatar-sm"
+                                                                                    alt="">
+                                                                            </div>
+
+
+
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="avatar align-self-center me-3">
+                                                                            <div
+                                                                                class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                                <i class="bx bx-user-circle text-primary"></i>
                                                                             </div>
                                                                         </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        @endforeach
-                                                    @else
-                                                        <div class="alert alert-primary alert-outline alert-dismissible fade show"
-                                                            role="alert">
-                                                            <i class="uil uil-minus-circle text-primary font-size-14"></i>
-                                                            <span class="text-primary font-size-12"> Arkadaşınız Yok</span>
-                                                        </div>
-                                                    @endif
+                                                                    @endif
 
 
-                                                    <a class="btn btn-primary collapsed" data-bs-toggle="collapse"
-                                                        href="#collapseExample" aria-expanded="false"
-                                                        aria-controls="collapseExample">
-                                                        Tamam
-                                                    </a>
-                                                </div>
+                                                                    <div class="flex-1">
+                                                                        <h5 class="font-size-15 mb-1">
+                                                                            {{ $comment->who_comment_user->name }}
 
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-
-
-                                        {{-- Yorum Sil  --}}
-                                        <div class="card">
-                                            <a class="btn btn-light collapsed" data-bs-toggle="collapse"
-                                                href="#commentsExample" aria-expanded="false"
-                                                aria-controls="collapseExample">
-                                                Yorum İşlemleri
-                                            </a>
-                                            <div class="card-body collapse" id="commentsExample">
-                                                <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
-
-
-                                                </div>
-
-                                                {{-- Comment Form Forech --}}
-                                                @if (count($editableTaskComments) > 0)
-                                                    @foreach ($editableTaskComments as $comment)
-                                                        <div class="border-bottom py-3">
-                                                            <p class="float-sm-end text-muted font-size-13">
-                                                                {{ $comment->created_at->diffForHumans() }}
-                                                            </p>
-                                                            <div class="d-flex align-items-center mb-3">
-
-
-
-                                                                @if ($comment->who_comment_user->profile_photo_path)
-                                                                    <div class="avatar align-self-center me-3">
-
-
-                                                                        <div
-                                                                            class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
-                                                                            <img src="{{ asset($comment->who_comment_user->profile_photo_path) }}"
-                                                                                class="rounded-circle avatar-sm"
-                                                                                alt="">
-                                                                        </div>
-
-
+                                                                        </h5>
+                                                                        <a href="javascript: void(0);"
+                                                                            class="badge bg-soft-success text-success font-size-11">{{ $comment->who_comment_user->user_name }}</a>
 
                                                                     </div>
-                                                                @else
-                                                                    <div class="avatar align-self-center me-3">
-                                                                        <div
-                                                                            class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
-                                                                            <i class="bx bx-user-circle text-primary"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                @endif
-
-
-                                                                <div class="flex-1">
-                                                                    <h5 class="font-size-15 mb-1">
-                                                                        {{ $comment->who_comment_user->name }}
-
-                                                                    </h5>
-                                                                    <a href="javascript: void(0);"
-                                                                        class="badge bg-soft-success text-success font-size-11">{{ $comment->who_comment_user->user_name }}</a>
-
                                                                 </div>
-                                                            </div>
-                                                            <p class="text-muted mb-4">
-                                                                {{ $comment->comment }}</p>
-                                                            <div class="d-flex align-items-start">
+                                                                <p class="text-muted mb-4">
+                                                                    {{ $comment->comment }}</p>
+                                                                <div class="d-flex align-items-start">
 
-                                                                <div class="flex-shrink-0">
-                                                                    <ul class="list-inline product-review-link mb-0">
-                                                                      
-                                                                      
-                                                                        {{-- 
+                                                                    <div class="flex-shrink-0">
+                                                                        <ul class="list-inline product-review-link mb-0">
+
+
+                                                                            {{-- 
                                                                             like icon
                                                                             <li class="list-inline-item">
                                                                             <a href="#" data-bs-toggle="tooltip"
@@ -927,96 +928,96 @@
 
 
 
-                                                                        @if ($comment->pimmed == 1)
+                                                                            @if ($comment->pimmed == 1)
+                                                                                <li class="list-inline-item">
+
+                                                                                    <form
+                                                                                        action="{{ route('pim.comment.task') }}"
+                                                                                        method="post">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="comment"
+                                                                                            value="{{ $comment->comment_uuid }}">
+                                                                                        <button class="btn badge bg-success"><i
+                                                                                                class="mdi mdi-tooltip-check-outline font-size-16 text-white"></i></button>
+
+                                                                                    </form>
+                                                                                </li>
+                                                                            @else
+                                                                                <li class="list-inline-item">
+
+                                                                                    <form
+                                                                                        action="{{ route('pim.comment.task') }}"
+                                                                                        method="post">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="comment"
+                                                                                            value="{{ $comment->comment_uuid }}">
+                                                                                        <button
+                                                                                            class="btn badge bg-soft-warning"><i
+                                                                                                class="mdi mdi-tooltip-remove-outline font-size-16 text-white"></i></button>
+
+                                                                                    </form>
+                                                                                </li>
+                                                                            @endif
+
+
+
                                                                             <li class="list-inline-item">
 
                                                                                 <form
-                                                                                    action="{{ route('pim.comment.task') }}"
+                                                                                    action="{{ route('delete.comment.task') }}"
                                                                                     method="post">
                                                                                     @csrf
                                                                                     <input type="hidden" name="comment"
                                                                                         value="{{ $comment->comment_uuid }}">
-                                                                                    <button class="btn badge bg-success"><i
-                                                                                            class="mdi mdi-tooltip-check-outline font-size-16 text-white"></i></button>
+                                                                                    <button class="btn badge bg-danger"><i
+                                                                                            class="bx bx-trash font-size-16 text-white"></i></button>
 
                                                                                 </form>
                                                                             </li>
-                                                                        @else
-                                                                            <li class="list-inline-item">
-
-                                                                                <form
-                                                                                    action="{{ route('pim.comment.task') }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    <input type="hidden" name="comment"
-                                                                                        value="{{ $comment->comment_uuid }}">
-                                                                                    <button
-                                                                                        class="btn badge bg-soft-warning"><i
-                                                                                            class="mdi mdi-tooltip-remove-outline font-size-16 text-white"></i></button>
-
-                                                                                </form>
-                                                                            </li>
-                                                                        @endif
 
 
 
-                                                                        <li class="list-inline-item">
-
-                                                                            <form
-                                                                                action="{{ route('delete.comment.task') }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                <input type="hidden" name="comment"
-                                                                                    value="{{ $comment->comment_uuid }}">
-                                                                                <button class="btn badge bg-danger"><i
-                                                                                        class="bx bx-trash font-size-16 text-white"></i></button>
-
-                                                                            </form>
-                                                                        </li>
-
-
-
-                                                                    </ul>
+                                                                        </ul>
 
 
 
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                        @endforeach
+                                                    @else
+                                                        <div class="border-bottom py-3">
+                                                            <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                                role="alert">
+                                                                <i class="far fa-comments text-primary font-size-14"></i>
+                                                                <span class="text-primary font-size-12">
+                                                                    Yorum Yok</span>
+                                                            </div>
                                                         </div>
-                                                    @endforeach
-                                                @else
-                                                    <div class="border-bottom py-3">
-                                                        <div class="alert alert-primary alert-outline alert-dismissible fade show"
-                                                            role="alert">
-                                                            <i class="far fa-comments text-primary font-size-14"></i>
-                                                            <span class="text-primary font-size-12">
-                                                                Yorum Yok</span>
-                                                        </div>
-                                                    </div>
-                                                @endif
+                                                    @endif
 
-                                            </div><!-- end card body -->
+                                                </div><!-- end card body -->
+                                            </div>
+
+
                                         </div>
-
-
-                                    </div>
-                                    <!-- end modalbody -->
-                                    <div class="modal-footer">
-                                   <input type="submit" class="btn btn-primary" value="Kaydet">
-                                    </div>
-                                    <!-- end modalfooter -->
-                                     </form>
+                                        <!-- end modalbody -->
+                                        <div class="modal-footer">
+                                            <input type="submit" class="btn btn-primary" value="Kaydet">
+                                        </div>
+                                        <!-- end modalfooter -->
+                                    </form>
 
 
 
 
-                                <!-- end cardbody -->
+                                    <!-- end cardbody -->
 
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end tab pane -->
-
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div><!-- end tab pane -->
+                    @endrole
 
 
                 </div>

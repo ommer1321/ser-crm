@@ -36,7 +36,7 @@ trait TaskTrait
 
     public function listTask()
     {
-        $tasks = Task::where('teacher_id', Auth::user()->id)->OrderBy('finished_at', 'asc')->get();
+        $tasks = Task::where('teacher_id', Auth::user()->id)->OrderBy('updated_at', 'desc')->get();
 
         return ($tasks);
     }

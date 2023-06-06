@@ -8,8 +8,8 @@
                         <img src="assets/images/logo-sm.svg" alt="" height="26">
                     </span>
                     <span class="logo-lg">
-                        <img src="assets/images/logo-sm.svg" alt="" height="26"> <span
-                            class="logo-txt">As Yazılım</span>
+                        <img src="assets/images/logo-sm.svg" alt="" height="26"> <span class="logo-txt">As
+                            Yazılım</span>
                     </span>
                 </a>
 
@@ -18,8 +18,8 @@
                         <img src="assets/images/logo-sm.svg" alt="" height="26">
                     </span>
                     <span class="logo-lg">
-                        <img src="assets/images/logo-sm.svg" alt="" height="26"> <span
-                            class="logo-txt">As Yazılım</span>
+                        <img src="assets/images/logo-sm.svg" alt="" height="26"> <span class="logo-txt">As
+                            Yazılım</span>
                     </span>
                 </a>
             </div>
@@ -61,24 +61,22 @@
                                         data-key="t-calendar">Görevler</a>
 
 
+                                    @role('teacher')
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                                id="topnav-projects" role="button">
+                                                <span data-key="t-projects">Gruplar</span>
+                                                <div class="arrow-down"></div>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="topnav-projects">
+                                                <a href="{{ route('index.grup') }}" class="dropdown-item"
+                                                    data-key="t-p-grid">Grup Listesi</a>
+                                                <a href="{{ route('create.grup') }}" class="dropdown-item"
+                                                    data-key="t-p-list">Grup Oluştur</a>
 
-
-
-
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                            id="topnav-projects" role="button">
-                                            <span data-key="t-projects">Gruplar</span>
-                                            <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-projects">
-                                            <a href="{{ route('index.grup') }}" class="dropdown-item"
-                                                data-key="t-p-grid">Grup Listesi</a>
-                                            <a href="{{ route('create.grup') }}" class="dropdown-item"
-                                                data-key="t-p-list">Grup Oluştur</a>
-
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endrole
                                 </div>
                             </li>
 
@@ -108,7 +106,7 @@
                     </form>
                 </div>
             </div>
-{{-- 
+            {{-- 
             <div class="dropdown d-inline-block language-switch">
                 <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
@@ -281,19 +279,19 @@
                             class="mdi mdi-calendar-check-outline text-muted font-size-16 align-middle me-1"></i> <span
                             class="align-middle">Taskboard</span></a>
                     --}}
-                            <a class="dropdown-item" href="{{route('myfriends.friendship')}}"><i
+                    <a class="dropdown-item" href="{{ route('myfriends.friendship') }}"><i
                             class="bx bxs-user-detail text-muted font-size-20 align-middle me-1"></i> <span
                             class="align-middle">Arkadaşlarım</span></a>
 
-      <a class="dropdown-item" href="{{route('index.friendship')}}"><i
+                    <a class="dropdown-item" href="{{ route('index.friendship') }}"><i
                             class="uil-user-plus text-muted font-size-20 align-middle me-1"></i> <span
                             class="align-middle">Arkadaş Ekle</span></a>
 
 
-                            <a class="dropdown-item" href="{{route('request-box.friendship')}}"><i
-                                class="bx bx-heart text-muted font-size-20 align-middle me-1"></i> <span
-                                class="align-middle">İstek Kutusu</span></a>
-    
+                    <a class="dropdown-item" href="{{ route('request-box.friendship') }}"><i
+                            class="bx bx-heart text-muted font-size-20 align-middle me-1"></i> <span
+                            class="align-middle">İstek Kutusu</span></a>
+
                     <div class="dropdown-divider"></div>
                     {{-- <a class="dropdown-item" href="#"><i
                             class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span

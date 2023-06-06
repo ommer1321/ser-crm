@@ -18,6 +18,8 @@ class RoleControl
         if ($user && $user->role != 'teacher' && $user->role != 'student' ) {
             return  abort('404');
             //hata:basic burası Ana sayfaya yonlendirilecek
+
+            
         } 
 
         return $next($request);
