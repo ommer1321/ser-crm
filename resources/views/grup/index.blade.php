@@ -1,309 +1,1240 @@
 @extends('layouts.app')
 
-@section('title')
-    Gruplar
-@endsection
-
 @section('css')
+    {{-- <link href="{{ asset('assets/libs/fullcalendar/main.min.css') }}" rel="stylesheet" type="text/css" /> --}}
 @endsection
+{{-- 
+@role('admin')
+admin
+@endrole  
 
+@role('teacher')
+teacher
+@endrole  
+
+
+@role('student')
+student
+@endrole   --}}
 @section('content')
-    <div class="card">
-        <div class="card-body">
-                 {{-- İncludes --}}
+    @include('includes.alerts')
+    @include('includes.errors')
 
-        @include('includes.alerts')
+    <div class="row">
 
-        @include('includes.errors')
 
-        {{-- İncludes --}}
+        <div class="col-xxl-3 col-lg-4">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="user-profile-img">
+                        <img src="{{ asset('assets/images/pattern-bg.jpg') }}"
+                            class="profile-img profile-foreground-img rounded-top" style="height: 120px;" alt="">
+                        <div class="overlay-content rounded-top">
+                            <div>
+                                <div class="user-nav p-3">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle" href="#" role="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bx bx-dots-horizontal font-size-20 text-white"></i>
+                                            </a>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="mb-3">
-                        <a href="{{ route('create.grup') }}" class="btn btn-light">
-                            <i class="uil uil-plus me-1"></i>Grup Oluştur
-                        </a>
-                    </div>
-                </div><!-- end col -->
-                <div class="col-md-9">
-                    <div class="d-flex flex-wrap align-items-start justify-content-md-end gap-2 mb-3">
-                        <div class="search-box ">
-                            <div class="position-relative">
-                                <input type="text" class="form-control bg-light border-light rounded"
-                                    placeholder="Search...">
-                                <i class="uil uil-search search-icon"></i>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" href="#">Üye Sınırını Arttır</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a>
+                                                </li>
+                                                <li><a class="dropdown-item" href="#">Something else
+                                                        here</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div><!-- end serch box -->
-
-                        <div>
-                            <ul class="nav nav-pills">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="projects-list.html" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="" data-bs-original-title="List"
-                                        aria-label="List"><i class="uil uil-list-ul"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="projects-grid.html" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="" data-bs-original-title="Grid"
-                                        aria-label="Grid"><i class="uil uil-apps"></i></a>
-                                </li>
-                            </ul><!-- end ul -->
                         </div>
-                        <div class="dropdown">
-                            <a class="btn btn-link text-dark dropdown-toggle shadow-none" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('create.grup') }}">Grup Oluştur</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </div><!-- end dropdown -->
+                    </div>
+                    <!-- end user-profile-img -->
+
+                    <div class="mt-n5 position-relative">
+
+
+
+
+                        <div class="text-center d-flex justify-content-center">
+
+                            @if ($grup->logo_path)
+                                <img src="{{ asset($grup->logo_path) }}" alt=""
+                                    class="avatar-xl rounded-circle img-thumbnail">
+                            @else
+                                <div class="avatar-xl">
+                                    <span class="avatar-title rounded-circle avatar-xl  fs-1 rounded-circle img-thumbnail">
+                                        {{ $grup->first_letter }}
+                                    </span>
+                                </div>
+                            @endif
+
+
+
+
+                        </div>
+
+
+                        <div class="mt-3 text-center ">
+                            <h5 class="mb-1">{{ $grup->name }}</h5>
+                            <div>
+                                <a href="#" class="badge badge-soft-success m-1">{{ $grup->branch }}</a>
+                            </div>
+
+
+                        </div>
                     </div>
 
-                </div><!-- end col -->
+                    <div class="p-3 mt-3 border-bottom">
+                        <div class="row text-center">
+                            <div class="col-6 border-end">
+                                <div class="p-1">
+                                    <h5 class="mb-1 text-danger">Max {{ $grup->limit }}</h5>
+                                    <p class="text-muted mb-0">Üye Sınırı</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-1">
+                                    <h5 class="mb-1"></h5>
+                                    <p class="text-muted mb-0">
+                                    <h5 class="font-size-16"><button type="button"
+                                            class="btn btn-primary btn-rounded btn-sm font-size-16 " data-bs-toggle="modal"
+                                            data-bs-target="#exampleModalScrollable">Üyeler
+                                            {{ $grup->members_count }}</button></h5>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 mt-2">
+                        <p class="text-muted mb-1">Eğitmen Adı : </p>
+                        <h5 class="  font-size-16">{{ $grup->teacher->name }} {{ $grup->teacher->surname }}</h5>
+
+                        <div class="mt-4">
+                            <p class="text-muted mb-1">Kullanıcı Adı</p>
+                            <h5 class="font-size-14 text-truncate">{{ $grup->teacher->user_name }}</h5>
+                        </div>
+
+                        <div class="mt-4">
+                            <p class="text-muted mb-1">Telefon :</p>
+                            <h5 class="font-size-14 text-truncate">{{ $grup->teacher->phone }}</h5>
+                        </div>
+
+                        <div class="mt-4">
+                            <p class="text-muted mb-1">E-mail :</p>
+                            <h5 class="font-size-14 text-truncate">{{ $grup->teacher->email }}</h5>
+                        </div>
+
+                        <div class="mt-4">
+                            <p class="text-muted mb-1">Grup Açıklaması :</p>
+                            <h5 class="font-size-14 ">{{ $grup->details }}</h5>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end card body -->
             </div>
-
-            <div class="mt-2">
-                <hr>
-            </div>
-
-            <!-- Tab content -->
-            <div class="tab-content">
-                <div class="tab-pane active" id="grid-all" role="tabpanel">
-                    <div class="row">
-
-                        @foreach ($grups as $grup)
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="card">
-                                    <div class="card-body pb-3">
-                                        <div class="d-flex align-items-start mb-3">
+        </div>
+        <!-- end col -->
 
 
-                                            <div class="flex-grow-1">
-                                                <div class="avatar">
+        {{-- Part-2  --}}
 
-                                                    @if ($grup->logo_path == null)
-                                                        <span
-                                                            class="avatar-title rounded-circle bg-info text-white font-size-16">
-                                                            {{ $grup->first_letter }}
-                                                        </span>
+
+
+
+
+        <div class="col-xxl-9 col-lg-8">
+
+
+            {{-- Üyeler - Modal --}}
+
+            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">
+                                Üyeler</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @if ($grupOfMembers)
+                            @else
+                                <div class="alert alert-primary alert-outline alert-dismissible fade show" role="alert">
+                                    <i
+                                        class="uil-minus-circle
+                                text-primary font-size-16 me-2"></i>
+                                    Ekleyecek Arkadaşınız Kalmadı
+                                </div>
+                            @endif
+                            @foreach ($grupOfMembers as $grupOfMember)
+                                <ul class="list-unstyled chat-list">
+
+                                    <li class="">
+                                        <a href="#">
+                                            <div class="d-flex align-items-start">
+
+                                                <div class="avatar align-self-center me-3">
+
+
+
+
+                                                    @if ($grupOfMember->profile_photo_path)
+                                                        <div
+                                                            class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                            <img src="{{ asset($grupOfMember->profile_photo_path) }}"
+                                                                class="rounded-circle avatar-sm" alt="">
+
+
+                                                        </div>
                                                     @else
-                                                        <img src="{{ asset($grup->logo_path) }} " alt="" class=" rounded-circle avatar">
+                                                        <div class="avatar">
+                                                            <span
+                                                                class="avatar-title rounded-circle bg-soft-primary font-size-16">
+                                                                <div
+                                                                    class="rounded-circle avatar-sm    avatar-title  bg-soft-primary  font-size-26">
+                                                                    <i class="bx bx-user-circle text-primary"></i>
+                                                                </div>
+                                                            </span>
+                                                        </div>
                                                     @endif
-
                                                 </div>
-                                            </div>
 
 
-
-                                            <div class="flex-shrink-0">
-                                                <div class="dropdown">
-                                                    <a class="text-body dropdown-toggle font-size-16" href="#"
-                                                        role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            class="feather feather-more-horizontal icon-xs">
-                                                            <circle cx="12" cy="12" r="1"></circle>
-                                                            <circle cx="19" cy="12" r="1"></circle>
-                                                            <circle cx="5" cy="12" r="1"></circle>
-                                                        </svg>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item"
-                                                                href="{{ route('settings.grup',$grup->grup_id )}}">Ayarlar</a></li>
-                                                        <li>
-                                                            <hr class="dropdown-divider">
-                                                        </li>
-                                                        <li><a class="dropdown-item" href="#">Göster</a></li>
-
-                                                    </ul>
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="text-truncate font-size-16 mb-1">
+                                                        {{ $grupOfMember->user_name }}
+                                                    </h5>
+                                                    <small class=" text-truncate" style="opacity: 0.8">
+                                                        {{ $grupOfMember->name }} {{ $grupOfMember->surname }}</small>
                                                 </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="pt-2">
-                                            <h5 class="font-size-15 mb-1 text-truncate"><a href="projects-overview.html"
-                                                    class="text-dark text-truncate">{{ $grup->name }}</a></h5>
-                                            <p class="text-muted mb-4 text-truncate">{{ $grup->details }}
-                                            </p>
-                                        </div>
-
-                                        <div class="d-flex justify-content-between">
-                                            <span class="badge badge-soft-warning font-size-12">{{ $grup->branch }}</span>
-                                            @if ($grup->members_count > 0)
-                                            <p class="text-muted font-size-13 mb-1">Üyeler : {{$grup->members_count}} Kişi</p>
-
-                                            @else
-                                            <p class="text-muted font-size-13 mb-1"> Üye Bulunmamakta</p>
- 
-                                            @endif
-                                            {{-- ilişkili üyeler çekilecek ve ilişkili üyelerin countu alınacak --}}
-                                        </div>
-
-                                        {{-- 
-                                    <div class=" m-1 mb-2" style="height: 6px;">
-                                
-                                        
-                                        <div class="progress-bar" role="progressbar" style="width: 85%"
-                                            aria-valuenow="52" aria-valuemin="0" aria-valuemax="52">
-                                        </div>
-                                    </div> --}}
-
-                                        @php
-                                            //   hata:basic
-                                            $profile_foto_gecici_variable = '';
-                                        @endphp
-
-                                        @if ($grup->members_count > 0)
-                                            <div class="pt-3">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    {{-- <span class="badge badge-soft-danger font-size-12"><i
-                                                    class="mdi mdi-clock-outline font-size-14 me-1 align-middle"></i> 3
-                                                days left</span> --}}
-                                                    <div class="avatar-group align-items-center">
-                                                        @foreach ($grup->members as $member)
-                                                            @if ($profile_foto_gecici_variable == null)
-                                                                <div class="avatar-group-item">
-                                                                    <a href="javascript: void(0);" class="d-block"
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title=""
-                                                                        data-bs-original-title="{{ $member->user->name }}">
-                                                                        <div class="avatar-sm">
-                                                                            <span
-                                                                                class="avatar-title rounded-circle bg-info text-white font-size-16">
-                                                                                {{ $member->user->first_letter }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </a>
-                                                                </div>
-                                                            @else
-                                                                <div class="avatar-group-item">
-                                                                    <a href="javascript: void(0);{{ $member->id }}"
-                                                                        class="d-block" data-bs-toggle="tooltip"
-                                                                        data-bs-placement="top" title=""
-                                                                        data-bs-original-title="Megan Seaton">
-                                                                        <img src="{{ asset('assets/images/users/avatar-4.jpg') }}"
-                                                                            alt=""
-                                                                            class="rounded-circle avatar-sm">
-                                                                    </a>
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
-
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @else
-                                         
-                                        <div class="badge bg-danger mt-4 mb-2" >
-                                        Bu Grupta Öğrenci Henüz Yok
-                                        </div>
-                                        
-                                        @endif
-
-                                    </div><!-- end card body -->
-                                </div><!-- end card -->
-                            </div><!-- end col -->
-                        @endforeach
-
-
-                        {{--  Create Grup --}}
-
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="card">
-                                <div class="card-body pb-3">
-                                    <div class="d-flex align-items-center justify-content-center m-3">
-
-                                        <div class="avatar-group ">
-
-                                            <div class="avatar-group-item">
-                                                <a href="{{ route('create.grup') }}"
-                                                    class=" d-flex align-items-center justify-content-center"
-                                                    title="">
-                                                    <div class="avatar-md ">
-                                                        <span
-                                                            class="avatar-title rounded-circle bg-primary bg-opacity-50 text-white ">
-                                                            <span class="fs-1">+</span>
-                                                        </span>
-                                                    </div>
-                                                </a>
-
-
-
-                                                <p class="text-muted mt-2 text-truncate fs-5 d-block">Yeni Grup Oluştur
-                                                </p>
 
 
                                             </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endforeach
+                        </div>
+                        <!-- end modalbody -->
+                        <div class="modal-footer">
+                            {{-- <button type="button" class="btn btn-light" data-bs-dismiss="modal">İptal</button> --}}
+                            <button type="button" class="btn btn-primary">Tamam</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            {{-- Üyeler - Modal --}}
+
+            @role('teacher')
+                {{--  Task Ekle Modal --}}
+                <div class="modal fade" id="task-create" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Not Oluştur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+
+
+                            <form action="{{ route('store.task') }}" method="post">
+                                @csrf
+                                <!-- end modalheader -->
+                                <div class="modal-body">
+
+                                    <input type="hidden" name="grup" value="{{ $grup->grup_id }}">
+                                    <div class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Başlık</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="title" class="form-control"
+                                                value="{{ old('title') }}" id="horizontal-firstname-input"
+                                                placeholder="Başlık Giriniz..">
+                                            @error('title')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
                                         </div>
+                                    </div><!-- end row -->
+
+                                    <div class="row mb-4 mt-3 mt-xl-0">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Son
+                                            Tarih</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" name="finished_at" type="date"
+                                                value="{{ old('finished_at') }}" id="example-date-input">
+                                            @error('finished_at')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
 
 
+                                    <div class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Not
+                                            Önemi</label>
+                                        <div class="col-md-9">
+                                            <select class="form-select" value="{{ old('status') }}" name="status">
+                                                <option value="red">Kırmızı</option>
+                                                <option value="yellow">Sarı</option>
+                                                <option value="green">Yeşil</option>
+                                            </select>
+                                            @error('status')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
                                     </div>
 
 
 
+                                    <div class="row mb-4">
+                                        <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Notunuz:
+                                        </label>
+                                        <div class="col-md-9">
+                                            <div class="form-floating">
+                                                <textarea class="form-control" name="note" placeholder="Leave a comment here" id="floatingTextarea2"
+                                                    style="height: 100px">{{ old('note') }}</textarea>
+                                                <label for="floatingTextarea2">Buraya Yaz..</label>
+                                                @error('note')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                </div><!-- end card body -->
-                            </div><!-- end card -->
-                        </div><!-- end col -->
 
-                        {{--  Create Grup --}}
+                                    <div class="card">
+                                        <a class="btn btn-light collapsed" data-bs-toggle="collapse" href="#collapseExample"
+                                            aria-expanded="false" aria-controls="collapseExample">
+                                            Kullanıcı Etiketle
+                                        </a>
+                                        <div class="card-body collapse" id="collapseExample">
+                                            <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
 
-                    </div><!-- end row -->
 
-                    <div class="row g-0">
-                        <div class="col-sm-6">
-                            <div>
-                                <p class="mb-sm-0">Showing 1 to 8 of 24 entries</p>
-                            </div>
+                                            </div>
+
+                                            <div class="card card-body mb-0">
+                                                @foreach ($grupOfMembers as $grupOfMember)
+                                                    <ul class="list-unstyled chat-list">
+
+                                                        <li class="">
+                                                            <a href="#">
+                                                                <div class="d-flex align-items-start">
+
+                                                                    <div class="avatar align-self-center me-3">
+
+
+
+
+                                                                        @if ($grupOfMember->profile_photo_path)
+                                                                            <div
+                                                                                class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                                <img src="{{ asset($grupOfMember->profile_photo_path) }}"
+                                                                                    class="rounded-circle avatar-sm"
+                                                                                    alt="">
+
+
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="avatar">
+                                                                                <span
+                                                                                    class="avatar-title rounded-circle bg-soft-primary font-size-16">
+                                                                                    <div
+                                                                                        class="rounded-circle avatar-sm    avatar-title  bg-soft-primary  font-size-26">
+                                                                                        <i
+                                                                                            class="bx bx-user-circle text-primary"></i>
+                                                                                    </div>
+                                                                                </span>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+
+
+                                                                    <div class="flex-grow-1 overflow-hidden">
+                                                                        <h5 class="text-truncate font-size-16 mb-1">
+                                                                            {{ $grupOfMember->user_name }}
+                                                                        </h5>
+                                                                        <small class=" text-truncate" style="opacity: 0.8">
+                                                                            {{ $grupOfMember->name }}
+                                                                            {{ $grupOfMember->surname }}</small>
+                                                                    </div>
+
+
+                                                                    <div class="unread-message">
+
+
+
+
+
+
+                                                                        <div class="form-check form-switch mb-2"
+                                                                            dir="ltr">
+                                                                            <input type="checkbox" class="form-check-input"
+                                                                                name="user[]"
+                                                                                value="{{ $grupOfMember->user_id }}"
+                                                                                id="customSwitchsizesm">
+                                                                        </div>
+
+
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                @endforeach
+                                                <a class="btn btn-primary collapsed" data-bs-toggle="collapse"
+                                                    href="#collapseExample" aria-expanded="false"
+                                                    aria-controls="collapseExample">
+                                                    Tamam
+                                                </a>
+                                            </div>
+
+                                        </div><!-- end card body -->
+                                    </div><!-- end card -->
+
+
+                                </div>
+                                <!-- end modalbody -->
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" value="Oluştur">
+                                </div>
+                                <!-- end modalfooter -->
+                            </form>
+
+
+
                         </div>
-                        <div class="col-sm-6">
-                            <div class="float-sm-end">
-                                <ul class="pagination pagination-rounded mb-sm-0">
-                                    <li class="page-item disabled">
-                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">1</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a href="#" class="page-link">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">4</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">5</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                    </li>
-                                </ul><!-- end ul -->
-                            </div>
-                        </div><!-- end col -->
-                    </div><!-- end row -->
+                    </div>
                 </div>
-                <!-- end tab pane -->
+
+                {{--  Task Ekle Modal --}}
+            @endrole
 
 
-                <!-- end tab pane -->
+            <div class="col-xxl-12 col-xl-6">
+                <div class="card">
+
+
+
+
+                    <div class="col-xxl-12 col-xl-6">
+                        <div class="card">
+                            <div class="card-header justify-content-center d-flex align-items-center">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-pills nav-justified bg-light" role="tablist">
+                                    <li class="nav-item mx-2">
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#navpills2-home"
+                                            role="tab" aria-selected="true">
+                                            <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                            <span class="d-none d-sm-block">Akış</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mx-2">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#navpills2-profile"
+                                            role="tab" aria-selected="false">
+                                            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                            <span class="d-none d-sm-block">Tasklarınız </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mx-2">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#navpills2-messages"
+                                            role="tab" aria-selected="false">
+                                            <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                            <span class="d-none d-sm-block">Tasklarım</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mx-2">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#navpills2-settings"
+                                            role="tab" aria-selected="false">
+                                            <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
+                                            <span class="d-none d-sm-block">Programlarım</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!-- end card header -->
+                            <div class="card-body">
+
+
+                                <!-- Tab panes -->
+                                <div class="tab-content  text-muted">
+                                    <div class="tab-pane active" id="navpills2-home" role="tabpanel">
+
+
+                                        {{-- Üyeler - Modal --}}
+                                        <div class="modal fade" id="asdfg" tabindex="-1" role="dialog"
+                                            aria-labelledby="12345pTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="12345pTitle">
+                                                            Yorumlar</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close">
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <div class="simplebar-content" style="padding: 0px 24px;">
+
+
+
+                                                            <div class="border-bottom py-3">
+                                                                <p class=" text-muted font-size-13" style="float: right">
+
+
+                                                                </p>
+                                                                <div class="dropdown " style="float: right">
+                                                                    1 saniye önce
+                                                                    <a class="btn btn-link text-dark dropdown-toggle shadow-none"
+                                                                        href="#" role="button"
+                                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="mdi mdi-chevron-down ms-1"></i>
+                                                                    </a>
+
+                                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                                        style="">
+
+
+                                                                        <form
+                                                                            action="http://127.0.0.1:8000/tasks/comment/comment/delete"
+                                                                            method="post">
+                                                                            <input type="hidden" name="_token"
+                                                                                value="JtQ46WG7CmwsxAloJi6YZy9f3UOctMVYEJwMwxez">
+                                                                            <input type="hidden" name="comment"
+                                                                                value="715c46cf-3b36-4169-b171-93a6a79c91ff">
+                                                                            <input type="hidden" name="_token"
+                                                                                value="1Q5wcJa3kNR8qmdqMzmK9Xc5aTS66wuWHrQ96sYD">
+                                                                            <li><input type="submit"
+                                                                                    class="dropdown-item" value="Sil">
+                                                                            </li>
+
+                                                                        </form>
+
+
+                                                                    </ul>
+                                                                </div>
+
+                                                                <p></p>
+                                                                <div class="d-flex align-items-center mb-3">
+
+
+
+                                                                    <div class="avatar align-self-center me-3">
+
+
+                                                                        <div
+                                                                            class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                            <img src="http://127.0.0.1:8000/assets/images/users/avatar-1.jpg"
+                                                                                class="rounded-circle avatar-sm"
+                                                                                alt="">
+                                                                        </div>
+
+
+
+                                                                    </div>
+
+
+                                                                    <div class="flex-1">
+                                                                        <h5 class="font-size-15 mb-1">
+                                                                            Sen
+
+                                                                        </h5>
+                                                                        <a href="javascript: void(0);"
+                                                                            class="badge bg-soft-success text-success font-size-11">ommer1453</a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <p class="text-muted mb-4">
+
+
+                                                                    anh mi bag before banksy hoodie helvetica they sold out
+                                                                    farm-to-table.
+
+
+                                                                </p>
+
+
+
+
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="simplebar-content" style="padding: 0px 24px;">
+
+
+                                                            <div class="border-bottom py-3">
+                                                                <p class=" text-muted font-size-13" style="float: right">
+
+
+                                                                </p>
+                                                                <div class="dropdown " style="float: right">
+                                                                    11 dakika önce
+                                                                    <a class="btn btn-link text-dark dropdown-toggle shadow-none"
+                                                                        href="#" role="button"
+                                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="mdi mdi-chevron-down ms-1"></i>
+                                                                    </a>
+
+                                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                                        style="">
+
+
+                                                                        <form
+                                                                            action="http://127.0.0.1:8000/tasks/comment/comment/delete"
+                                                                            method="post">
+                                                                            <input type="hidden" name="_token"
+                                                                                value="JtQ46WG7CmwsxAloJi6YZy9f3UOctMVYEJwMwxez">
+                                                                            <input type="hidden" name="comment"
+                                                                                value="e7be1819-398a-4376-a1cb-0a94c2b9edbc">
+                                                                            <input type="hidden" name="_token"
+                                                                                value="1Q5wcJa3kNR8qmdqMzmK9Xc5aTS66wuWHrQ96sYD">
+                                                                            <li><input type="submit"
+                                                                                    class="dropdown-item" value="Sil">
+                                                                            </li>
+
+                                                                        </form>
+
+
+                                                                    </ul>
+                                                                </div>
+
+                                                                <p></p>
+                                                                <div class="d-flex align-items-center mb-3">
+
+
+
+                                                                    <div class="avatar align-self-center me-3">
+
+
+                                                                        <div
+                                                                            class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                            <img src="http://127.0.0.1:8000/assets/images/users/avatar-1.jpg"
+                                                                                class="rounded-circle avatar-sm"
+                                                                                alt="">
+                                                                        </div>
+
+
+
+                                                                    </div>
+
+
+                                                                    <div class="flex-1">
+                                                                        <h5 class="font-size-15 mb-1">
+                                                                            Sen
+
+                                                                        </h5>
+                                                                        <a href="javascript: void(0);"
+                                                                            class="badge bg-soft-success text-success font-size-11">ommer1453</a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <p class="text-muted mb-4">
+
+
+                                                                    Trust fund seitan letterpress, keytar raw denim keffiyeh
+                                                                    etsy art party before they sold out master cleanse
+                                                                    gluten-free squid scenester freegan cosby sweater. Fanny
+                                                                    pack portland seitan DIY, art party locavore wolf cliche
+                                                                    high life echo park Austin. Cred vinyl keffiyeh DIY
+                                                                    salvia PBR, banh mi bag before banksy hoodie helvetica
+                                                                    they sold out farm-to-table.Trust fund seitan
+                                                                    letterpress, keytar raw denim keffiyeh etsy art party
+                                                                    before they sold out master cleanse gluten-free squid
+                                                                    scenester freegan cosby sweater. Fanny pack portland
+                                                                    seitan DIY, art party locavore wolf cliche high life
+                                                                    echo park Austin. Cred vinyl keffiyeh DIY salvia PBR,
+                                                                    banh mi bag before banksy hoodie helvetica they sold out
+                                                                    farm-to-table. Trust fund seitan letterpress, keytar raw
+                                                                    denim keffiyeh etsy art party before they sold out
+                                                                    master cleanse gluten-free squid scenester freegan cosby
+                                                                    sweater. Fanny pack portland seitan DIY, art party
+                                                                    locavore wolf cliche high life echo park Austin. Cred
+                                                                    vinyl keffiyeh DIY salvia PBR, b
+                                                                </p>
+
+
+
+
+
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <!-- end modalbody -->
+                                                    <div class="modal-footer">
+                                                        <div class="border rounded m-2 w-100  ">
+                                                            <div class="d-flex chat-input-section align-items-start p-1">
+
+                                                                <div class="flex-grow-1">
+                                                                    <div
+                                                                        class="position-relative d-flex align-items-start">
+                                                                        <input type="text" name="comment"
+                                                                            class="form-control chat-input"
+                                                                            placeholder="Yorum yap..">
+                                                                        <input type="hidden" name="task"
+                                                                            value="e359a26e-e212-4a5b-927f-39017f7a41dd">
+                                                                        <div
+                                                                            class="chat-input-links d-flex align-items-start">
+
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary mx-2"><i
+                                                                                    class="uil uil-message"></i></button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div>
+                                        {{-- Üyeler - Modal --}}
+
+                                        <div class="d-flex align-items-start mb-4">
+                                            <div class="flex-shrink-0 avatar rounded-circle me-3">
+                                                <img src="assets/images/users/avatar-1.jpg" alt=""
+                                                    class="img-fluid rounded-circle">
+                                            </div>
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <h5 class="font-size-15 mb-1 text-truncate"><a href="pages-profile.html"
+                                                        class="text-dark">Donald
+                                                        Risher</a></h5>
+                                                <span class="text-mute mb-0">1 saat önce</span>
+
+                                            </div>
+
+
+                                            <div class="flex-shrink-0 dropdown">
+                                                <a class="text-body dropdown-toggle font-size-16" href="#"
+                                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-more-horizontal icon-xs">
+                                                        <circle cx="12" cy="12" r="1"></circle>
+                                                        <circle cx="19" cy="12" r="1"></circle>
+                                                        <circle cx="5" cy="12" r="1"></circle>
+                                                    </svg>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item" href="#">Action</a>
+                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                </div>
+                                            </div><!-- end dropdown -->
+                                        </div>
+                                        <h5 class="">
+                                            <a href="" class="text-dark lh-base"><b>Stylish Cricket &amp; Walking
+                                                    Light Weight Shoes</b></a>
+                                        </h5>
+
+                                        <p class="mb-0">
+                                            Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
+                                            art party before they sold out master cleanse gluten-free squid
+                                            scenester freegan cosby sweater. Fanny pack portland seitan DIY,
+                                            art party locavore wolf cliche high life echo park Austin. Cred
+                                            vinyl keffiyeh DIY salvia PBR, banh mi bag before banksy hoodie
+                                            helvetica they sold out farm-to-table.Trust fund seitan letterpress, keytar raw
+                                            denim keffiyeh etsy art party before they sold out master cleanse gluten-free
+                                            squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party
+                                            locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                                            PBR, banh mi bag before banksy hoodie helvetica they sold out farm-to-table.
+
+                                            Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before
+                                            they sold out master cleanse gluten-free squid scenester freegan cosby sweater.
+                                            Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo
+                                            park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi bag before banksy
+                                            hoodie helvetica they sold out farm-to-table.
+
+
+                                        </p>
+
+                                        <div class="mt-2">
+                                            <span class="badge badge-soft-danger ">Full Stack </span>
+                                            <span class="badge badge-soft-danger ">Full </span>
+                                            <span class="badge badge-soft-danger ">Full Developer</span>
+                                            <span class="badge badge-soft-danger ">Full Stack Developer</span>
+                                            <span class="badge badge-soft-danger ">Full Stack Developer</span>
+                                            <span class="badge badge-soft-danger ">Full Stack Developer</span>
+                                            <span class="badge badge-soft-danger ">Full Stack Developer</span>
+                                        </div>
+
+                                        <ul class="list-inline product-review-link  mt-3">
+                                            <li class="list-inline-item">
+                                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="" data-bs-original-title="Beğen"><i
+                                                        class="bx bx-like"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="" data-bs-original-title="Yorum Yap"><i
+                                                        class="bx bx-comment-dots"></i></a>
+                                            </li>
+                                        </ul>
+
+                                        {{-- <hr class="my-2 text-muted"> --}}
+
+                                        <div class="card">
+
+                                            <button style="float: right" type="button"
+                                                class="btn btn-primary btn-rounded btn-sm font-size-16 "
+                                                data-bs-toggle="modal" data-bs-target="#asdfg">Yorum Yok <i
+                                                    class="uil-user-plus text-white font-size-16"></i></button>
+                                        </div>
+
+
+
+
+
+
+
+                                    </div> <!-- end tab pane -->
+
+                                    <div class="tab-pane" id="navpills2-profile" role="tabpanel">
+                                        {{-- deneme1453 --}}
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="card">
+                                                    <div class="card-header d-flex align-items-center">
+
+                                                        <div class="flex-grow-1">
+                                                            <div class="card-title d-inline"><b>Tasklarınız</b></div>
+                                                            @role('teacher')
+                                                                <!-- Scrollable modal -->
+                                                                <button style="float: right" type="button"
+                                                                    class="btn btn-primary btn-rounded btn-sm font-size-16 "
+                                                                    data-bs-toggle="modal" data-bs-target="#task-create">Task
+                                                                    Ekle
+                                                                </button>
+                                                            @endrole
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        @if ($tasks)
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-xl-12">
+                                                                <div class="timeline-sec timeline-vertical">
+                                                                    <div class="wrapper">
+                                                                        <div class="timeline-main">
+
+                                                                            <div class="timeline-row">
+
+                                                                        
+                                                                           
+                                                                                @foreach ($tasks as $task)
+                                                                                    <div class="timeline-box ">
+                                                                                        <div
+                                                                                            class="timeline-date bg-soft-{{ $task->status_color }} border-{{ $task->status_color }} ">
+                                                                                            <div class="date text-center ">
+                                                                                                <h3
+                                                                                                    class="mb-1 text-{{ $task->status_color }} font-size-20 ">
+                                                                                                    {{ $task->first_letter }}
+                                                                                                </h3>
+                                                                                                <p
+                                                                                                    class="mb-0 d-none d-md-block  text-{{ $task->status_color }}">
+                                                                                                    {{ $task->date_counter }}
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="timeline-content ">
+                                                                                            <h3 class="font-size-18  ">
+                                                                                                {{ $task->title }} <span
+                                                                                                    style="float:right;"
+                                                                                                    class=" badge badge-soft-{{ $task->status_color }} ">{{ $task->status_tr }}</span>
+                                                                                            </h3>
+                                                                                            <p
+                                                                                                class="text-muted mb-0 mt-2 pt-1">
+                                                                                                {{ $task->note }}</p>
+                                                                                            <a href="{{ route('details.task', $task->task_id) }}"
+                                                                                                class="btn btn-{{ $task->status_color }} btn-rounded waves-effect waves-light mt-4">Git
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endforeach
+
+                                                                       
+
+                                                                                <div class="horizontal-line"></div>
+                                                                                <div class="verticle-line"></div>
+                                                                                <div class="corner top"></div>
+                                                                                <div class="corner bottom"></div>
+                                                                            </div>
+                                                                            <div class="timeline-row">
+                                                                                <div class="timeline-box">
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @else
+                                                        <div class="alert alert-info alert-outline alert-dismissible fade show"
+                                                        role="alert">
+                                                        <i
+                                                            class="uil-minus-circle
+                                                    text-info font-size-16 me-2"></i>
+                                                        Etiketlediğiniz Kullanıcılar <b> Yakında</b> Burada Olacak
+                                                    </div> 
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end row -->
+
+                                    </div> <!-- end tab pane -->
+                                    <div class="tab-pane" id="navpills2-messages" role="tabpanel">
+                                        <div class="card-header d-flex align-items-center">
+
+                                            <div class="flex-grow-1">
+                                                <div class="card-title d-inline"><b>Tasklarınız</b></div>
+                                                @role('teacher')
+                                                    <!-- Scrollable modal -->
+                                                    <button style="float: right" type="button"
+                                                        class="btn btn-primary btn-rounded btn-sm font-size-16 "
+                                                        data-bs-toggle="modal" data-bs-target="#task-create">Task Ekle
+                                                    </button>
+                                                @endrole
+                                            </div>
+
+                                        </div>
+                                        @if ($tasks)
+                                            <div class="accordion" id="accordionExample">
+
+                                                {{--  --}}
+
+                                                @foreach ($tasks as $task)
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="{{ $task->id }}">
+                                                            <button class="accordion-button fw-medium collapsed"
+                                                                type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#task-{{ $task->id }}"
+                                                                aria-expanded="false" aria-controls="collapseOne">
+
+                                                                <a href="{{ route('details.task', $task->task_id) }}"
+                                                                    class="d-block mx-3" data-bs-toggle="tooltip"
+                                                                    data-placement="top" title="">
+                                                                    <div class="avatar">
+                                                                        <div
+                                                                            class="avatar-title rounded-circle bg-{{ $task->status_color }} ">
+                                                                            {{ $task->first_letter }}
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                                <strong
+                                                                    class="d-block  text-muted ">{{ $task->title }}</strong>
+
+                                                            </button>
+
+                                                        </h2>
+                                                        <div id="task-{{ $task->id }}"
+                                                            class="accordion-collapse collapse"
+                                                            aria-labelledby="{{ $task->id }}"
+                                                            data-bs-parent="#accordionExample" style="">
+                                                            <div class="accordion-body">
+
+
+                                                                <div class="d-flex align-items-start">
+
+                                                                    <div class="flex-grow-1 overflow-hidden mx-2">
+                                                                        <span
+                                                                            class="badge badge-soft-{{ $task->status_color }} my-1">{{ $task->status_tr }}</span>
+                                                                        <span style="float:right;"
+                                                                            class="text-muted">{{ $task->date_counter }}</span>
+                                                                        {{-- <strong class="d-block">This is the second item's accordion body.</strong>  --}}
+                                                                        <small
+                                                                            class="mt-2 text-muted d-block">{{ $task->note }}</small>
+                                                                    </div>
+
+                                                                </div>
+                                                                @if ($task->tagged_users)
+                                                                    @foreach ($task->tagged_users as $tagged_user)
+                                                                        <div class="avatar-md ">
+                                                                            <span
+                                                                                class="avatar-title rounded-circle bg-primary bg-opacity-50 text-white ">
+                                                                                <span class="fs-1">+</span>
+                                                                            </span>
+                                                                        </div>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+
+                                                {{--  --}}
+                                            </div>
+                                        @else
+                                            <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                role="alert">
+                                                <i
+                                                    class="uil-minus-circle
+                                            text-primary font-size-16 me-2"></i>
+                                                Etiketli Olduğunuz Task Yok
+                                            </div>
+                                        @endif
+
+                                    </div> <!-- end tab pane -->
+
+
+
+
+
+                                    <div class="tab-pane" id="navpills2-settings" role="tabpanel">
+
+
+
+                                        <div class="d-flex align-items-start mb-4">
+                                            <div class="flex-shrink-0 avatar rounded-circle me-3">
+                                                <img src="assets/images/users/avatar-1.jpg" alt=""
+                                                    class="img-fluid rounded-circle">
+                                            </div>
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <h5 class="font-size-15 mb-1 text-truncate"><a href="pages-profile.html"
+                                                        class="text-dark">Donald
+                                                        Risher</a></h5>
+                                                <span class="text-mute mb-0">1 saat önce</span>
+
+                                            </div>
+
+
+                                            <div class="flex-shrink-0 dropdown">
+                                                <a class="text-body dropdown-toggle font-size-16" href="#"
+                                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-more-horizontal icon-xs">
+                                                        <circle cx="12" cy="12" r="1"></circle>
+                                                        <circle cx="19" cy="12" r="1"></circle>
+                                                        <circle cx="5" cy="12" r="1"></circle>
+                                                    </svg>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item" href="#">Action</a>
+                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                </div>
+                                            </div><!-- end dropdown -->
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <a href="assets/images/small/img-1.jpg"
+                                                        class="thumb preview-thumb image-popup">
+                                                        <img src="assets/images/small/img-1.jpg" class="img-fluid"
+                                                            alt="work-thumbnail">
+                                                    </a>
+                                                </div>
+                                            </div><!-- end col -->
+                                            <div class="col-md-6">
+                                                <div class="mt-4 mt-md-0">
+                                                    <a href="assets/images/small/img-2.jpg"
+                                                        class="thumb preview-thumb image-popup">
+                                                        <img src="assets/images/small/img-2.jpg" class="img-fluid"
+                                                            alt="work-thumbnail">
+                                                    </a>
+                                                </div>
+                                            </div><!-- end col -->
+                                        </div>
+                                        <h5 class="mt-1">
+                                            <a href="" class="text-dark lh-base">Stylish Cricket &amp; Walking
+                                                Light Weight Shoes</a>
+                                        </h5>
+                                        <p class="mb-0">
+                                            Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
+                                            art party before they sold out master cleanse gluten-free squid
+                                            scenester freegan cosby sweater. Fanny pack portland seitan DIY,
+                                            art party locavore wolf cliche high life echo park Austin. Cred
+                                            vinyl keffiyeh DIY salvia PBR, banh mi bag before banksy hoodie
+                                            helvetica they sold out farm-to-table.Trust fund seitan letterpress, keytar raw
+                                            denim keffiyeh etsy art party before they sold out master cleanse gluten-free
+                                            squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party
+                                            locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
+                                            PBR, banh mi bag before banksy hoodie helvetica they sold out farm-to-table.
+
+                                            Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before
+                                            they sold out master cleanse gluten-free squid scenester freegan cosby sweater.
+                                            Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo
+                                            park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi bag before banksy
+                                            hoodie helvetica they sold out farm-to-table.
+
+
+                                        </p>
+                                        <span class="badge badge-soft-danger my-2 mt-2">Full Stack </span>
+                                        <span class="badge badge-soft-danger my-2 mt-2">Full </span>
+                                        <span class="badge badge-soft-danger my-2 mt-2">Full Developer</span>
+                                        <span class="badge badge-soft-danger my-2 mt-2">Full Stack Developer</span>
+                                        <div class="">
+                                            <div class="border rounded m-2">
+                                                <div class="d-flex chat-input-section align-items-start p-1">
+
+                                                    <div class="flex-grow-1">
+                                                        <div class="position-relative d-flex align-items-start">
+                                                            <input type="text" name="comment"
+                                                                class="form-control chat-input" placeholder="Yorum yap..">
+                                                            <input type="hidden" name="task"
+                                                                value="e359a26e-e212-4a5b-927f-39017f7a41dd">
+                                                            <div class="chat-input-links d-flex align-items-start">
+
+                                                                <button type="submit" class="btn btn-primary mx-2"><i
+                                                                        class="uil uil-message"></i></button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <hr class="my-4 text-muted">
+
+
+
+
+
+                                    </div><!-- end tab pane -->
+                                </div>
+                            </div>
+                        </div><!-- end card -->
+                    </div>
+
+
+                </div><!-- end card -->
             </div>
-            <!-- end tab content -->
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
 
+                    <div class="flex-grow-1">
+                        <div class="card-title d-inline"><b>Grup</b></div>
+
+                        <!-- Scrollable modal -->
+                        <button style="float: right" type="button"
+                            class="btn btn-danger btn-rounded btn-sm font-size-16 " data-bs-toggle="modal"
+                            data-bs-target="#exampleModalScrollable">Something <i
+                                class="uil-user-plus text-white font-size-16"></i></button>
+
+
+                    </div>
+
+                </div>
+                <div class="card-body">
+
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+
+                            {{-- <div class="mb-4">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div><h5 class="font-size-14 mb-0">Month</h5></div>
+                                    <div class="form-check form-switch font-size-20 ms-3" onclick="check()">
+                                        <input class="form-check-input" type="checkbox" id="plan-switch">
+                                        <label class="form-check-label" for="plan-switch"></label>
+                                    </div>
+                                    <div><h5 class="font-size-14 mb-0">Annual</h5></div>
+                                </div>
+                            </div> --}}
+
+
+                            <div class="row">
+
+
+
+                                <div class="col-xl-3">
+                                    <div class="card pricing-box">
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <h5 class="mb-1 font-size-20">Takvim</h5>
+                                            </div>
+                                            <hr class="my-4 text-muted">
+                                            <div class="mt-4">
+                                                <a href="#" class="btn btn-primary w-100">Git</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col -->
+
+                                <div class="col-xl-3">
+                                    <div class="card pricing-box">
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <h5 class="mb-1 font-size-20">Programlar</h5>
+                                            </div>
+                                            <hr class="my-4 text-muted">
+                                            <div class="mt-4">
+                                                <a href="#" class="btn btn-primary w-100">Git</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col -->
+
+
+                                <div class="col-xl-3">
+                                    <div class="card pricing-box">
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <h5 class="mb-1 font-size-20">Görevler</h5>
+                                            </div>
+                                            <hr class="my-4 text-muted">
+                                            <div class="mt-4">
+                                                <a href="#" class="btn btn-primary w-100">Git</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col -->
+
+                                <div class="col-xl-3">
+                                    <div class="card pricing-box">
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <h5 class="mb-1 font-size-20">Raporlar</h5>
+                                            </div>
+                                            <hr class="my-4 text-muted">
+                                            <div class="mt-4">
+                                                <a href="#" class="btn btn-primary w-100">Git</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col -->
+
+
+                            </div>
+                            <!-- end row -->
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
         </div>
+
     </div>
 @endsection
-
 @section('js')
+    <script src="{{ asset('assets/libs/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/lightbox.init.js') }}"></script>
 @endsection

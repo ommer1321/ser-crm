@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Http\Requests\TaskFormRequest;
 use App\Http\Requests\TaskMemberValidateFormRequest;
+use App\Models\Grup\Grup;
 use App\Models\Teacher\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,10 @@ trait TaskTrait
 
     public function listTask()
     {
-        $tasks = Task::where('teacher_id', Auth::user()->id)->OrderBy('updated_at', 'desc')->get();
+        $tasks = Task::where('teacher_id', Auth::user()->id)
+        ->where('grup_id',null)
+        ->OrderBy('updated_at', 'desc')
+        ->get();
 
         return ($tasks);
     }
@@ -131,8 +135,12 @@ trait TaskTrait
     }
 
 
-    public function storeTask($validatedData, $task, $requestUsers)
+    public function storeTask($request, $task, $requestUsers)
     {
+    
+        $validatedData =  $request->validated();
+
+        
         $task->teacher_id = Auth::user()->id;
         $task->title = $validatedData['title'];
         $task->note = $validatedData['note'];
@@ -145,13 +153,47 @@ trait TaskTrait
             return redirect()->back()->with('failed', 'Geçersiz Kullanıcı Mevcut');
         }
 
-        $task->tagged_users = $res_member ?? null;
+        $task->tagged_users = $res_member ?? null;       
 
+        
+
+        
         $taskResult = $task->save();
 
         return   $this->redirectBackTask($taskResult);
     }
 
+    public function storeTaskWithGrup($request, $task, $requestUsers)
+    {
+    
+        $validatedData =  $request->validated();
+
+        if($request->grup){
+            $grup = Grup::where('grup_id',$request->grup)->first();
+        }
+        
+        $task->teacher_id = Auth::user()->id;
+        $task->title = $validatedData['title'];
+        $task->note = $validatedData['note'];
+        $task->status = $validatedData['status'];
+        $task->finished_at = $validatedData['finished_at'];
+
+        $res_member =  $this->memberValidate($requestUsers);
+
+        if ($res_member == 'failed') {
+            return redirect()->back()->with('failed', 'Geçersiz Kullanıcı Mevcut');
+        }
+
+        $task->tagged_users = $res_member ?? null;       
+
+        $grup ? $task->grup_id = $grup->id : $task->grup_id =  null ;
+        
+
+
+        $taskResult = $task->save();
+
+        return   $this->redirectBackTask($taskResult);
+    }
 
     public function deleteTask($task_id)
     {

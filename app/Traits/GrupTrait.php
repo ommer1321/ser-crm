@@ -34,7 +34,9 @@ trait GrupTrait
     public function listMembers($grup_id)
     {
         $grup = Grup::where('teacher_id', auth()->user()->id)->where('status', 1)->where('grup_id', $grup_id)->first();
+
         return $grup->members;
+        // hata:basic Bu gruba ait olmayan kullanıcı role arken ulaşabiliyor ve hata veriyor  
     }
 
 
@@ -139,7 +141,7 @@ trait GrupTrait
             }
         }
     }
-// 
+    // 
     public function checkUserAndGrup($validatedUserAndGrup)
     {
 
@@ -205,7 +207,7 @@ trait GrupTrait
         }
     }
 
-// 
+    // 
 
     public function storeProfilePhoto($request, $grup)
     {
@@ -238,10 +240,10 @@ trait GrupTrait
     {
         if ($grupResult) {
 
-            return redirect()->route('index.grup')->with('success', 'Başarılı Bir Şekilde Tamamlandı');
+            return redirect()->route('index.mainpage.grup')->with('success', 'Başarılı Bir Şekilde Tamamlandı');
         } else {
 
-            return redirect()->route('index.grup')->with('failed', 'Maalesef Başarısız');
+            return redirect()->route('index.mainpage.grup')->with('failed', 'Maalesef Başarısız');
         }
     }
 }

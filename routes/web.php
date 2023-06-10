@@ -71,18 +71,15 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
 
         // Task Comment Route
         Route::group(['prefix' => 'comment'], function () {
-    
+
             Route::post('store', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'store'])->name('store.comment.task');
-            
+
             Route::group(['prefix' => 'comment', 'middleware' => ['auth', 'role:teacher']], function () {
 
                 Route::post('delete', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'delete'])->name('delete.comment.task');
                 Route::post('pim', [App\Http\Controllers\Teacher\Task\TaskCommentController::class, 'pim'])->name('pim.comment.task');
-            
             });
-        
         });
-    
     });
 
 
@@ -93,14 +90,25 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
 
 
     // Grup Route
-    Route::group(['prefix' => 'grup', 'middleware' => ['auth', 'role:teacher']], function () {
+    Route::group(['prefix' => 'grup', 'middleware' => ['auth', 'role:teacher|student']], function () {
+        
+        Route::get('/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupMainPageController::class, 'index'])->name('index.mainpage.grup');
 
-        Route::get('/', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'index'])->name('index.grup');
-        Route::get('/settings/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'settings'])->name('settings.grup');
-        Route::get('/create', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'create'])->name('create.grup');
-        Route::post('/store', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'store'])->name('store.grup');
-        Route::put('/update/Profile-Photo/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'updateGroupPhoto'])->name('update.profile-photo.grup');
-        Route::put('/update/Info/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'updateGroupInfo'])->name('update.info.grup');
+        Route::get('list/', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'listGrups'])->name('list.grup');
+
+
+        //Settings Route 
+        Route::group(['prefix' => 'settings', 'middleware' => ['auth', 'role:teacher']], function () {
+         
+            Route::get('/create', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'create'])->name('create.grup');
+            Route::get('/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'settings'])->name('settings.grup');
+            Route::post('/store', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'store'])->name('store.grup');
+            Route::put('/update/Profile-Photo/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'updateGroupPhoto'])->name('update.profile-photo.grup');
+            Route::put('/update/Info/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'updateGroupInfo'])->name('update.info.grup');
+     
+        });
+
+
 
         //Member Route 
         Route::group(['prefix' => 'member'], function () {

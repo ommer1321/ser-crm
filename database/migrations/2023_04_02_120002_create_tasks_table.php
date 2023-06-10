@@ -17,11 +17,13 @@ return new class extends Migration
             $table->id();
             $table->uuid('task_id')->unique();
             $table->unsignedBigInteger('teacher_id');
+            $table->unsignedBigInteger('grup_id')->nullable();
             $table->string('title');
             $table->longText('note');
             $table->json('tagged_users')->nullable();
             $table->date('finished_at')->nullable();
             $table->enum('status',['red','yellow','green']);
+            $table->foreign('grup_id')->references('id')->on('grups')->onDelete('cascade');
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

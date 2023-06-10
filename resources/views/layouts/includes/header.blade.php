@@ -69,7 +69,7 @@
                                                 <div class="arrow-down"></div>
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="topnav-projects">
-                                                <a href="{{ route('index.grup') }}" class="dropdown-item"
+                                                <a href="{{ route('list.grup') }}" class="dropdown-item"
                                                     data-key="t-p-grid">Grup Listesi</a>
                                                 <a href="{{ route('create.grup') }}" class="dropdown-item"
                                                     data-key="t-p-list">Grup Oluştur</a>

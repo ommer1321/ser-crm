@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-  use TaskTrait , Friendship , TaskCommentTrait;
+  use TaskTrait, Friendship, TaskCommentTrait;
 
   public function index()
   {
     $myFriends = $this->myFriendships();
-     $taskList = $this->listTask();
+    $taskList = $this->listTask();
     return view('task.index', compact('taskList', 'myFriends'));
   }
 
@@ -31,13 +31,13 @@ class TaskController extends Controller
     $task = $data['task'];
     $tagged_users = $data['tagged_users'];
 
-      $activeTaskComments = $this->getActiveTaskComments($task->id);
-     
-     $editableTaskComments = $this->getTaskComments($task->id);
+    $activeTaskComments = $this->getActiveTaskComments($task->id);
+
+    $editableTaskComments = $this->getTaskComments($task->id);
 
     $myFriends = $this->myFriendshipsWithTaggedUsers($task);
 
-    return view('task.details', compact('task', 'tagged_users', 'myFriends','activeTaskComments','editableTaskComments'));
+    return view('task.details', compact('task', 'tagged_users', 'myFriends', 'activeTaskComments', 'editableTaskComments'));
   }
 
 
@@ -46,11 +46,11 @@ class TaskController extends Controller
   public function update(TaskFormRequest $request, $task_id)
   {
 
- 
+
     $data =  $this->getTask($task_id);
     $task = $data['task'];
 
-    return $this->updateTask($request, $task );
+    return $this->updateTask($request, $task);
   }
 
 
@@ -58,11 +58,18 @@ class TaskController extends Controller
 
 
   public function store(TaskFormRequest $request)
-  {
+  {;
     $request->user ?? '';
     $validatedData =  $request->validated();
+
     $task =  new Task();
-    return $this->storeTask($validatedData, $task, $request->user);
+
+    if ($request->grup) {
+      return $this->storeTaskWithGrup($request, $task, $request->user);
+    } else {
+      return $this->storeTask($request, $task, $request->user);
+    }
+    
   }
 
 

@@ -13,7 +13,7 @@ class Task extends Model
     use HasFactory, TaskTrait;
     protected $table = 'tasks';
     protected $fillable = ['note', 'finished_at', 'status', 'title'];
-    protected  $appends = ['first_letter', 'status_color', 'mini_note', 'status_tr', 'date_counter', 'percent_time'];
+    protected  $appends = ['task_of_grup', 'first_letter', 'status_color', 'mini_note', 'status_tr', 'date_counter', 'percent_time'];
 
 
 
@@ -43,15 +43,30 @@ class Task extends Model
 
     // Get Methods
 
+
+    public function getTaskOfGrupAttribute()
+    {
+        if ($this->attributes['grup_id'] != null) {
+            return  1;
+        } else {
+            return   0;
+        }
+    }
+
     public function getDateCounterAttribute()
     {
+
+        // hata:basic bugün eklenecek
+        if($this->attributes['finished_at'] == null) return 'Süre Yok';
+        
         $now = Carbon::parse(Carbon::now());
         $end = Carbon::parse($this->attributes['finished_at']);
-         
-        
+
 
         $diff = $now->diffInDays($end);
-        if ($now > $end) { return 'Süre Bitti'; }
+        if ($now > $end) {
+            return 'Süre Bitti';
+        }
         return   $diff . ' Gün Sonra';
     }
 
@@ -60,7 +75,9 @@ class Task extends Model
         $start = Carbon::parse($this->attributes['created_at']);
         $now = Carbon::parse(Carbon::now());
         $end = Carbon::parse($this->attributes['finished_at']);
-        if ($now > $end) { return 100; }
+        if ($now > $end) {
+            return 100;
+        }
 
         $startdiff = $start->diffInDays($end);
         $nowdiff = $now->diffInDays($end);
@@ -75,6 +92,7 @@ class Task extends Model
             return  $percent;
         }
     }
+
 
 
     public function getFirstLetterAttribute()
@@ -157,6 +175,7 @@ class Task extends Model
 
         $this->attributes['note']  =  Str::ucfirst($value);
     }
+
 
     public function setTitleAttribute($value)
     {

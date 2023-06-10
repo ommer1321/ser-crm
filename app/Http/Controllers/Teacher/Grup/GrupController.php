@@ -11,6 +11,7 @@ use App\Models\Grup\Grup;
 use App\Models\Grup\Member;
 use App\Models\User;
 use App\Traits\Friendship;
+use App\Traits\GrupTaskTrait;
 use App\Traits\GrupTrait;
 use App\Traits\HelperTrait;
 use Illuminate\Http\Request;
@@ -19,14 +20,17 @@ use Spatie\Permission\Models\Role;
 
 class GrupController extends Controller
 {
-    use GrupTrait, Friendship, HelperTrait;
+    use GrupTrait, Friendship, HelperTrait, GrupTaskTrait;
 
-    public function index()
+
+
+
+    public function listGrups()
     {
 
         $grups = $this->listGrupsWithMembers();
 
-        return view('grup.index', compact('grups'));
+        return view('grup.list-grups', compact('grups'));
     }
 
     public function create()
