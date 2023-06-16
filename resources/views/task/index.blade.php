@@ -143,19 +143,11 @@
 
                                                             <div class="unread-message">
 
-
-
-
-
-
                                                                 <div class="form-check form-switch mb-2" dir="ltr">
                                                                     <input type="checkbox" class="form-check-input"
                                                                         name="user[]" value="{{ $myFriend->user_id }}"
                                                                         id="customSwitchsizesm">
                                                                 </div>
-
-
-
 
                                                             </div>
                                                         </div>

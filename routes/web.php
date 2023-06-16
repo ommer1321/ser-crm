@@ -90,26 +90,22 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
 
 
     // Grup Route
-    Route::group(['prefix' => 'grup', 'middleware' => ['auth', 'role:teacher|student']], function () {
+    Route::group(['prefix' => 'grup/', 'middleware' => ['auth', 'role:teacher|student']], function () {
         
-        Route::get('/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupMainPageController::class, 'index'])->name('index.mainpage.grup');
-
         Route::get('list/', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'listGrups'])->name('list.grup');
-
-
-        //Settings Route 
-        Route::group(['prefix' => 'settings', 'middleware' => ['auth', 'role:teacher']], function () {
+     
+           //Settings Route 
+           Route::group(['prefix' => 'settings', 'middleware' => ['auth', 'role:teacher']], function () {
          
             Route::get('/create', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'create'])->name('create.grup');
-            Route::get('/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'settings'])->name('settings.grup');
             Route::post('/store', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'store'])->name('store.grup');
+            Route::get('/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'settings'])->name('settings.grup');
             Route::put('/update/Profile-Photo/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'updateGroupPhoto'])->name('update.profile-photo.grup');
             Route::put('/update/Info/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'updateGroupInfo'])->name('update.info.grup');
      
         });
 
-
-
+     
         //Member Route 
         Route::group(['prefix' => 'member'], function () {
 
@@ -117,5 +113,11 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
             Route::post('/delete', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'deleteMember'])->name('delete.members.grup');
             Route::post('/add', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'addMember'])->name('add.members.grup');
         });
+
+
+        Route::get('/{grup_id}', [App\Http\Controllers\Teacher\Grup\GrupMainPageController::class, 'index'])->name('index.mainpage.grup');
+        Route::post('/{grup_id}/store', [App\Http\Controllers\Teacher\Grup\GrupNewsController::class, 'store'])->name('store.news.grup');
+
+
     });
 });

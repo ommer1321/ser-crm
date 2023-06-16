@@ -27,7 +27,7 @@ trait GrupTaskTrait
             ->get();
 
         $auth_tasks = [];
-    
+
         // transformation to array from json
         foreach ($tasks as $task) {
             $tagged_users = $task->tagged_users;
@@ -36,7 +36,7 @@ trait GrupTaskTrait
 
                 if (in_array(Auth::user()->user_id, $task->tagged_users)) {
 
-                
+
                     $auth_tasks[] = $task;
                 }
             }
@@ -53,11 +53,14 @@ trait GrupTaskTrait
         $grup = Grup::where('grup_id', $grup_id)->first();
 
         $members =  $grup->members;
-        
-        foreach ($members as $member) {
+        $data = [];
+        if ($members) {
+
+            foreach ($members as $member) {
 
 
-            $data[] = User::where('id', $member->user_id)->first();
+                $data[] = User::where('id', $member->user_id)->first();
+            }
         }
         return $data;
         // hata:basic Bu gruba ait olmayan kullanıcı role arken ulaşabiliyor ve hata veriyor  

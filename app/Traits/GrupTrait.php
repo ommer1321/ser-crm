@@ -117,7 +117,7 @@ trait GrupTrait
             if (File::exists($grup->logo_path)) {
 
                 if (File::delete($grup->logo_path)) {
-                    if ($filePath = $file->move('uploads/grup/', $fileName)) {
+                    if ($filePath = $file->move('uploads/grup/grup-profile/', $fileName)) {
                         $grup->logo_path = $filePath;
 
                         if ($grup->save()) {
@@ -129,7 +129,7 @@ trait GrupTrait
                 }
             } else {
 
-                if ($filePath = $file->move('uploads/grup/', $fileName)) {
+                if ($filePath = $file->move('uploads/grup/grup-profile/', $fileName)) {
                     $grup->logo_path = $filePath;
 
                     if ($grup->save()) {
@@ -218,7 +218,7 @@ trait GrupTrait
             $ext = $file->getClientOriginalExtension();
             $fileName = 'pp' . time() . '.' . $ext;
 
-            if ($filePath = $file->move('uploads/grup/', $fileName)) {
+            if ($filePath = $file->move('uploads/grup/grup-profile/', $fileName)) {
 
 
                 return $grup->logo_path = $filePath;
@@ -240,10 +240,14 @@ trait GrupTrait
     {
         if ($grupResult) {
 
-            return redirect()->route('index.mainpage.grup')->with('success', 'Başarılı Bir Şekilde Tamamlandı');
+            return redirect()->route('list.grup')->with('success', 'Başarılı Bir Şekilde Tamamlandı');
         } else {
 
-            return redirect()->route('index.mainpage.grup')->with('failed', 'Maalesef Başarısız');
+            return redirect()->route('list.grup')->with('failed', 'Maalesef Başarısız');
         }
     }
+
+
+
+    
 }
