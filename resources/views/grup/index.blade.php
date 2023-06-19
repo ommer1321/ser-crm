@@ -1120,7 +1120,7 @@ student
 
                                                         {{-- <hr class="my-2 text-muted"> --}}
 
-                                                        <div class="card">
+                                                        <div class="card border border-0">
 
                                                             <button style="float: right" type="button"
                                                                 class="btn btn-primary btn-rounded btn-sm font-size-16 "

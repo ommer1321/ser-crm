@@ -89,6 +89,13 @@
                                 <span class="d-none d-sm-block">Düzenle</span>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#comments" role="tab">
+                                <i class="uil-comment-alt-edit font-size-20"></i>
+                                <span class="d-none d-sm-block">Yorumlar</span>
+                            </a>
+                        </li>
                     @endrole
                 </ul>
 
@@ -191,7 +198,16 @@
                                                 <div class="d-flex align-items-center">
 
 
-                                                    @if ($tagged_users)
+                                                    @if ($tagged_users)   <div class="avatar align-self-center me-3">
+
+                                                        <div
+                                                            class="avatar-title rounded bg-soft-{{ $task->status_color }} text-{{ $task->status_color }} font-size-24">
+                                                            <i
+                                                                class="uil-pricetag-alt                                                                                    "></i>
+                                                        </div>
+                                                        
+                                                    </div>
+
                                                         <div class="avatar-group ">
                                                             @foreach ($tagged_users as $user)
                                                                 @if ($user->profile_photo_path)
@@ -228,9 +244,9 @@
                                                             @endforeach
                                                         </div>
                                                     @else
-                                                        <div class="card border shadow-none mb-2">
+                                                      
                                                             <a href="javascript: void(0);" class="text-body">
-                                                                <div class="p-2">
+                                                                
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="avatar align-self-center me-3">
                                                                             <div
@@ -249,9 +265,9 @@
 
 
                                                                     </div>
-                                                                </div>
+                                                               
                                                             </a>
-                                                        </div>
+                                                      
                                                     @endif
 
                                                 </div>
@@ -850,155 +866,6 @@
                                             </div><!-- end card -->
 
 
-                                            {{-- Yorum Sil  --}}
-                                            <div class="card">
-                                                <a class="btn btn-light collapsed" data-bs-toggle="collapse"
-                                                    href="#commentsExample" aria-expanded="false"
-                                                    aria-controls="collapseExample">
-                                                    Yorum İşlemleri
-                                                </a>
-                                                <div class="card-body collapse" id="commentsExample">
-                                                    <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
-
-
-                                                    </div>
-
-                                                    {{-- Comment Form Forech --}}
-                                                    @if (count($editableTaskComments) > 0)
-                                                        @foreach ($editableTaskComments as $comment)
-                                                            <div class="border-bottom py-3">
-                                                                <p class="float-sm-end text-muted font-size-13">
-                                                                    {{ $comment->created_at->diffForHumans() }}
-                                                                </p>
-                                                                <div class="d-flex align-items-center mb-3">
-
-
-
-                                                                    @if ($comment->who_comment_user->profile_photo_path)
-                                                                        <div class="avatar align-self-center me-3">
-
-
-                                                                            <div
-                                                                                class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
-                                                                                <img src="{{ asset($comment->who_comment_user->profile_photo_path) }}"
-                                                                                    class="rounded-circle avatar-sm"
-                                                                                    alt="">
-                                                                            </div>
-
-
-
-                                                                        </div>
-                                                                    @else
-                                                                        <div class="avatar align-self-center me-3">
-                                                                            <div
-                                                                                class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
-                                                                                <i class="bx bx-user-circle text-primary"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endif
-
-
-                                                                    <div class="flex-1">
-                                                                        <h5 class="font-size-15 mb-1">
-                                                                            {{ $comment->who_comment_user->name }}
-
-                                                                        </h5>
-                                                                        <a href="javascript: void(0);"
-                                                                            class="badge bg-soft-success text-success font-size-11">{{ $comment->who_comment_user->user_name }}</a>
-
-                                                                    </div>
-                                                                </div>
-                                                                <p class="text-muted mb-4">
-                                                                    {{ $comment->comment }}</p>
-                                                                <div class="d-flex align-items-start">
-
-                                                                    <div class="flex-shrink-0">
-                                                                        <ul class="list-inline product-review-link mb-0">
-
-
-                                                                            {{-- 
-                                                                            like icon
-                                                                            <li class="list-inline-item">
-                                                                            <a href="#" data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top" title=""
-                                                                                data-bs-original-title="Like"><i
-                                                                                    class="bx bx-like"></i></a>
-                                                                        </li> --}}
-
-
-
-
-                                                                            @if ($comment->pimmed == 1)
-                                                                                <li class="list-inline-item">
-
-                                                                                    <form
-                                                                                        action="{{ route('pim.comment.task') }}"
-                                                                                        method="post">
-                                                                                        @csrf
-                                                                                        <input type="hidden" name="comment"
-                                                                                            value="{{ $comment->comment_uuid }}">
-                                                                                        <button class="btn badge bg-success"><i
-                                                                                                class="mdi mdi-tooltip-check-outline font-size-16 text-white"></i></button>
-
-                                                                                    </form>
-                                                                                </li>
-                                                                            @else
-                                                                                <li class="list-inline-item">
-
-                                                                                    <form
-                                                                                        action="{{ route('pim.comment.task') }}"
-                                                                                        method="post">
-                                                                                        @csrf
-                                                                                        <input type="hidden" name="comment"
-                                                                                            value="{{ $comment->comment_uuid }}">
-                                                                                        <button
-                                                                                            class="btn badge bg-soft-warning"><i
-                                                                                                class="mdi mdi-tooltip-remove-outline font-size-16 text-white"></i></button>
-
-                                                                                    </form>
-                                                                                </li>
-                                                                            @endif
-
-
-
-                                                                            <li class="list-inline-item">
-
-                                                                                <form
-                                                                                    action="{{ route('delete.comment.task') }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    <input type="hidden" name="comment"
-                                                                                        value="{{ $comment->comment_uuid }}">
-                                                                                    <button class="btn badge bg-danger"><i
-                                                                                            class="bx bx-trash font-size-16 text-white"></i></button>
-
-                                                                                </form>
-                                                                            </li>
-
-
-
-                                                                        </ul>
-
-
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    @else
-                                                        <div class="border-bottom py-3">
-                                                            <div class="alert alert-primary alert-outline alert-dismissible fade show"
-                                                                role="alert">
-                                                                <i class="far fa-comments text-primary font-size-14"></i>
-                                                                <span class="text-primary font-size-12">
-                                                                    Yorum Yok</span>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-
-                                                </div><!-- end card body -->
-                                            </div>
 
 
                                         </div>
@@ -1009,8 +876,7 @@
                                         <!-- end modalfooter -->
                                     </form>
 
-
-
+                                    {{--  --}}
 
                                     <!-- end cardbody -->
 
@@ -1019,7 +885,260 @@
                         </div><!-- end tab pane -->
                     @endrole
 
+                    @role('teacher')
+                        <div class="tab-pane " id="comments" role="tabpanel">
+                            <div class="card mb-0 border-0">
+                                <div class="card-body">
+                                    
 
+
+                                    <ul class="list-unstyled chat-list">
+
+                                        @if (count($editableTaskComments) > 0)
+                                            @foreach ($editableTaskComments as $comment)
+                                                <li class="">
+                                                    <a href="#">
+                                                        <div class="d-flex align-items-start">
+
+
+
+                                                            <div class="avatar align-self-center me-3">
+                                                                <div
+                                                                    class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                    <img src="{{ asset($comment->who_comment_user->profile_photo_path) }}"
+                                                                        class="rounded-circle avatar-sm" alt="">
+
+
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <h5 class="text-truncate font-size-16 mb-1">
+                                                                    {{ $comment->who_comment_user->name }}</h5>
+                                                                <small class=" text-truncate  mb-0 " style="opacity: 0.8">
+
+                                                                    {{ $comment->comment }}</small>
+                                                            </div>
+                                                            <div class="flex-shrink-0">
+                                                                <div class="font-size-11">
+                                                                    {{ $comment->created_at->diffForHumans() }}</div>
+                                                            </div>
+
+                                                            <div class="unread-message">
+                                                                <div class="d-flex ">
+
+                                                                    @if ($comment->pimmed == 1)
+                                                                        <form action="{{ route('pim.comment.task') }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            <input type="hidden" name="comment"
+                                                                                value="{{ $comment->comment_uuid }}">
+                                                                            <button class="btn badge bg-success"><i
+                                                                                    class="mdi mdi-tooltip-check-outline font-size-16 text-white"></i></button>
+
+
+                                                                        </form>
+                                                                    @else
+                                                                        <form action="{{ route('pim.comment.task') }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            <input type="hidden" name="comment"
+                                                                                value="{{ $comment->comment_uuid }}">
+                                                                            <button class="btn badge bg-soft-warning"><i
+                                                                                    class="mdi mdi-tooltip-remove-outline font-size-16 text-white"></i></button>
+
+                                                                        </form>
+                                                                    @endif
+
+                                                                    <form action="{{ route('delete.comment.task') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        <input type="hidden" name="comment"
+                                                                            value="{{ $comment->comment_uuid }}">
+                                                                        <button class="btn badge bg-danger mx-2"><i
+                                                                                class="bx bx-trash font-size-16 text-white"></i></button>
+
+                                                                    </form>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <!-- end li -->
+                                            @endforeach
+                                        @endif
+                                        @if (!count($editableTaskComments) > 0)
+                                            <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                role="alert">
+                                                <i
+                                                    class="far fa-comments
+                                            text-primary font-size-16 me-2"></i>
+                                                Henüz Yorum Yok.
+                                            </div>
+                                        @endif
+
+
+                                    </ul>
+
+
+
+
+
+                                    {{--  --}}
+                                    {{-- Yorum eski  --}}
+                                    {{-- <div class="card">
+                                        <a class="btn btn-light collapsed" data-bs-toggle="collapse" href="#commentsExample"
+                                            aria-expanded="false" aria-controls="collapseExample">
+                                            Yorum İşlemleri
+                                        </a>
+                                        <div class="card-body collapse" id="commentsExample">
+                                            <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
+
+
+                                            </div>
+
+                                         
+                                            <!-- Comment Form Forech-->
+                                            
+                                            @if (count($editableTaskComments) > 0)
+                                                @foreach ($editableTaskComments as $comment)
+                                                    <div class="border-bottom py-3">
+                                                        <p class="float-sm-end text-muted font-size-13">
+                                                            {{ $comment->created_at->diffForHumans() }}
+                                                        </p>
+                                                        <div class="d-flex align-items-center mb-3">
+
+
+
+                                                            @if ($comment->who_comment_user->profile_photo_path)
+                                                                <div class="avatar align-self-center me-3">
+
+
+                                                                    <div
+                                                                        class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                        <img src="{{ asset($comment->who_comment_user->profile_photo_path) }}"
+                                                                            class="rounded-circle avatar-sm" alt="">
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                            @else
+                                                                <div class="avatar align-self-center me-3">
+                                                                    <div
+                                                                        class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                        <i class="bx bx-user-circle text-primary"></i>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+
+                                                            <div class="flex-1">
+                                                                <h5 class="font-size-15 mb-1">
+                                                                    {{ $comment->who_comment_user->name }}
+
+                                                                </h5>
+                                                                <a href="javascript: void(0);"
+                                                                    class="badge bg-soft-success text-success font-size-11">{{ $comment->who_comment_user->user_name }}</a>
+
+                                                            </div>
+                                                        </div>
+                                                        <p class="text-muted mb-4">
+                                                            {{ $comment->comment }}</p>
+                                                        <div class="d-flex align-items-start">
+
+                                                            <div class="flex-shrink-0">
+                                                                <ul class="list-inline product-review-link mb-0">
+                                                                    like icon
+                                                                    <li class="list-inline-item">
+                                                                        <a href="#" data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title=""
+                                                                            data-bs-original-title="Like"><i
+                                                                                class="bx bx-like"></i></a>
+                                                                    </li>
+
+
+
+                                                                    @if ($comment->pimmed == 1)
+                                                                        <li class="list-inline-item">
+
+                                                                            <form action="{{ route('pim.comment.task') }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                <input type="hidden" name="comment"
+                                                                                    value="{{ $comment->comment_uuid }}">
+                                                                                <button class="btn badge bg-success"><i
+                                                                                        class="mdi mdi-tooltip-check-outline font-size-16 text-white"></i></button>
+
+                                                                            </form>
+                                                                        </li>
+                                                                    @else
+                                                                        <li class="list-inline-item">
+
+                                                                            <form action="{{ route('pim.comment.task') }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                <input type="hidden" name="comment"
+                                                                                    value="{{ $comment->comment_uuid }}">
+                                                                                <button class="btn badge bg-soft-warning"><i
+                                                                                        class="mdi mdi-tooltip-remove-outline font-size-16 text-white"></i></button>
+
+                                                                            </form>
+                                                                        </li>
+                                                                    @endif
+
+
+
+                                                                    <li class="list-inline-item">
+
+                                                                        <form action="{{ route('delete.comment.task') }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            <input type="hidden" name="comment"
+                                                                                value="{{ $comment->comment_uuid }}">
+                                                                            <button class="btn badge bg-danger"><i
+                                                                                    class="bx bx-trash font-size-16 text-white"></i></button>
+
+                                                                        </form>
+                                                                    </li>
+
+
+
+                                                                </ul>
+
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <div class="border-bottom py-3">
+                                                    <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                        role="alert">
+                                                        <i class="far fa-comments text-primary font-size-14"></i>
+                                                        <span class="text-primary font-size-12">
+                                                            Yorum Yok</span>
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                        </div><!-- end card body -->
+                                    </div> --}}
+
+
+
+
+
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div><!-- end tab pane -->
+                    @endrole
                 </div>
             </div>
 

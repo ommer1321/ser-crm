@@ -19,18 +19,24 @@ class GrupMainPageController extends Controller
 
     public function index($grup_id)
     {
+        $grup =    $this->listGrupDetails($grup_id);
 
+        $isGrupMember = $this->isGrupMember($grup);
+
+        if ($isGrupMember == false) {
+            return redirect()->back();
+          }
+          
         $mySharedTasks =  $this->mySharedGrupTasks($grup_id);
 
         $news = $this->listGrupNews($grup_id);
 
         $grupOfMembers = $this->grupOfMembers($grup_id);
 
-        $grup =    $this->listGrupDetails($grup_id);
 
         $tasks = $this->grupOfTasks($grup_id);
 
 
-        return view('grup.index', compact('mySharedTasks','tasks', 'grup', 'grupOfMembers', 'news'));
+        return view('grup.index', compact('mySharedTasks', 'tasks', 'grup', 'grupOfMembers', 'news'));
     }
 }

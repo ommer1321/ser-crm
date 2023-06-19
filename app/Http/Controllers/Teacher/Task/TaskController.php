@@ -28,8 +28,16 @@ class TaskController extends Controller
   {
 
     $data  = $this->getTask($task_id);
+
     $task = $data['task'];
+
     $tagged_users = $data['tagged_users'];
+
+    $isStudentTaggedToTask = $this->isStudentTaggedToTask($task, $tagged_users);
+
+    if ($isStudentTaggedToTask == false) {
+      return redirect()->back();
+    }
 
     $activeTaskComments = $this->getActiveTaskComments($task->id);
 
@@ -69,7 +77,6 @@ class TaskController extends Controller
     } else {
       return $this->storeTask($request, $task, $request->user);
     }
-    
   }
 
 

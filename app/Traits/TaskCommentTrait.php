@@ -152,7 +152,7 @@ trait TaskCommentTrait
 
     public function pimTaskComment($request)
     {
-      return  $taskComment = TaskComment::where('comment_uuid', $request->comment)
+        $taskComment = TaskComment::where('comment_uuid', $request->comment)
             ->where('is_deleted', '0')
             ->first();
 

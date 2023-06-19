@@ -63,6 +63,42 @@ trait GrupTrait
     }
 
 
+    function isGrupMember($grup)
+    {
+        // Log eklenecek
+        $res = false;
+
+
+        if (auth()->user()->id  == $grup->teacher_id) {
+
+            return $res = true;
+        }
+
+
+        if (count($grup->members) > 0) {
+
+            foreach ($grup->members as $member) {
+                if ($member->user_id == auth()->user()->id || auth()->user()->id  == $member->user_id) {
+                    return $res = true;
+                }
+            }
+        }
+
+        return $res;
+    }
+
+    function isGrupTeacher($grup)
+    {
+
+        $res = false;
+
+        if (auth()->user()->id  == $grup->teacher_id) {
+
+            return $res = true;
+        }
+        return $res ;
+    }
+
     public function storeGrup($request, $grup)
     {
         $validatedData = $request->validated();
@@ -246,8 +282,4 @@ trait GrupTrait
             return redirect()->route('list.grup')->with('failed', 'Maalesef Başarısız');
         }
     }
-
-
-
-    
 }

@@ -105,9 +105,19 @@ class GrupController extends Controller
 
     public function settings($grup_id)
     {
+
+
         $users = $this->students();
         $grup =    $this->listGrupDetails($grup_id);
 
+        $isGrupTeacher = $this->isGrupTeacher($grup);
+        
+        if ($isGrupTeacher == false) {
+            
+            return redirect()->back();
+
+        }
+        
         return view('grup.settings', compact(['grup', 'users']));
     }
 

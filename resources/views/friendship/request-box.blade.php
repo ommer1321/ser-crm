@@ -73,7 +73,7 @@
                                 <span class="d-none d-sm-block">Geçmiş</span>
                             </a>
                         </li>
-                   
+
                     </ul>
                 </div>
             </div>
@@ -104,15 +104,12 @@
                                                                     <a href="#">
                                                                         <div class="d-flex align-items-start">
 
-                                                                            {{-- <div class="flex-shrink-0 user-img online align-self-center me-3 font-size-24">
-                                                        <img src="assets/images/users/avatar-9.jpg" class="rounded-circle avatar-sm" alt="">
-                                                        <span class="user-status"></span>
-                                                    </div> --}}
+
 
                                                                             <div class="avatar align-self-center me-3">
                                                                                 <div
                                                                                     class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
-                                                                                    <img src="assets/images/users/avatar-9.jpg"
+                                                                                    <img src="{{ asset($user->profile_photo_path) }}"
                                                                                         class="rounded-circle avatar-sm"
                                                                                         alt="">
 
@@ -166,11 +163,13 @@
                                                             @endforeach
 
                                                             @if (!count($users) > 0)
-                                                            <div class="alert alert-primary alert-outline alert-dismissible fade show" role="alert">
-                                                                <i class="uil-minus-circle
+                                                                <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                                    role="alert">
+                                                                    <i
+                                                                        class="uil-minus-circle
                                                                 text-primary font-size-16 me-2"></i>
-                                                           Arkadaşlık İsteği Bulunmamaktadır.
-                                                            </div>
+                                                                    Arkadaşlık İsteği Bulunmamaktadır.
+                                                                </div>
                                                             @endif
 
 
@@ -244,64 +243,76 @@
                                             <div class="simplebar-content" style="padding: 0px;">
                                                 <div class="p-4">
                                                     <div>
-                                                   
+
 
                                                         <ul class="list-unstyled chat-list">
 
-                                                           @foreach ($allRequestes as $item )
-                                                          
-                                                            <li>
-                                                                <a href="#">
-                                                                    <div class="d-flex align-items-start">
-                                                                        <div class="flex-shrink-0 user-img online align-self-center me-3">
-                                                                            <div class="avatar-sm align-self-center">
-                                                                                <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                    {{$item->takenRequestHistory->first_letter }}
-                                                                                </span>
-                                                                            </div>
-                                                                       
-                                                                        </div>
-                                                                        @if ($item->status == 'rejected')
+                                                            @foreach ($allRequestes as $item)
+                                                                <li>
+                                                                    <a href="#">
+                                                                        <div class="d-flex align-items-start">
+                                                                            <div
+                                                                                class="flex-shrink-0 user-img online align-self-center me-3">
+                                                                                <div class="avatar-sm align-self-center">
+                                                                                    <span
+                                                                                        class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                        {{ $item->takenRequestHistory->first_letter }}
+                                                                                    </span>
+                                                                                </div>
 
-                                                                        <div class="flex-grow-1 overflow-hidden" >
-                                                                            <h5 class="text-truncate font-size-14 mb-1">{{$item->takenRequestHistory->user_name }} </h5>
-                                                                            <p class="text-truncate mb-0" ><span class="badge bg-danger rounded-pill" style="z-index: 10000; ">{{$item->takenRequestHistory->name }} {{$item->takenRequestHistory->surname }}&apos;ın İsteğini reddettiniz </span>
-                                                                            </p>
-                                                                            <span class="font-size-11 " style="float: right;"> <i class="bx bx-time font-size-12"></i> {{$item->event_time}}</span>
-                                                                        </div>
-                                                                   
-                                                                        {{-- <div class="unread-message ">
+                                                                            </div>
+                                                                            @if ($item->status == 'rejected')
+                                                                                <div class="flex-grow-1 overflow-hidden">
+                                                                                    <h5
+                                                                                        class="text-truncate font-size-14 mb-1">
+                                                                                        {{ $item->takenRequestHistory->user_name }}
+                                                                                    </h5>
+                                                                                    <p class="text-truncate mb-0"><span
+                                                                                            class="badge bg-danger rounded-pill"
+                                                                                            style="z-index: 10000; ">{{ $item->takenRequestHistory->name }}
+                                                                                            {{ $item->takenRequestHistory->surname }}&apos;ın
+                                                                                            İsteğini reddettiniz </span>
+                                                                                    </p>
+                                                                                    <span class="font-size-11 "
+                                                                                        style="float: right;"> <i
+                                                                                            class="bx bx-time font-size-12"></i>
+                                                                                        {{ $item->event_time }}</span>
+                                                                                </div>
+
+                                                                                {{-- <div class="unread-message ">
                                                                             <span class="badge bg-danger rounded-pill font-size-17 "> <i class="bx bx-user-x mx-auto "></i></span>
                                                                            
                                                                         </div> --}}
+                                                                            @elseif($item->status == 'approved')
+                                                                                <div class="flex-grow-1 overflow-hidden">
+                                                                                    <h5
+                                                                                        class="text-truncate font-size-14 mb-1">
+                                                                                        {{ $item->takenRequestHistory->user_name }}
+                                                                                    </h5>
+                                                                                    <p class="text-truncate mb-0"><span
+                                                                                            class="badge bg-success rounded-pill">{{ $item->takenRequestHistory->name }}
+                                                                                            {{ $item->takenRequestHistory->surname }}&apos;ın
+                                                                                            İsteğini kabul ettiniz </span>
+                                                                                    </p>
+                                                                                    <span class="font-size-11 "
+                                                                                        style="float: right;"> <i
+                                                                                            class="bx bx-time font-size-12"></i>
+                                                                                        {{ $item->event_time }}</span>
 
-                                                                        @elseif($item->status == 'approved')
-                                                                        
+                                                                                </div>
 
-                                                                        <div class="flex-grow-1 overflow-hidden">
-                                                                            <h5 class="text-truncate font-size-14 mb-1">{{$item->takenRequestHistory->user_name }} </h5>
-                                                                            <p class="text-truncate mb-0"><span class="badge bg-success rounded-pill">{{$item->takenRequestHistory->name }} {{$item->takenRequestHistory->surname }}&apos;ın İsteğini kabul ettiniz </span>
-                                                                            </p>
-                                                                            <span class="font-size-11 " style="float: right;"> <i class="bx bx-time font-size-12"></i> {{$item->event_time}}</span>
 
-                                                                        </div>
-                                                                     
-                                                                        
-                                                                        {{-- <div class="unread-message ">
+                                                                                {{-- <div class="unread-message ">
                                                                             <span class="badge bg-success rounded-pill font-size-17 "> <i class="bx bx-user-check mx-auto "></i></span>
                                                                            
                                                                         </div> --}}
-
-
-                                                                        @endif
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-
-                                                            
+                                                                            @endif
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
                                                             @endforeach
-                                                    
-                                                           
+
+
                                                         </ul>
                                                         <!-- end ul -->
                                                     </div>
@@ -323,7 +334,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
 
             </div>
