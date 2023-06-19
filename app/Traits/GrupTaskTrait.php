@@ -65,4 +65,19 @@ trait GrupTaskTrait
         return $data;
         // hata:basic Bu gruba ait olmayan kullanıcı role arken ulaşabiliyor ve hata veriyor  
     }
+
+
+
+
+    function mySharedGrupTasks($grup_id)
+    {
+        $grup = Grup::where('grup_id', $grup_id)->first();
+       
+        $tasks = Task::where('grup_id', $grup->id)
+            ->where('teacher_id', $grup->teacher_id)
+            ->OrderBy('updated_at', 'desc')
+            ->get();
+
+            return $tasks;
+    }
 }

@@ -26,7 +26,12 @@ trait GrupNewsTrait
 
         $grup = Grup::where('grup_id', $grup_id)->first();
 
-        $grupNews = GrupNews::where('grup_id', $grup->id)->with('post_tagged_user')->with('posted_user')->orderBy('updated_at','desc')->get();
+        $grupNews = GrupNews::where('grup_id', $grup->id)
+        ->with('post_tagged_user')
+        ->with('posted_user')
+        ->with('news_comments')
+        ->orderBy('updated_at','desc')
+        ->get();
 
         foreach ($grupNews as $new) {
             $new->images_paths = json_decode($new->images_paths);

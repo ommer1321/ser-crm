@@ -33,6 +33,11 @@ class GrupNews extends Model
         return $this->hasMany(GrupNewsTaggedUser::class, 'news_id', 'id');
     }
 
+    public function news_comments()
+    {
+
+        return $this->hasMany(GrupNewsComments::class, 'news_id', 'id')->orderBy('updated_at','asc');
+    }
     public function posted_user()
     {
 

@@ -164,8 +164,9 @@ student
             {{--  --}}
             <div class="card-body">
                 <div>
-                    <button type="button" class="btn btn-primary " data-bs-toggle="modal"
-                        data-bs-target="#firstmodal">Gönderi Oluştur</button>
+
+
+
                     <form action="{{ route('store.news.grup', $grup->grup_id) }}" enctype="multipart/form-data"
                         method="post">
                         @csrf
@@ -277,7 +278,7 @@ student
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Random</h5>
+                                        <h5 class="modal-title">Kullanıcı Etiketle</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -295,9 +296,8 @@ student
                                                 <div class="card-body collapse " id="collapseExample" style="">
                                                     <div class="d-flex flex-wrap gap-2 align-items-start mb-3">
                                                     </div>
-                                                    <div class="card card-body mb-0">
-
-                                                        @if ($grupOfMembers)
+                                                    @if ($grupOfMembers)
+                                                        <div class="card card-body mb-0">
                                                             @foreach ($grupOfMembers as $grupOfMember)
                                                                 <ul class="list-unstyled chat-list">
 
@@ -356,7 +356,7 @@ student
                                                                     </li>
                                                                 </ul>
                                                             @endforeach
-                                                    </div>
+                                                        </div>
                                                 </div>
                                             </div>
                                         @else
@@ -401,8 +401,9 @@ student
                                     </div>
                                     <!-- end modalheader -->
                                     <div class="modal-body">
-                                        <input type="text" name="title" class="form-control chat-input"
-                                            placeholder="Başlık Giriniz..">
+                                        {{-- <input type="text" name="title" class="form-control chat-input"
+                                            placeholder="Başlık Giriniz.."> --}}
+                                        Şimdilik Burası Boş
                                     </div>
                                     <div class="modal-footer">
                                         <!-- Toogle to first dialog -->
@@ -768,13 +769,13 @@ student
                                             <span class="d-none d-sm-block">Tasklarınız </span>
                                         </a>
                                     </li>
-                                    <li class="nav-item mx-2">
+                                    {{-- <li class="nav-item mx-2">
                                         <a class="nav-link" data-bs-toggle="tab" href="#navpills2-messages"
                                             role="tab" aria-selected="false">
                                             <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
                                             <span class="d-none d-sm-block">Tasklarım</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item mx-2">
                                         <a class="nav-link" data-bs-toggle="tab" href="#navpills2-settings"
                                             role="tab" aria-selected="false">
@@ -797,213 +798,264 @@ student
 
 
                                     <div class="tab-pane active" id="navpills2-home" role="tabpanel">
+                                        <div class="card">
 
 
-
-                                        @if (count($news) > 0)
-                                            @foreach ($news as $new)
-                                                {{-- Üyeler - Modal --}}
-                                                <div class="modal fade" id="asdfg" tabindex="-1" role="dialog"
-                                                    aria-labelledby="12345pTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-scrollable">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="12345pTitle">
-                                                                    Yorumlar</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-
-
-                                                                <div class="simplebar-content" style="padding: 0px 24px;">
-                                                                    <div class="border-bottom py-3">
-                                                                        <div class="dropdown " style="float: right">
-                                                                            11 dakika önce
-                                                                            <a class="btn btn-link text-dark dropdown-toggle shadow-none"
-                                                                                href="#" role="button"
-                                                                                data-bs-toggle="dropdown"
-                                                                                aria-expanded="false">
-                                                                                <i class="mdi mdi-chevron-down ms-1"></i>
-                                                                            </a>
-
-                                                                            <ul class="dropdown-menu dropdown-menu-end"
-                                                                                style="">
-                                                                                <form
-                                                                                    action="http://127.0.0.1:8000/tasks/comment/comment/delete"
-                                                                                    method="post">
-                                                                                    <input type="hidden" name="_token"
-                                                                                        value="JtQ46WG7CmwsxAloJi6YZy9f3UOctMVYEJwMwxez">
-                                                                                    <input type="hidden" name="comment"
-                                                                                        value="e7be1819-398a-4376-a1cb-0a94c2b9edbc">
-                                                                                    <input type="hidden" name="_token"
-                                                                                        value="1Q5wcJa3kNR8qmdqMzmK9Xc5aTS66wuWHrQ96sYD">
-                                                                                    <li><input type="submit"
-                                                                                            class="dropdown-item"
-                                                                                            value="Sil">
-                                                                                    </li>
-                                                                                </form>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div class="d-flex align-items-center mb-3">
-                                                                            <div class="avatar align-self-center me-3">
-                                                                                <div
-                                                                                    class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
-                                                                                    <img src="http://127.0.0.1:8000/assets/images/users/avatar-1.jpg"
-                                                                                        class="rounded-circle avatar-sm"
-                                                                                        alt="">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex-1">
-                                                                                <h5 class="font-size-15 mb-1">Sen</h5>
-                                                                                <a href="javascript: void(0);"
-                                                                                    class="badge bg-soft-success text-success font-size-11">ommer1453</a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <p class="text-muted mb-4">
-
-                                                                            Trust fund seitan letterpress, keytar raw denim
-                                                                            keffiyeh
-                                                                            etsy art party before they sold out master
-                                                                            cleanse
-                                                                            gluten-free squid scenester freegan cosby
-                                                                            sweater. Fanny
-                                                                            pack portland seitan DIY, art party locavore
-                                                                            wolf cliche
-                                                                            high life echo park Austin. Cred vinyl keffiyeh
-                                                                            DIY
-                                                                            salvia PBR, banh mi bag before banksy hoodie
-                                                                            helvetica
-                                                                            they sold out farm-to-table.Trust fund seitan
-                                                                            letterpress, keytar raw denim keffiyeh etsy art
-                                                                            party
-                                                                            before they sold out master cleanse gluten-free
-                                                                            squid
-                                                                            scenester freegan cosby sweater. Fanny pack
-                                                                            portland
-                                                                            seitan DIY, art party locavore wolf cliche high
-                                                                            life
-                                                                            echo park Austin. Cred vinyl keffiyeh DIY salvia
-                                                                            PBR,
-                                                                            banh mi bag before banksy hoodie helvetica they
-                                                                            sold out
-                                                                            farm-to-table. Trust fund seitan letterpress,
-                                                                            keytar raw
-                                                                            denim keffiyeh etsy art party before they sold
-                                                                            out
-                                                                            master cleanse gluten-free squid scenester
-                                                                            freegan cosby
-                                                                            sweater. Fanny pack portland seitan DIY, art
-                                                                            party
-                                                                            locavore wolf cliche high life echo park Austin.
-                                                                            Cred
-                                                                            vinyl keffiyeh DIY salvia PBR, b
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- end modalbody -->
-                                                            <div class="modal-footer">
-                                                                <div class="border rounded m-2 w-100  ">
-                                                                    <div
-                                                                        class="d-flex chat-input-section align-items-start p-1">
-
-                                                                        <div class="flex-grow-1">
-                                                                            <div
-                                                                                class="position-relative d-flex align-items-start">
-                                                                                <input type="text" name="comment"
-                                                                                    class="form-control chat-input"
-                                                                                    placeholder="Yorum yap..">
-                                                                                <input type="hidden" name="task"
-                                                                                    value="e359a26e-e212-4a5b-927f-39017f7a41dd">
-                                                                                <div
-                                                                                    class="chat-input-links d-flex align-items-start">
-
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary mx-2"><i
-                                                                                            class="uil uil-message"></i></button>
-
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div><!-- /.modal-content -->
-                                                    </div><!-- /.modal-dialog -->
+                                            <div class="card-header ">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h4 class="text-muted">Gönderiler</h4>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button type="button" style="float: right"
+                                                            class="btn btn-soft-primary btn-rounded btn-sm "
+                                                            data-bs-toggle="modal" data-bs-target="#firstmodal">Gönderi
+                                                            Oluştur</button>
+                                                    </div>
                                                 </div>
-                                                {{-- Üyeler Modal End --}}
+                                            </div>
+
+
+                                            <div class="card-body">
+
+
+
+                                                @if ($news && count($news) > 0)
+                                                    @foreach ($news as $new)
+                                                        {{-- Üyeler - Modal --}}
+
+
+                                                        <div class="modal fade" id="news{{ $new->news_uuid }}"
+                                                            tabindex="-1" role="dialog" aria-labelledby="12345pTitle"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="12345pTitle">
+                                                                            Yorumlar</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+
+                                                                        @if (count($new->news_comments) > 0)
+                                                                            @foreach ($new->news_comments as $news_comment)
+                                                                                <div class="simplebar-content"
+                                                                                    style="padding: 0px 24px;">
+                                                                                    <div class="border-bottom py-3">
+                                                                                        <div class="dropdown "
+                                                                                            style="float: right">
+                                                                                            {{ $news_comment->updated_at->diffForHumans() }}
+                                                                                            {{-- <a class="btn btn-link text-dark dropdown-toggle shadow-none"
+                                                                                        href="#" role="button"
+                                                                                        data-bs-toggle="dropdown"
+                                                                                        aria-expanded="false">
+                                                                                        <i
+                                                                                            class="mdi mdi-chevron-down ms-1"></i>
+                                                                                    </a>
+
+                                                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                                                        style="">
+                                                                                        <form
+                                                                                            action=""
+                                                                                            method="post">
+                                                                                            <input type="hidden"
+                                                                                                name="_token"
+                                                                                                value="">
+                                                                                            <input type="hidden"
+                                                                                                name="comment"
+                                                                                                value="">
+                                                                                           
+                                                                                            <li><input type="submit"
+                                                                                                    class="dropdown-item"
+                                                                                                    value="Sil">
+                                                                                            </li>
+                                                                                        </form>
+                                                                                    </ul> --}}
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="d-flex align-items-center mb-3">
+
+                                                                                            @if ($news_comment->who_comment_user->profile_photo_path)
+                                                                                                <div
+                                                                                                    class="avatar align-self-center me-3">
+                                                                                                    <div
+                                                                                                        class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                                                        <img src="{{ asset($news_comment->who_comment_user->profile_photo_path) }}"
+                                                                                                            class="rounded-circle avatar-sm"
+                                                                                                            alt="">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            @else
+                                                                                                <div class="avatar mx-2 ">
+                                                                                                    <span
+                                                                                                        class="avatar-title rounded-circle bg-soft-primary font-size-16">
+                                                                                                        <div
+                                                                                                            class="rounded-circle avatar-sm    avatar-title  bg-soft-primary  font-size-26">
+                                                                                                            <i
+                                                                                                                class="bx bx-user-circle text-primary"></i>
+                                                                                                        </div>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            @endif
+
+
+                                                                                            <div class="flex-1">
+                                                                                                <h5
+                                                                                                    class="font-size-15 mb-1">
+                                                                                                    @if ($news_comment->who_comment_user->id == auth()->user()->id)
+                                                                                                        Sen
+                                                                                                    @else
+                                                                                                        {{ $news_comment->who_comment_user->name }}
+                                                                                                    @endif
+                                                                                                </h5>
+                                                                                                <a href="javascript: void(0);"
+                                                                                                    class="badge bg-soft-success text-success font-size-11">{{ $news_comment->who_comment_user->user_name }}</a>
+                                                                                            </div>
+                                                                                        </div>
+
+
+                                                                                        <p class="text-muted mb-4">
+
+                                                                                            {{ $news_comment->comment }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        @else
+                                                                            <div class="alert alert-primary"> <i
+                                                                                    class="uil-comment mx-2 font-size-18"></i>Henüz
+                                                                                Yorum Yok</div>
+                                                                        @endif
+
+                                                                    </div>
 
 
 
 
 
-                                                <div class="d-flex align-items-start mb-4 mt-5">
-                                                    @if ($new->posted_user->profile_photo_path)
-                                                        <div class="avatar align-self-center me-3">
-                                                            <img src=" {{ asset($new->posted_user->profile_photo_path) }}"
-                                                                class=" rounded-circle avatar">
+                                                                    <!-- end modalbody -->
+                                                                    <div class="modal-footer">
+                                                                        <div class="border rounded m-2 w-100  ">
+                                                                            <div
+                                                                                class="d-flex chat-input-section align-items-start p-1">
+
+                                                                                <div class="flex-grow-1">
+
+
+                                                                                    <form
+                                                                                        action="{{ route('store.comment.news.grup', $grup->grup_id) }}"
+                                                                                        method="post">
+                                                                                        @csrf
+
+                                                                                        <div
+                                                                                            class="position-relative d-flex align-items-start">
+                                                                                            <input type="text"
+                                                                                                name="comment"
+                                                                                                class="form-control chat-input"
+                                                                                                placeholder="Yorum yap..">
+                                                                                            <input type="hidden"
+                                                                                                name="grup"
+                                                                                                value="{{ $grup->grup_id }}">
+                                                                                            <input type="hidden"
+                                                                                                name="grup_news"
+                                                                                                value="{{ $new->news_uuid }}">
+                                                                                            {{-- <input type="hidden" name="grup_news"
+                                                                                        value="{{ $new->news_uuid }}"> --}}
+                                                                                            <div
+                                                                                                class="chat-input-links d-flex align-items-start">
+
+                                                                                                <button type="submit"
+                                                                                                    class="btn btn-primary mx-2"><i
+                                                                                                        class="uil uil-message"></i></button>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div><!-- /.modal-content -->
+                                                            </div><!-- /.modal-dialog -->
                                                         </div>
-                                                    @else
-                                                        <div class="avatar align-self-center me-3">
-                                                            <div
-                                                                class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
-                                                                <i class="bx bx-user-circle text-primary"></i>
+                                                        {{-- Üyeler Modal End --}}
+
+
+
+
+
+                                                        <div class="d-flex align-items-start mb-4 mt-5">
+                                                            @if ($new->posted_user->profile_photo_path)
+                                                                <div class="avatar align-self-center me-3">
+                                                                    <img src=" {{ asset($new->posted_user->profile_photo_path) }}"
+                                                                        class=" rounded-circle avatar">
+                                                                </div>
+                                                            @else
+                                                                <div class="avatar align-self-center me-3">
+                                                                    <div
+                                                                        class="avatar-title  rounded-circle avatar bg-soft-primary text-info font-size-24">
+                                                                        <i class="bx bx-user-circle text-primary"></i>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <h5 class="font-size-15 mb-1 text-truncate"><a
+                                                                        href="pages-profile.html"
+                                                                        class="text-dark">{{ $new->posted_user->user_name }}</a>
+                                                                </h5>
+
+                                                                <span class="text-mute mb-0">
+                                                                    {{ $new->updated_at->diffForHumans() }}</span>
+
+
+
                                                             </div>
+
+
+
+
+                                                            <div class="flex-shrink-0 dropdown">
+                                                                <a class="text-body dropdown-toggle font-size-16"
+                                                                    href="#" role="button"
+                                                                    data-bs-toggle="dropdown" aria-haspopup="true">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-more-horizontal icon-xs">
+                                                                        <circle cx="12" cy="12"
+                                                                            r="1">
+                                                                        </circle>
+                                                                        <circle cx="19" cy="12"
+                                                                            r="1">
+                                                                        </circle>
+                                                                        <circle cx="5" cy="12"
+                                                                            r="1">
+                                                                        </circle>
+                                                                    </svg>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                                    <a class="dropdown-item" href="#">Action</a>
+                                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                                </div>
+                                                            </div><!-- end dropdown -->
                                                         </div>
-                                                    @endif
 
-
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <h5 class="font-size-15 mb-1 text-truncate"><a
-                                                                href="pages-profile.html"
-                                                                class="text-dark">{{ $new->posted_user->user_name }}</a>
+                                                        <h5 class="">
+                                                            <a href="#"
+                                                                class="text-dark lh-base"><b>{{ $new->title }}sadsa</b></a>
                                                         </h5>
 
-                                                        <span class="text-mute mb-0">
-                                                            {{ $new->updated_at->diffForHumans() }}</span>
+                                                        <p class="mb-0">{{ $new->note }}</p>
 
-
-
-                                                    </div>
-
-
-
-
-                                                    <div class="flex-shrink-0 dropdown">
-                                                        <a class="text-body dropdown-toggle font-size-16" href="#"
-                                                            role="button" data-bs-toggle="dropdown"
-                                                            aria-haspopup="true">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-more-horizontal icon-xs">
-                                                                <circle cx="12" cy="12" r="1">
-                                                                </circle>
-                                                                <circle cx="19" cy="12" r="1">
-                                                                </circle>
-                                                                <circle cx="5" cy="12" r="1">
-                                                                </circle>
-                                                            </svg>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                            <a class="dropdown-item" href="#">Action</a>
-                                                            <a class="dropdown-item" href="#">Remove</a>
-                                                        </div>
-                                                    </div><!-- end dropdown -->
-                                                </div>
-
-                                                <h5 class="">
-                                                    <a href="#"
-                                                        class="text-dark lh-base"><b>{{ $new->title }}sadsa</b></a>
-                                                </h5>
-
-                                                <p class="mb-0">{{ $new->note }}</p>
-
-                                                {{-- <div class="mt-2">
+                                                        {{-- <div class="mt-2">
                                                     <span class="badge badge-soft-danger ">Full Stack </span>
                                                     <span class="badge badge-soft-danger ">Full </span>
                                                     <span class="badge badge-soft-danger ">Full Developer</span>
@@ -1012,163 +1064,405 @@ student
                                                     <span class="badge badge-soft-danger ">Full Stack Developer</span>
                                                     <span class="badge badge-soft-danger ">Full Stack Developer</span>
                                                 </div> --}}
-                                                <div class="col-12  my-1 ">
+                                                        <div class="col-12  my-1 ">
 
-                                                    <div class="card-body">
-                                                        <div class="row">
+                                                            <div class="card-body">
+                                                                <div class="row">
 
-                                                            @if ($new->images_paths)
-                                                                @foreach ($new->images_paths as $image)
-                                                                    <div class="col-4 mt-2">
-                                                                        <div>
-                                                                            <a href="{{ asset($image) }}"
-                                                                                class="thumb preview-thumb image-popup-desc "
-                                                                                data-title="{{ $new->title }}"
-                                                                                data-description="{{ $new->note }}">
-                                                                                <img src="{{ asset($image) }}"
-                                                                                    class="img-fluid"
-                                                                                    alt="work-thumbnail">
-                                                                            </a>
-                                                                        </div>
-                                                                    </div><!-- end col -->
-                                                                @endforeach
-                                                            @endif
+                                                                    @if ($new->images_paths)
+                                                                        @foreach ($new->images_paths as $image)
+                                                                            <div class="col-4 mt-2">
+                                                                                <div>
+                                                                                    <a href="{{ asset($image) }}"
+                                                                                        class="thumb preview-thumb image-popup-desc "
+                                                                                        data-title="{{ $new->title }}"
+                                                                                        data-description="{{ $new->note }}">
+                                                                                        <img src="{{ asset($image) }}"
+                                                                                            class="img-fluid"
+                                                                                            alt="work-thumbnail">
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div><!-- end col -->
+                                                                        @endforeach
+                                                                    @endif
 
-                                                        </div><!-- end row -->
+                                                                </div><!-- end row -->
+                                                            </div>
+
+                                                        </div> <!-- end col -->
+
+
+                                                        <ul class="list-inline product-review-link  mt-3">
+                                                            <li class="list-inline-item">
+                                                                <a href="#" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title=""
+                                                                    data-bs-original-title="Beğen"><i
+                                                                        class="bx bx-like"></i></a>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <a href="#" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title=""
+                                                                    data-bs-original-title="Yorum Yap"><i
+                                                                        class="bx bx-comment-dots"></i></a>
+                                                            </li>
+                                                            <li style="float: right" class="list-inline-item">
+                                                                @if (count($new->news_comments) > 0)
+                                                                    <span style="float:right;"
+                                                                        class=" badge badge-soft-primary ">
+                                                                        {{ count($new->news_comments) }} Yorum Var</span>
+                                                                @else
+                                                                    <span style="float:right;"
+                                                                        class=" badge badge-soft-primary ">
+                                                                        Yorum Yok</span>
+                                                                @endif
+                                                            </li>
+                                                        </ul>
+
+                                                        {{-- <hr class="my-2 text-muted"> --}}
+
+                                                        <div class="card">
+
+                                                            <button style="float: right" type="button"
+                                                                class="btn btn-primary btn-rounded btn-sm font-size-16 "
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#news{{ $new->news_uuid }}"><span
+                                                                    class="align-middle">Yorum Yap </span><i
+                                                                    class="far fa-comments align-middle mt-1  text-white font-size-18"></i>
+                                                            </button>
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                        role="alert">
+                                                        <i
+                                                            class="uil-minus-circle
+                    text-primary font-size-16 me-2"></i>
+                                                        Post Bulunmamakta
                                                     </div>
+                                                @endif
 
-                                                </div> <!-- end col -->
-
-
-                                                <ul class="list-inline product-review-link  mt-3">
-                                                    <li class="list-inline-item">
-                                                        <a href="#" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title=""
-                                                            data-bs-original-title="Beğen"><i class="bx bx-like"></i></a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a href="#" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title=""
-                                                            data-bs-original-title="Yorum Yap"><i
-                                                                class="bx bx-comment-dots"></i></a>
-                                                    </li>
-                                                </ul>
-
-                                                {{-- <hr class="my-2 text-muted"> --}}
-
-                                                <div class="card">
-
-                                                    <button style="float: right" type="button"
-                                                        class="btn btn-primary btn-rounded btn-sm font-size-16 "
-                                                        data-bs-toggle="modal" data-bs-target="#asdfg">Yorum Yok <i
-                                                            class="uil-user-plus text-white font-size-16"></i></button>
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="alert alert-primary">Post Bulunmamakta</div>
-                                        @endif
-
-
+                                            </div>
+                                        </div>
 
                                     </div> <!-- end tab pane -->
 
                                     <div class="tab-pane" id="navpills2-profile" role="tabpanel">
-                                        {{-- deneme1453 --}}
+
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="card">
                                                     <div class="card-header d-flex align-items-center">
 
                                                         <div class="flex-grow-1">
-                                                            <div class="card-title d-inline"><b>Tasklarınız</b></div>
-                                                            @role('teacher')
-                                                                <!-- Scrollable modal -->
-                                                                <button style="float: right" type="button"
-                                                                    class="btn btn-primary btn-rounded btn-sm font-size-16 "
-                                                                    data-bs-toggle="modal" data-bs-target="#task-create">Task
-                                                                    Ekle
-                                                                </button>
-                                                            @endrole
+                                                            <div class="card-title d-inline">
+                                                                
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <h4 class="text-muted">Tasklarınız</h4>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        @role('student')
+                                                                        @if ($tasks)
+                                                                            <button
+                                                                                class="btn btn-soft-primary btn-rounded collapsed btn-sm"
+                                                                                type="button" data-bs-toggle="collapse"
+                                                                                data-bs-target=".multi-collapse"
+                                                                                aria-expanded="false"
+                                                                                aria-controls="multiCollapseExample1 multiCollapseExample2"
+                                                                                style="float: right;">Görünümü Değiştir</button>
+                                                                        @endif
+                                                                    @endrole
+                                                                    @role('teacher')
+                                                                    <!-- Scrollable modal -->
+                                                                    <button style="float: right" type="button"
+                                                                        class="btn btn-soft-primary btn-rounded collapsed btn-sm"
+                                                                        data-bs-toggle="modal" data-bs-target="#task-create">Task
+                                                                        Ekle
+                                                                    </button>
+                                                                @endrole
+                                                                </div>
+                                                                </div>
+
+                                                          
+                                                            </div>
+
+
+                                                      
                                                         </div>
 
                                                     </div>
                                                     <div class="card-body">
-                                                        @if ($tasks)
-                                                            <div class="row justify-content-center">
-                                                                <div class="col-xl-12">
-                                                                    <div class="timeline-sec timeline-vertical">
-                                                                        <div class="wrapper">
-                                                                            <div class="timeline-main">
 
-                                                                                <div class="timeline-row">
+                                                        @role('student')
+                                                            @if ($tasks)
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <div class="multi-collapse collapse show"
+                                                                            id="multiCollapseExample1" style="">
+                                                                            <div class="card card-body mb-0">
+
+                                                                                <div class="row justify-content-center">
+                                                                                    <div class="col-xl-12">
+                                                                                        <div
+                                                                                            class="timeline-sec timeline-vertical">
+                                                                                            <div class="wrapper">
+                                                                                                <div class="timeline-main">
+
+                                                                                                    <div class="timeline-row">
 
 
 
-                                                                                    @foreach ($tasks as $task)
-                                                                                        <div class="timeline-box ">
-                                                                                            <div
-                                                                                                class="timeline-date bg-soft-{{ $task->status_color }} border-{{ $task->status_color }} ">
-                                                                                                <div
-                                                                                                    class="date text-center ">
-                                                                                                    <h3
-                                                                                                        class="mb-1 text-{{ $task->status_color }} font-size-20 ">
-                                                                                                        {{ $task->first_letter }}
-                                                                                                    </h3>
-                                                                                                    <p
-                                                                                                        class="mb-0 d-none d-md-block  text-{{ $task->status_color }}">
-                                                                                                        {{ $task->date_counter }}
-                                                                                                    </p>
+                                                                                                        @foreach ($tasks as $task)
+                                                                                                            <div
+                                                                                                                class="timeline-box ">
+                                                                                                                <div
+                                                                                                                    class="timeline-date bg-soft-{{ $task->status_color }} border-{{ $task->status_color }} ">
+                                                                                                                    <div
+                                                                                                                        class="date text-center ">
+                                                                                                                        <h3
+                                                                                                                            class="mb-1 text-{{ $task->status_color }} font-size-20 ">
+                                                                                                                            {{ $task->first_letter }}
+                                                                                                                        </h3>
+                                                                                                                        <p
+                                                                                                                            class="mb-0 d-none d-md-block  text-{{ $task->status_color }}">
+                                                                                                                            {{ $task->date_counter }}
+                                                                                                                        </p>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div
+                                                                                                                    class="timeline-content ">
+                                                                                                                    <h3
+                                                                                                                        class="font-size-18  ">
+                                                                                                                        {{ $task->title }}
+                                                                                                                        <span
+                                                                                                                            style="float:right;"
+                                                                                                                            class=" badge badge-soft-{{ $task->status_color }} ">{{ $task->status_tr }}</span>
+                                                                                                                    </h3>
+                                                                                                                    <p
+                                                                                                                        class="text-muted mb-0 mt-2 pt-1">
+                                                                                                                        {{ $task->note }}
+                                                                                                                    </p>
+                                                                                                                    <a href="{{ route('details.task', $task->task_id) }}"
+                                                                                                                        class="btn btn-{{ $task->status_color }} btn-rounded waves-effect waves-light mt-4">Git
+                                                                                                                    </a>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        @endforeach
+
+
+
+                                                                                                        <div
+                                                                                                            class="horizontal-line">
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="verticle-line">
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="corner top">
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="corner bottom">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="timeline-row">
+                                                                                                        <div
+                                                                                                            class="timeline-box">
+
+                                                                                                        </div>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="timeline-content ">
-                                                                                                <h3 class="font-size-18  ">
-                                                                                                    {{ $task->title }}
-                                                                                                    <span
-                                                                                                        style="float:right;"
-                                                                                                        class=" badge badge-soft-{{ $task->status_color }} ">{{ $task->status_tr }}</span>
-                                                                                                </h3>
-                                                                                                <p
-                                                                                                    class="text-muted mb-0 mt-2 pt-1">
-                                                                                                    {{ $task->note }}</p>
-                                                                                                <a href="{{ route('details.task', $task->task_id) }}"
-                                                                                                    class="btn btn-{{ $task->status_color }} btn-rounded waves-effect waves-light mt-4">Git
-                                                                                                </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end col -->
+                                                                    <div class="col-12">
+                                                                        <div class="multi-collapse collapse"
+                                                                            id="multiCollapseExample2" style="">
+
+                                                                            @if ($tasks)
+                                                                                <div class="accordion" id="accordionExample">
+
+                                                                                    {{--  --}}
+
+                                                                                    @foreach ($tasks as $task)
+                                                                                        <div class="accordion-item">
+                                                                                            <h2 class="accordion-header"
+                                                                                                id="{{ $task->id }}">
+                                                                                                <button
+                                                                                                    class="accordion-button fw-medium collapsed"
+                                                                                                    type="button"
+                                                                                                    data-bs-toggle="collapse"
+                                                                                                    data-bs-target="#task-{{ $task->id }}"
+                                                                                                    aria-expanded="false"
+                                                                                                    aria-controls="collapseOne">
+
+                                                                                                    <a href="{{ route('details.task', $task->task_id) }}"
+                                                                                                        class="d-block mx-3"
+                                                                                                        data-bs-toggle="tooltip"
+                                                                                                        data-placement="top"
+                                                                                                        title="">
+                                                                                                        <div class="avatar">
+                                                                                                            <div
+                                                                                                                class="avatar-title rounded-circle bg-{{ $task->status_color }} ">
+                                                                                                                {{ $task->first_letter }}
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </a>
+                                                                                                    <strong
+                                                                                                        class="d-block  text-muted ">{{ $task->title }}</strong>
+
+                                                                                                </button>
+
+                                                                                            </h2>
+                                                                                            <div id="task-{{ $task->id }}"
+                                                                                                class="accordion-collapse collapse"
+                                                                                                aria-labelledby="{{ $task->id }}"
+                                                                                                data-bs-parent="#accordionExample"
+                                                                                                style="">
+                                                                                                <div class="accordion-body">
+
+
+                                                                                                    <div
+                                                                                                        class="d-flex align-items-start">
+
+                                                                                                        <div
+                                                                                                            class="flex-grow-1 overflow-hidden mx-2">
+                                                                                                            <span
+                                                                                                                class="badge badge-soft-{{ $task->status_color }} my-1">{{ $task->status_tr }}</span>
+                                                                                                            <span
+                                                                                                                style="float:right;"
+                                                                                                                class="text-muted">{{ $task->date_counter }}</span>
+                                                                                                            {{-- <strong class="d-block">This is the second item's accordion body.</strong>  --}}
+                                                                                                            <small
+                                                                                                                class="mt-2 text-muted d-block">{{ $task->note }}</small>
+                                                                                                        </div>
+
+                                                                                                    </div>
+
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     @endforeach
 
-
-
-                                                                                    <div class="horizontal-line"></div>
-                                                                                    <div class="verticle-line"></div>
-                                                                                    <div class="corner top"></div>
-                                                                                    <div class="corner bottom"></div>
+                                                                                    {{--  --}}
                                                                                 </div>
-                                                                                <div class="timeline-row">
-                                                                                    <div class="timeline-box">
+                                                                            @else
+                                                                                <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                                                    role="alert">
+                                                                                    <i
+                                                                                        class="uil-minus-circle
+                                                                 text-primary font-size-16 me-2"></i>
+                                                                                    Etiketli Olduğunuz Task Yok
+                                                                                </div>
+                                                                            @endif
+
+
+                                                                        </div>
+                                                                    </div><!-- end col -->
+                                                                </div>
+                                                            @else
+                                                                <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                                    role="alert">
+                                                                    <i
+                                                                        class="uil-minus-circle
+                                    text-primary font-size-16 me-2"></i>
+                                                                    Henüz Task Yok
+                                                                </div>
+                                                            @endif
+                                                        @endrole
+
+
+                                                        @role('teacher')
+                                                            @if (count($mySharedTasks) > 0)
+                                                                <div class="accordion" id="accordionExample">
+
+                                                                    {{--  --}}
+
+                                                                    @foreach ($mySharedTasks as $mySharedTask)
+                                                                        <div class="accordion-item">
+                                                                            <h2 class="accordion-header"
+                                                                                id="{{ $mySharedTask->id }}">
+                                                                                <button
+                                                                                    class="accordion-button fw-medium collapsed"
+                                                                                    type="button" data-bs-toggle="collapse"
+                                                                                    data-bs-target="#task-{{ $mySharedTask->id }}"
+                                                                                    aria-expanded="false"
+                                                                                    aria-controls="collapseOne">
+
+                                                                                    <a href="{{ route('details.task', $mySharedTask->task_id) }}"
+                                                                                        class="d-block mx-3"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-placement="top" title="">
+                                                                                        <div class="avatar">
+                                                                                            <div
+                                                                                                class="avatar-title rounded-circle bg-{{ $mySharedTask->status_color }} ">
+                                                                                                {{ $mySharedTask->first_letter }}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                    <strong
+                                                                                        class="d-block  text-muted ">{{ $mySharedTask->title }}</strong>
+
+                                                                                </button>
+
+                                                                            </h2>
+                                                                            <div id="task-{{ $mySharedTask->id }}"
+                                                                                class="accordion-collapse collapse"
+                                                                                aria-labelledby="{{ $mySharedTask->id }}"
+                                                                                data-bs-parent="#accordionExample"
+                                                                                style="">
+                                                                                <div class="accordion-body">
+
+
+                                                                                    <div class="d-flex align-items-start">
+
+                                                                                        <div
+                                                                                            class="flex-grow-1 overflow-hidden mx-2">
+                                                                                            <span
+                                                                                                class="badge badge-soft-{{ $mySharedTask->status_color }} my-1">{{ $mySharedTask->status_tr }}</span>
+                                                                                            <span style="float:right;"
+                                                                                                class="text-muted">{{ $mySharedTask->date_counter }}</span>
+                                                                                            {{-- <strong class="d-block">This is the second item's accordion body.</strong>  --}}
+                                                                                            <small
+                                                                                                class="mt-2 text-muted d-block">{{ $mySharedTask->note }}</small>
+                                                                                        </div>
 
                                                                                     </div>
+
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    @endforeach
+
+                                                                    {{--  --}}
                                                                 </div>
-                                                            </div>
-                                                        @else
-                                                            <div class="alert alert-info alert-outline alert-dismissible fade show"
-                                                                role="alert">
-                                                                <i
-                                                                    class="uil-minus-circle
-                                                    text-info font-size-16 me-2"></i>
-                                                                Etiketlediğiniz Kullanıcılar <b> Yakında</b> Burada Olacak
-                                                            </div>
-                                                        @endif
+                                                            @else
+                                                                <div class="alert alert-primary alert-outline alert-dismissible fade show"
+                                                                    role="alert">
+                                                                    <i
+                                                                        class="uil-minus-circle
+                                            text-primary font-size-16 me-2"></i>
+                                                                    Bu Grupta Hiç Task Paylaşmadınız
+                                                                </div>
+                                                            @endif
+                                                        @endrole
                                                     </div>
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
 
                                     </div> <!-- end tab pane -->
+
+
+
+                                    {{--   
+    burada tasklar bulunmakta ihtiyac oldugu zaman tabı kullanabilirsin
+    
                                     <div class="tab-pane" id="navpills2-messages" role="tabpanel">
                                         <div class="card-header d-flex align-items-center">
 
@@ -1187,7 +1481,7 @@ student
                                         @if ($tasks)
                                             <div class="accordion" id="accordionExample">
 
-                                                {{--  --}}
+                                           
 
                                                 @foreach ($tasks as $task)
                                                     <div class="accordion-item">
@@ -1227,7 +1521,7 @@ student
                                                                             class="badge badge-soft-{{ $task->status_color }} my-1">{{ $task->status_tr }}</span>
                                                                         <span style="float:right;"
                                                                             class="text-muted">{{ $task->date_counter }}</span>
-                                                                        {{-- <strong class="d-block">This is the second item's accordion body.</strong>  --}}
+                                                                       
                                                                         <small
                                                                             class="mt-2 text-muted d-block">{{ $task->note }}</small>
                                                                     </div>
@@ -1239,7 +1533,7 @@ student
                                                     </div>
                                                 @endforeach
 
-                                                {{--  --}}
+                                        
                                             </div>
                                         @else
                                             <div class="alert alert-primary alert-outline alert-dismissible fade show"
@@ -1252,7 +1546,7 @@ student
                                         @endif
 
                                     </div> <!-- end tab pane -->
-
+ --}}
 
 
 
@@ -1261,131 +1555,46 @@ student
 
 
 
-                                        <div class="d-flex align-items-start mb-4">
-                                            <div class="flex-shrink-0 avatar rounded-circle me-3">
-                                                <img src="assets/images/users/avatar-1.jpg" alt=""
-                                                    class="img-fluid rounded-circle">
-                                            </div>
-                                            <div class="flex-grow-1 overflow-hidden">
-                                                <h5 class="font-size-15 mb-1 text-truncate"><a href="pages-profile.html"
-                                                        class="text-dark">Donald
-                                                        Risher</a></h5>
-                                                <span class="text-mute mb-0">1 saat önce</span>
-
-                                            </div>
-
-
-                                            <div class="flex-shrink-0 dropdown">
-                                                <a class="text-body dropdown-toggle font-size-16" href="#"
-                                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="feather feather-more-horizontal icon-xs">
-                                                        <circle cx="12" cy="12" r="1"></circle>
-                                                        <circle cx="19" cy="12" r="1"></circle>
-                                                        <circle cx="5" cy="12" r="1"></circle>
-                                                    </svg>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Remove</a>
-                                                </div>
-                                            </div><!-- end dropdown -->
-                                        </div>
-
-                                        <h5 class="mt-1">
-                                            <a href="" class="text-dark lh-base">Stylish Cricket &amp; Walking
-                                                Light Weight Shoes</a>
-                                        </h5>
-                                        <p class="mb-0">
-                                            Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
-                                            art party before they sold out master cleanse gluten-free squid
-                                            scenester freegan cosby sweater. Fanny pack portland seitan DIY,
-                                            art party locavore wolf cliche high life echo park Austin. Cred
-                                            vinyl keffiyeh DIY salvia PBR, banh mi bag before banksy hoodie
-                                            helvetica they sold out farm-to-table.Trust fund seitan letterpress, keytar raw
-                                            denim keffiyeh etsy art party before they sold out master cleanse gluten-free
-                                            squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party
-                                            locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia
-                                            PBR, banh mi bag before banksy hoodie helvetica they sold out farm-to-table.
-
-                                            Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before
-                                            they sold out master cleanse gluten-free squid scenester freegan cosby sweater.
-                                            Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo
-                                            park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi bag before banksy
-                                            hoodie helvetica they sold out farm-to-table.
-
-
-                                        </p>
-                                        <span class="badge badge-soft-danger my-2 mt-2">Full Stack </span>
-                                        <span class="badge badge-soft-danger my-2 mt-2">Full </span>
-                                        <span class="badge badge-soft-danger my-2 mt-2">Full Developer</span>
-                                        <span class="badge badge-soft-danger my-2 mt-2">Full Stack Developer</span>
-                                        <div class="">
-                                            <div class="border rounded m-2">
-                                                <div class="d-flex chat-input-section align-items-start p-1">
-
-                                                    <div class="flex-grow-1">
-                                                        <div class="position-relative d-flex align-items-start">
-                                                            <input type="text" name="comment"
-                                                                class="form-control chat-input" placeholder="Yorum yap..">
-                                                            <input type="hidden" name="task"
-                                                                value="e359a26e-e212-4a5b-927f-39017f7a41dd">
-                                                            <div class="chat-input-links d-flex align-items-start">
-
-                                                                <button type="submit" class="btn btn-primary mx-2"><i
-                                                                        class="uil uil-message"></i></button>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <hr class="my-4 text-muted">
+                                    </div>
+                                    <hr class="my-4 text-muted">
 
 
 
 
 
-                                    </div><!-- end tab pane -->
-                                </div>
-
-
+                                </div><!-- end tab pane -->
                             </div>
 
-                        </div><!-- end card -->
-                    </div>
+
+                        </div>
+
+                    </div><!-- end card -->
+                </div>
 
 
-                </div><!-- end card -->
-            </div>
-            <div class="card">
-                <div class="card-header d-flex align-items-center">
+            </div><!-- end card -->
+        </div>
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
 
-                    <div class="flex-grow-1">
-                        <div class="card-title d-inline"><b>Grup</b></div>
+                <div class="flex-grow-1">
+                    <div class="card-title d-inline"><b>Grup</b></div>
 
-                        <!-- Scrollable modal -->
-                        <button style="float: right" type="button"
-                            class="btn btn-danger btn-rounded btn-sm font-size-16 " data-bs-toggle="modal"
-                            data-bs-target="#exampleModalScrollable">Something <i
-                                class="uil-user-plus text-white font-size-16"></i></button>
+                    <!-- Scrollable modal -->
+                    <button style="float: right" type="button" class="btn btn-danger btn-rounded btn-sm font-size-16 "
+                        data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">Something <i
+                            class="uil-user-plus text-white font-size-16"></i></button>
 
-
-                    </div>
 
                 </div>
-                <div class="card-body">
 
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
+            </div>
+            <div class="card-body">
 
-                            {{-- <div class="mb-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+
+                        {{-- <div class="mb-4">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div><h5 class="font-size-14 mb-0">Month</h5></div>
                                     <div class="form-check form-switch font-size-20 ms-3" onclick="check()">
@@ -1397,82 +1606,82 @@ student
                             </div> --}}
 
 
-                            <div class="row">
+                        <div class="row">
 
 
 
-                                <div class="col-xl-3">
-                                    <div class="card pricing-box">
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <h5 class="mb-1 font-size-20">Takvim</h5>
-                                            </div>
-                                            <hr class="my-4 text-muted">
-                                            <div class="mt-4">
-                                                <a href="#" class="btn btn-primary w-100">Git</a>
-                                            </div>
+                            <div class="col-xl-3">
+                                <div class="card pricing-box">
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <h5 class="mb-1 font-size-20">Takvim</h5>
+                                        </div>
+                                        <hr class="my-4 text-muted">
+                                        <div class="mt-4">
+                                            <a href="#" class="btn btn-primary w-100">Git</a>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end col -->
-
-                                <div class="col-xl-3">
-                                    <div class="card pricing-box">
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <h5 class="mb-1 font-size-20">Programlar</h5>
-                                            </div>
-                                            <hr class="my-4 text-muted">
-                                            <div class="mt-4">
-                                                <a href="#" class="btn btn-primary w-100">Git</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-
-
-                                <div class="col-xl-3">
-                                    <div class="card pricing-box">
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <h5 class="mb-1 font-size-20">Görevler</h5>
-                                            </div>
-                                            <hr class="my-4 text-muted">
-                                            <div class="mt-4">
-                                                <a href="#" class="btn btn-primary w-100">Git</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-
-                                <div class="col-xl-3">
-                                    <div class="card pricing-box">
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <h5 class="mb-1 font-size-20">Raporlar</h5>
-                                            </div>
-                                            <hr class="my-4 text-muted">
-                                            <div class="mt-4">
-                                                <a href="#" class="btn btn-primary w-100">Git</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-
-
                             </div>
-                            <!-- end row -->
+                            <!-- end col -->
+
+                            <div class="col-xl-3">
+                                <div class="card pricing-box">
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <h5 class="mb-1 font-size-20">Programlar</h5>
+                                        </div>
+                                        <hr class="my-4 text-muted">
+                                        <div class="mt-4">
+                                            <a href="#" class="btn btn-primary w-100">Git</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+
+
+                            <div class="col-xl-3">
+                                <div class="card pricing-box">
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <h5 class="mb-1 font-size-20">Görevler</h5>
+                                        </div>
+                                        <hr class="my-4 text-muted">
+                                        <div class="mt-4">
+                                            <a href="#" class="btn btn-primary w-100">Git</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-xl-3">
+                                <div class="card pricing-box">
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <h5 class="mb-1 font-size-20">Raporlar</h5>
+                                        </div>
+                                        <hr class="my-4 text-muted">
+                                        <div class="mt-4">
+                                            <a href="#" class="btn btn-primary w-100">Git</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+
+
                         </div>
+                        <!-- end row -->
                     </div>
-
-
-
                 </div>
+
+
+
             </div>
         </div>
+    </div>
 
     </div>
 @endsection
