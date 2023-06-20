@@ -27,11 +27,11 @@ trait GrupNewsTrait
         $grup = Grup::where('grup_id', $grup_id)->first();
 
         $grupNews = GrupNews::where('grup_id', $grup->id)
-        ->with('post_tagged_user')
-        ->with('posted_user')
-        ->with('news_comments')
-        ->orderBy('updated_at','desc')
-        ->get();
+            ->with('post_tagged_user')
+            ->with('posted_user')
+            ->with('news_comments')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         foreach ($grupNews as $new) {
             $new->images_paths = json_decode($new->images_paths);
@@ -69,14 +69,14 @@ trait GrupNewsTrait
 
 
             if ($news->save()) {
-              
-                // News id'yi alır 
-               
-               if($request->tagged_users){
 
-                   $news_id = $news->getKey();
-                   
-                   $this->storeGrupNewsTaggedUser($request->tagged_users, $grup, $news_id);
+                // News id'yi alır 
+
+                if ($request->tagged_users) {
+
+                    $news_id = $news->getKey();
+
+                    $this->storeGrupNewsTaggedUser($request->tagged_users, $grup, $news_id);
                 }
 
                 return true;
@@ -90,9 +90,58 @@ trait GrupNewsTrait
     }
 
 
+    function deleteNews($request)
+    {
+        $grupNews = GrupNews::where('news_uuid', $request->news)->first();
+
+        if ($grupNews) {
+
+            if ($grupNews->delete()) {
+
+                
+                if ($grupNews->images_paths &&  (count(json_decode($grupNews->images_paths)) > 0)) {
+                    $deleted = 0;
+                    $deleted = 0;
+
+                    $grupNews->images_paths = json_decode($grupNews->images_paths);
+
+
+                    foreach ($grupNews->images_paths as  $images_path) {
+                        if (File::exists($images_path)) {
+
+                            if (File::delete($images_path)) {
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            } else {
+
+                return false;
+            }
+        }
+    }
+
+
+    function isGrupTeacherOrNewsOwner($request)
+    {
+         $grupNews = GrupNews::where('news_uuid', $request->news)->with('grup_info')->first();
+       
+        $res = false;
+
+        if (auth()->user()->id  == $request->posted_user_id ||   auth()->user()->id  == $grupNews->grup_info->teacher_id) {
+         
+            return $res = true;
+        }
+        
+        return $res;
+    }
+
+
     function storeGrupNewsTaggedUser($tagged_users, $grup, $news_id)
     {
-    
+
 
         foreach ($tagged_users as $tagged_user) {
 

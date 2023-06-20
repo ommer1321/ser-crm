@@ -22,7 +22,7 @@ class TaskCommentController extends Controller
 
     if(! $checkUserTaggedToTask){
 
-      return redirect()->back()->with('failed', 'Bu Taskta Yorum Yapamazsınız');
+      return redirect()->route('index.home')->with('failed', 'Bu Tasktan Çıkarıldınız Yorum Yapamazsınız');
 
     }
 

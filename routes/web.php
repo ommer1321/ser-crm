@@ -127,7 +127,11 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
             Route::post('/{grup_id}/store', [App\Http\Controllers\Teacher\Grup\GrupNewsCommentController::class, 'store'])->name('store.comment.news.grup');
         });
 
-        //  student ve teacher eklenecek gruba alınacak news
+        Route::group(['prefix' => 'news', 'middleware' => ['auth', 'role:teacher|student']], function () {
+            //  student ve teacher eklenecek gruba alınacak news
         Route::post('/{grup_id}/store', [App\Http\Controllers\Teacher\Grup\GrupNewsController::class, 'store'])->name('store.news.grup');
+        Route::delete('/{grup_id}/delete', [App\Http\Controllers\Teacher\Grup\GrupNewsController::class, 'delete'])->name('delete.news.grup');
+    });
+  
     });
 });

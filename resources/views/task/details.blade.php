@@ -542,47 +542,50 @@
                                                                                 <p class=" text-muted font-size-13"
                                                                                     style="float: right">
 
+                                                                             <div class="d-flex justify-content-center align-item-center text-muted" style="float: right"><span>       {{ $comment->created_at->diffForHumans() }}</span>
+                                                                           
+                                                                                @if ($comment->auth)
+                                                                                <div
+                                                                                    class="dropdown " style="float: right">
+                                                                                  
+                                                                                    <a class="btn btn-link text-dark dropdown-toggle shadow-none"
+                                                                                        href="#"
+                                                                                        role="button"
+                                                                                        data-bs-toggle="dropdown"
+                                                                                        aria-expanded="false">
+                                                                                        <i
+                                                                                            class="mdi mdi-chevron-down ms-1"></i>
+                                                                                    </a>
 
-                                                                                    @if ($comment->auth)
-                                                                                        <div
-                                                                                            class="dropdown "style="float: right">
-                                                                                            {{ $comment->created_at->diffForHumans() }}
-                                                                                            <a class="btn btn-link text-dark dropdown-toggle shadow-none"
-                                                                                                href="#"
-                                                                                                role="button"
-                                                                                                data-bs-toggle="dropdown"
-                                                                                                aria-expanded="false">
-                                                                                                <i
-                                                                                                    class="mdi mdi-chevron-down ms-1"></i>
-                                                                                            </a>
-
-                                                                                            <ul class="dropdown-menu dropdown-menu-end"
-                                                                                                style="">
-
-
-                                                                                                <form
-                                                                                                    action="{{ route('delete.comment.task') }}"
-                                                                                                    method="post">
-                                                                                                    @csrf
-                                                                                                    <input type="hidden"
-                                                                                                        name="comment"
-                                                                                                        value="{{ $comment->comment_uuid }}">
-                                                                                                    <input type="hidden"
-                                                                                                        name="_token"
-                                                                                                        value="1Q5wcJa3kNR8qmdqMzmK9Xc5aTS66wuWHrQ96sYD">
-                                                                                                    <li><input
-                                                                                                            type="submit"
-                                                                                                            class="dropdown-item"
-                                                                                                            value="Sil">
-                                                                                                    </li>
-
-                                                                                                </form>
+                                                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                                                        style="">
 
 
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    @endif
+                                                                                        <form
+                                                                                            action="{{ route('delete.comment.task') }}"
+                                                                                            method="post">
+                                                                                            @csrf
+                                                                                            <input type="hidden"
+                                                                                                name="comment"
+                                                                                                value="{{ $comment->comment_uuid }}">
+                                                                                            <input type="hidden"
+                                                                                                name="_token"
+                                                                                                value="1Q5wcJa3kNR8qmdqMzmK9Xc5aTS66wuWHrQ96sYD">
+                                                                                            <li><input
+                                                                                                    type="submit"
+                                                                                                    class="dropdown-item"
+                                                                                                    value="Sil">
+                                                                                            </li>
 
+                                                                                        </form>
+
+
+                                                                                    </ul>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            </div>
+                                                                                  
                                                                                 </p>
                                                                                 <div
                                                                                     class="d-flex align-items-center mb-3">

@@ -1019,33 +1019,47 @@ student
 
 
 
-
+                                                            @if (Auth::user()->id == $new->posted_user_id || Auth::user()->id == $new->grup_info->teacher_id)
+                                                          
                                                             <div class="flex-shrink-0 dropdown">
-                                                                <a class="text-body dropdown-toggle font-size-16"
-                                                                    href="#" role="button"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="2"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="feather feather-more-horizontal icon-xs">
-                                                                        <circle cx="12" cy="12"
-                                                                            r="1">
-                                                                        </circle>
-                                                                        <circle cx="19" cy="12"
-                                                                            r="1">
-                                                                        </circle>
-                                                                        <circle cx="5" cy="12"
-                                                                            r="1">
-                                                                        </circle>
-                                                                    </svg>
-                                                                </a>
-                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                                    <a class="dropdown-item" href="#">Action</a>
-                                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                                    <a class="text-body dropdown-toggle font-size-16"
+                                                                        href="#" role="button"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="24" height="24"
+                                                                            viewBox="0 0 24 24" fill="none"
+                                                                            stroke="currentColor" stroke-width="2"
+                                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                                            class="feather feather-more-horizontal icon-xs">
+                                                                            <circle cx="12" cy="12"
+                                                                                r="1">
+                                                                            </circle>
+                                                                            <circle cx="19" cy="12"
+                                                                                r="1">
+                                                                            </circle>
+                                                                            <circle cx="5" cy="12"
+                                                                                r="1">
+                                                                            </circle>
+                                                                        </svg>
+                                                                    </a>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        {{-- <a class="dropdown-item" href="#">Edit</a> --}}
+                                                                        <form
+                                                                            action="{{ route('delete.news.grup', $new->news_uuid) }}"
+                                                                            name="deleteTask" method="post">
+                                                                            @csrf
+                                                                            @method('delete')
+                                                                            <input type="hidden" name="news"
+                                                                                value="{{ $new->news_uuid }}">
+                                                                            <input type="submit" name="deleteNewsButton"
+                                                                                class="dropdown-item" value="Sil">
+
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
-                                                            </div><!-- end dropdown -->
+
+                                                            @endif
+                                                            <!-- end dropdown -->
                                                         </div>
 
                                                         <h5 class="">
@@ -1155,39 +1169,41 @@ student
 
                                                         <div class="flex-grow-1">
                                                             <div class="card-title d-inline">
-                                                                
+
                                                                 <div class="row">
                                                                     <div class="col-6">
                                                                         <h4 class="text-muted">Tasklarınız</h4>
                                                                     </div>
                                                                     <div class="col-6">
                                                                         @role('student')
-                                                                        @if ($tasks)
-                                                                            <button
+                                                                            @if ($tasks)
+                                                                                <button
+                                                                                    class="btn btn-soft-primary btn-rounded collapsed btn-sm"
+                                                                                    type="button" data-bs-toggle="collapse"
+                                                                                    data-bs-target=".multi-collapse"
+                                                                                    aria-expanded="false"
+                                                                                    aria-controls="multiCollapseExample1 multiCollapseExample2"
+                                                                                    style="float: right;">Görünümü
+                                                                                    Değiştir</button>
+                                                                            @endif
+                                                                        @endrole
+                                                                        @role('teacher')
+                                                                            <!-- Scrollable modal -->
+                                                                            <button style="float: right" type="button"
                                                                                 class="btn btn-soft-primary btn-rounded collapsed btn-sm"
-                                                                                type="button" data-bs-toggle="collapse"
-                                                                                data-bs-target=".multi-collapse"
-                                                                                aria-expanded="false"
-                                                                                aria-controls="multiCollapseExample1 multiCollapseExample2"
-                                                                                style="float: right;">Görünümü Değiştir</button>
-                                                                        @endif
-                                                                    @endrole
-                                                                    @role('teacher')
-                                                                    <!-- Scrollable modal -->
-                                                                    <button style="float: right" type="button"
-                                                                        class="btn btn-soft-primary btn-rounded collapsed btn-sm"
-                                                                        data-bs-toggle="modal" data-bs-target="#task-create">Task
-                                                                        Ekle
-                                                                    </button>
-                                                                @endrole
-                                                                </div>
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#task-create">Task
+                                                                                Ekle
+                                                                            </button>
+                                                                        @endrole
+                                                                    </div>
                                                                 </div>
 
-                                                          
+
                                                             </div>
 
 
-                                                      
+
                                                         </div>
 
                                                     </div>

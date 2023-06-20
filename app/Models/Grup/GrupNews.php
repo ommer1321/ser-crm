@@ -23,7 +23,8 @@ class GrupNews extends Model
         'student_feedback',
         'status',
         'pimmed',
-        'is_deleted'
+        'is_deleted',
+        'grup_id'
     ];
 
     // Relations
@@ -45,7 +46,10 @@ class GrupNews extends Model
     }
 
 
-
+    public function grup_info()
+    {
+        return $this->belongsTo(Grup::class,'grup_id','id');
+    }
 
 
 

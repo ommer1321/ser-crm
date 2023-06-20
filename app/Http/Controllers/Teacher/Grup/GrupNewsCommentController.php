@@ -21,7 +21,7 @@ class GrupNewsCommentController extends Controller
       
       if(! $checkUserMemberToGrup){
   
-        return redirect()->back()->with('failed', ' Bu Grupta Yorum Yapamazsınız');
+        return redirect()->route('index.home')->with('failed', ' Bu Gruptan Çıkarıldınız Yorum Yapamazsınız');
   
       }
   
