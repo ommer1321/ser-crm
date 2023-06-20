@@ -18,11 +18,11 @@ class TaskCommentController extends Controller
   public function store(TaskCommentFormRequest $request)
   {
 
-    $checkUserTaggedToTask  =  $this->checkUserTaggedToTask($request);
+     $checkUserTaggedToTask  =  $this->checkUserTaggedToTask($request);
 
     if(! $checkUserTaggedToTask){
 
-      return redirect()->back()->with('failed', 'Yorum Yapamazsınız');
+      return redirect()->back()->with('failed', 'Bu Taskta Yorum Yapamazsınız');
 
     }
 

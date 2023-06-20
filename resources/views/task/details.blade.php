@@ -198,15 +198,16 @@
                                                 <div class="d-flex align-items-center">
 
 
-                                                    @if ($tagged_users)   <div class="avatar align-self-center me-3">
+                                                    @if ($tagged_users)
+                                                        <div class="avatar align-self-center me-3">
 
-                                                        <div
-                                                            class="avatar-title rounded bg-soft-{{ $task->status_color }} text-{{ $task->status_color }} font-size-24">
-                                                            <i
-                                                                class="uil-pricetag-alt                                                                                    "></i>
+                                                            <div
+                                                                class="avatar-title rounded bg-soft-{{ $task->status_color }} text-{{ $task->status_color }} font-size-24">
+                                                                <i
+                                                                    class="uil-pricetag-alt                                                                                    "></i>
+                                                            </div>
+
                                                         </div>
-                                                        
-                                                    </div>
 
                                                         <div class="avatar-group ">
                                                             @foreach ($tagged_users as $user)
@@ -244,30 +245,28 @@
                                                             @endforeach
                                                         </div>
                                                     @else
-                                                      
-                                                            <a href="javascript: void(0);" class="text-body">
-                                                                
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="avatar align-self-center me-3">
-                                                                            <div
-                                                                                class="avatar-title rounded bg-soft-{{ $task->status_color }} text-{{ $task->status_color }} font-size-24">
-                                                                                <i
-                                                                                    class="uil-pricetag-alt                                                                                    "></i>
-                                                                            </div>
-                                                                        </div>
+                                                        <a href="javascript: void(0);" class="text-body">
 
-                                                                        <div class="overflow-hidden me-auto">
-                                                                            <h5 class="font-size-15 text-truncate mt-2">
-                                                                                <b>Kimse Etiketli Değil</b>
-                                                                            </h5>
-
-                                                                        </div>
-
-
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar align-self-center me-3">
+                                                                    <div
+                                                                        class="avatar-title rounded bg-soft-{{ $task->status_color }} text-{{ $task->status_color }} font-size-24">
+                                                                        <i
+                                                                            class="uil-pricetag-alt                                                                                    "></i>
                                                                     </div>
-                                                               
-                                                            </a>
-                                                      
+                                                                </div>
+
+                                                                <div class="overflow-hidden me-auto">
+                                                                    <h5 class="font-size-15 text-truncate mt-2">
+                                                                        <b>Kimse Etiketli Değil</b>
+                                                                    </h5>
+
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        </a>
                                                     @endif
 
                                                 </div>
@@ -286,26 +285,134 @@
                                         <div class="card h-100 mb-lg-0">
                                             <div class="card-body">
 
-                                                <div class="d-flex align-items-start mb-4">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <img class="rounded-circle avatar"
-                                                            src="{{ asset('assets/images/users/avatar-5.jpg') }}"
-                                                            alt="Generic placeholder image">
-                                                    </div>
+                                                @role('student|teacher|admin')
+                                                    <div class="d-flex align-items-start mb-4">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <img class="rounded-circle avatar"
+                                                                src="{{ asset($task->teacher->profile_photo_path) }}"
+                                                                alt="Generic placeholder image">
+                                                        </div>
 
-                                                    <div class="flex-grow-1">
-                                                        <h5 class="font-size-15 my-1">Humberto D. Champion</h5>
-                                                        <small class="text-muted">support@domain.com</small>
+                                                        <div class="flex-grow-1">
+                                                            <h5 class="font-size-15 my-1">{{ $task->teacher->name }}
+                                                                {{ $task->teacher->surname }}</h5>
+                                                            <small class="text-muted"><a
+                                                                    href="mailto:{{ $task->teacher->email }}">
+                                                                    {{ $task->teacher->email }}</a></small>
+                                                        </div>
                                                     </div>
-                                                </div>
-
+                                                @endrole
                                                 <h4 class="mt-0  font-size-16">{{ $task->title }}</h4>
-                                                <hr>
+
                                                 {{-- <h5 class="card-title mb-4"></h5> --}}
 
                                                 <div class="text-muted">
                                                     {{ $task->note }}
                                                 </div>
+                                                <hr>
+                                                <div class="row">
+
+                                                    <div class="col-7">
+
+
+                                                        <div class="d-flex flex-wrap gap-2">
+
+                                                            <form action="{{ route('update.answer.task') }}"
+                                                                method="post">
+                                                                @csrf
+
+                                                                <input type="hidden" name="task"
+                                                                    value="{{ $task->task_id }}">
+
+                                                                    @if ($task->my_answer == 'ok')
+                                                                <button type="submit" name="answer" value="ok"
+                                                                    class="btn btn-sm btn-success"><i
+                                                                        class="uil uil-check-circle"></i></button>
+
+                                                                        @else
+                                                                        <button type="submit" name="answer" value="ok"
+                                                                        class="btn  btn-sm btn-soft-success"><i
+                                                                            class="uil uil-check-circle"></i></button>
+                                                                        @endif
+                                                            </form>
+
+
+                                                            <form action="{{ route('update.answer.task') }}"
+                                                                method="post">
+                                                                @csrf
+
+                                                                <input type="hidden" name="task"
+                                                                    value="{{ $task->task_id }}">
+
+                                                                @if ($task->my_answer == 'doing')
+
+                                                                    <button type="submit" name="answer" value="doing"
+                                                                        class="btn btn-sm btn-warning"><i
+                                                                            class="uil uil-exclamation-triangle"></i></button>
+                                                                @else
+
+                                                                    <button type="submit" name="answer" value="doing"
+                                                                        class="btn btn-sm btn-soft-warning"><i
+                                                                            class="uil uil-exclamation-triangle"></i></button>
+                                                                @endif
+
+                                                            </form>
+
+                                                            <form action="{{ route('update.answer.task') }}"
+                                                                method="post">
+                                                                @csrf
+
+                                                                <input type="hidden" name="task"
+                                                                    value="{{ $task->task_id }}">
+
+                                                                @if ($task->my_answer == 'no')
+                                                                    <button type="submit" name="answer" value="no"
+                                                                        class="btn btn-sm btn-danger"><i
+                                                                            class="uil uil-ban"></i></button>
+                                                                @else
+                                                                    <button type="submit" name="answer" value="no"
+                                                                        class="btn btn-sm btn-soft-danger"><i
+                                                                            class="uil uil-ban"></i></button>
+                                                                @endif
+
+                                                            </form>
+
+
+                                                 
+
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="col-5">
+                                                     @if ($task->my_answer == 'ok')
+                                                     <span class="badge bg-soft-success text-success font-size-15"
+                                                     style="float: right"><i
+                                                         class="uil-arrow-circle-right me-1"></i>Tamamlandı</span>
+                                                     @elseif($task->my_answer == 'doing')
+                                                     <span class="badge bg-soft-warning text-warning font-size-15"
+                                                     style="float: right"><i
+                                                         class="uil-arrow-circle-right me-1"></i>Bekliyor</span>
+                                                     @elseif($task->my_answer == 'no')
+                                                     <span class="badge bg-soft-danger text-danger font-size-15"
+                                                     style="float: right"> <i
+                                                         class="uil-arrow-circle-right me-1"></i>Yapılmadı</span>
+                                                         @else
+                                                         <span class="badge bg-soft-secondary text-secondary font-size-15"
+                                                     style="float: right"> <i
+                                                         class="uil-arrow-circle-right me-1"></i> Durum Yok</span>
+                                                     @endif  
+                                                       
+                                                     
+
+
+                                                    </div>
+                                                </div>
+
+
+
+
                                             </div><!-- end card body -->
                                         </div><!-- end card -->
                                     </div><!-- end col -->
@@ -889,7 +996,7 @@
                         <div class="tab-pane " id="comments" role="tabpanel">
                             <div class="card mb-0 border-0">
                                 <div class="card-body">
-                                    
+
 
 
                                     <ul class="list-unstyled chat-list">

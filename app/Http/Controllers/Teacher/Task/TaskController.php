@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher\Task;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskAnswerRequest;
 use App\Http\Requests\TaskFormRequest;
 use App\Models\Teacher\Task;
 use App\Traits\Friendship;
@@ -24,12 +25,31 @@ class TaskController extends Controller
 
 
 
+  function updateAnswer(TaskAnswerRequest $request)
+  {
+
+    $updateStudentTaskAnswer_res = $this->updateStudentTaskAnswer($request);
+
+
+    if ($updateStudentTaskAnswer_res) {
+
+      return redirect()->back()->with('success', 'Durum Güncellendi');
+    } else {
+
+      return redirect()->back()->with('failed', 'Opss! Bir Sorun Oluştu Durum Güncellenmedi. ');
+    }
+  }
+
+
+
   public function detail($task_id)
   {
 
     $data  = $this->getTask($task_id);
 
+
     $task = $data['task'];
+
 
     $tagged_users = $data['tagged_users'];
 
@@ -44,6 +64,13 @@ class TaskController extends Controller
     $editableTaskComments = $this->getTaskComments($task->id);
 
     $myFriends = $this->myFriendshipsWithTaggedUsers($task);
+
+
+    // Services Area
+
+    $service_task_data  = $this->SERVICE_FUNC_detail_task($task);
+    $task->user_answers = $service_task_data['task_answer'];
+    $task->my_answer =  $service_task_data['my_answer'];
 
     return view('task.details', compact('task', 'tagged_users', 'myFriends', 'activeTaskComments', 'editableTaskComments'));
   }

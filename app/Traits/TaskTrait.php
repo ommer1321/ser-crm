@@ -209,27 +209,67 @@ trait TaskTrait
         // Log eklenecek
         $res = false;
 
-        if( auth()->user()->id  == $task->teacher_id){
+        if (auth()->user()->id  == $task->teacher_id) {
 
             return $res = true;
         }
 
         if ($tagged_users) {
             foreach ($tagged_users as $tagged_user) {
-                if ($tagged_user->id == auth()->user()->id || auth()->user()->id  == $task->teacher_id ) {
-                   return $res = true;
+                if ($tagged_user->id == auth()->user()->id || auth()->user()->id  == $task->teacher_id) {
+                    return $res = true;
                 }
             }
-
-            
         }
 
         return $res;
     }
 
+    function updateStudentTaskAnswer($request)
+    {
+
+        //  Format transformation 
+        $Task = Task::where('task_id', $request->task)->first();
+        $task_answers = json_decode($Task->user_answers);
+        $task_answers = collect($task_answers);
 
 
 
+        if ($task_answers->has(Auth::user()->id)) {
+
+            foreach ($task_answers as $user_id => $task_answer) {
+
+                if ($user_id == auth()->user()->id) {
+
+                    $task_answers[$user_id] = $request->answer;
+
+                    $Task->user_answers = json_encode($task_answers);
+
+
+
+                    if ($Task->save()) {
+
+                        return true;
+                    } else {
+
+                        return false;
+                    }
+                }
+            }
+        } else {
+
+            $task_answers->put(Auth::user()->id, $request->answer);
+            $Task->user_answers = json_encode($task_answers);
+
+            if ($Task->save()) {
+
+                return true;
+            } else {
+
+                return false;
+            }
+        }
+    }
 
 
 
@@ -261,6 +301,35 @@ trait TaskTrait
             }
             return json_encode($data);
         } else {
+        }
+    }
+
+
+
+    // Service 
+
+
+
+    function SERVICE_FUNC_detail_task($task)
+    {
+        $data = [];
+
+        $task->user_answers = json_decode($task->user_answers);
+
+        $task_answers = collect($task->user_answers);
+
+        if ($task_answers->has(Auth::user()->id)) {
+
+            foreach ($task_answers as $user_id => $task_answer) {
+
+                if ($user_id == auth()->user()->id) {
+
+                    return $data = ['task_answer' => $task->user_answers, 'my_answer' => $task_answer];
+                }
+            }
+        } else {
+
+            return $data = ['task_answer' => $task->user_answers, 'my_answer' => 'other'];
         }
     }
 }

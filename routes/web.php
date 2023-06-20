@@ -67,6 +67,8 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
         Route::post('/store', [App\Http\Controllers\Teacher\Task\TaskController::class, 'store'])->name('store.task');
         Route::put('/delete/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'delete'])->name('delete.task');
         Route::put('/update/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'update'])->name('update.task');
+        
+        Route::post('/status/update', [App\Http\Controllers\Teacher\Task\TaskController::class, 'updateAnswer'])->name('update.answer.task');
 
 
         // Task Comment Route

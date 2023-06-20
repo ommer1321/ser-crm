@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-
+use App\Models\User;
 class Task extends Model
 {
     use HasFactory, TaskTrait;
@@ -18,7 +18,10 @@ class Task extends Model
 
 
 
-
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
 
     // Casts
 

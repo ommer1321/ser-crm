@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('grup_id')->nullable();
             $table->string('title');
             $table->longText('note');
+            $table->json('user_answers')->nullable();
             $table->json('tagged_users')->nullable();
             $table->date('finished_at')->nullable();
             $table->enum('status',['red','yellow','green']);

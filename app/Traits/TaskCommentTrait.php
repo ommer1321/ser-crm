@@ -17,23 +17,26 @@ trait TaskCommentTrait
         $user = User::where('id', auth()->user()->id)->first();
         $task = Task::where('task_id', $request->task)->first();
         $tagged_users = json_decode($task->tagged_users);
-
+      
+        if ($task->teacher_id == auth()->user()->id) {
+            return true;
+        }
+      
         if ($tagged_users) {
 
             foreach ($tagged_users as $tagged_user) {
 
-                if ($user->user_id != $tagged_user) {
+                if ($user->user_id == $tagged_user) {
 
-                    if ($task->teacher_id != auth()->user()->id) {
 
-                        return false;
-                    }
+
+                    return true;
                 }
             }
         }
 
 
-        return true;
+        return false;
     }
 
 
@@ -67,8 +70,6 @@ trait TaskCommentTrait
         }
 
         return  $comments;
-
-        
     }
 
 
@@ -130,7 +131,7 @@ trait TaskCommentTrait
 
             $task = Task::where('id', $taskComment->task_id)->first();
 
-     
+
             if (auth()->user()->id == $taskComment->who_commenter_id || auth()->user()->id == $task->teacher_id) {
 
                 $taskComment->is_deleted = 1;
@@ -169,8 +170,7 @@ trait TaskCommentTrait
                     // dd(2);
                     $taskComment->pimmed = '0';
                     $res = $taskComment->save();
-                }
-                elseif ($taskComment->pimmed == 0) {
+                } elseif ($taskComment->pimmed == 0) {
                     // dd(1);
                     $taskComment->pimmed = '1';
                     $res = $taskComment->save();
@@ -188,5 +188,4 @@ trait TaskCommentTrait
             return false;
         }
     }
-
 }
