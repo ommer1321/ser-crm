@@ -7,6 +7,7 @@ use App\Models\FriendshipAllowStatus;
 use App\Models\Grup\Grup;
 use App\Models\Grup\Member;
 use App\Models\Teacher\Task;
+use App\Models\Teacher\TaskComment;
 use App\Models\User;
 use App\Observers\Logs\FriendshipAllowStatusObserver;
 use Illuminate\Auth\Events\Registered;
@@ -18,6 +19,8 @@ use App\Observers\Logs\GrupObserver;
 use App\Observers\Logs\MemberObserver;
 use App\Observers\Logs\TaskObserver;
 use App\Observers\Logs\UserObserver;
+use App\Observers\Notifications\TaskNotificationObserver;
+use App\Observers\Notifications\TaskCommentNotificationObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -44,6 +47,8 @@ class EventServiceProvider extends ServiceProvider
         Grup::observe(GrupObserver::class);
         Member::observe(MemberObserver::class);
         Task::observe(TaskObserver::class);
+        Task::observe(TaskNotificationObserver::class);
+        TaskComment::observe(TaskCommentNotificationObserver::class);
     }
 
     /**

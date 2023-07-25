@@ -568,9 +568,7 @@
                                                                                             <input type="hidden"
                                                                                                 name="comment"
                                                                                                 value="{{ $comment->comment_uuid }}">
-                                                                                            <input type="hidden"
-                                                                                                name="_token"
-                                                                                                value="1Q5wcJa3kNR8qmdqMzmK9Xc5aTS66wuWHrQ96sYD">
+                                                                                           
                                                                                             <li><input
                                                                                                     type="submit"
                                                                                                     class="dropdown-item"

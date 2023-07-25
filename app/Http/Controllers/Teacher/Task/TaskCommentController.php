@@ -31,7 +31,7 @@ class TaskCommentController extends Controller
 
     if ($res) {
 
-      return redirect()->back()->with('success', 'Yorum Başarılı');
+      return redirect()->back()->with('success', 'Yorum Başarıyla Eklendi ');
     } else {
 
       return redirect()->back()->with('failed', 'Opss! Yorum Başarısız');

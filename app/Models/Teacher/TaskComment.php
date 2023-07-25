@@ -26,6 +26,10 @@ class TaskComment extends Model
         return $this->belongsTo(User::class,'who_commenter_id');
     }
 
+    public function which_task()
+    {
+        return $this->belongsTo(Task::class,'task_id');
+    }
 
 
 

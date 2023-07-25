@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskAnswerRequest;
 use App\Http\Requests\TaskFormRequest;
 use App\Models\Teacher\Task;
+use App\Models\User;
 use App\Traits\Friendship;
+use App\Traits\GrupNotification;
 use App\Traits\TaskCommentTrait;
 use App\Traits\TaskTrait;
 use Illuminate\Http\Request;
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-  use TaskTrait, Friendship, TaskCommentTrait;
+  use TaskTrait, Friendship, TaskCommentTrait , GrupNotification;
 
   public function index()
   {
@@ -93,7 +95,9 @@ class TaskController extends Controller
 
 
   public function store(TaskFormRequest $request)
-  {;
+  {
+ 
+
     $request->user ?? '';
     $validatedData =  $request->validated();
 
