@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('grup_notifications', function (Blueprint $table) {
             $table->id();
             $table->uuid('notification_uuid');
+            $table->text('model_uuid');
 
             $table->unsignedBigInteger('grup_id')->index();
             $table->unsignedBigInteger('sender_id')->index();            
             $table->unsignedBigInteger('user_id')->index();
 
             $table->enum('is_sended',['1','0'])->default(0)->comment('0 görülmedi 1 görüldü');
-            $table->enum('model',['task','news','friendship_request','task_comment']);
+            $table->enum('model',['task','news','friendship_request','task_comment','news_comment']);
             $table->text('message');
 
             $table->foreign('grup_id')->references('id')->on('grups')->onDelete('cascade');

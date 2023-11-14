@@ -103,22 +103,26 @@
                                                                 @csrf
 
 
-                                                                <button type="submit" style="float: right"
+                                                                <button type="submit" style="float: right; border-radius: 20px"
                                                                     name="friend_status"
-                                                                    class="btn btn-danger  btn-sm chat-send "><b><span
+                                                                    class="btn btn-danger  btn-sm chat-send mb-2 "><b><span
                                                                             class="d-none d-sm-inline-block">Tümünü İşaretle
                                                                         </span>
                                                                     </b><i class="bx bx-check float-end font-size-18"></i>
                                                                     {{ count($notifications) }} </button>
-                                                            </form>
 
+
+                                                            </form>
+                                                            <br>     
                                                             <br>
 
                                                             @foreach ($notifications as $notification)
                                                                 <li class="">
-                                                                    <a href="#">
+                                                                    <a href="
+                                                                    {{url($notification->model.'/'.$notification->model_uuid)}}
+                                                                        ">
                                                                         <div class="d-flex align-items-start">
-
+                                                                  
 
                                                                             @if (isset($notification->userInfo->profile_photo_path))
                                                                                 <div class="avatar align-self-center me-3">
@@ -151,10 +155,7 @@
                                                                                 <h5 class="text-truncate font-size-16 mb-1">
                                                                                     {{ $notification->userInfo->name }}</h5>
                                                                                 <small class=" text-truncate  mb-0 "
-                                                                                    style="opacity: 0.8">{{ $notification->sender_id }}kullanıcı
-                                                                                    {{ $notification->grup_id }} grubunda
-                                                                                    bir {{ $notification->message }} yaptı
-                                                                                    {{ $notification->surname }}</small>
+                                                                                    style="opacity: 0.8"> {{ $notification->message }} </small>
                                                                             </div>
                                                                             <div class="flex-shrink-0">
                                                                                 <div class="font-size-11">
@@ -243,8 +244,11 @@
                                                         <ul class="list-unstyled chat-list">
 
 
-
-                                                            <button type="submit" style="float: right"
+{{-- 
+    
+                                        
+    burada neden kullanmam geketiğini unuttum :)
+                                                            <button type="submit" style="float: right; border-radius: 20px"
                                                                 name="friend_status"
                                                                 class="btn btn-danger  btn-sm chat-send "
                                                                 value="ok"><b><span
@@ -252,7 +256,8 @@
                                                                     </span>
                                                                 </b><i class="bx bx-check float-end font-size-18"></i>
                                                                 {{ count($newNotifications) }} </button>
-                                                            <br>
+                                                                <br>     
+                                                            <br> --}}
                                                             @foreach ($newNotifications as $newNotification)
                                                                 <li class="">
                                                                     <a href="#">
@@ -292,11 +297,8 @@
                                                                                     {{ $newNotification->userInfo->name }}
                                                                                 </h5>
                                                                                 <small class=" text-truncate  mb-0 "
-                                                                                    style="opacity: 0.8">{{ $newNotification->sender_id }}
-                                                                                    kullanıcısı
-                                                                                    {{ $newNotification->grup_id }}
-                                                                                    grubunda bir
-                                                                                    {{ $newNotification->message }} yaptı
+                                                                                    style="opacity: 0.8">
+                                                                                    {{ $newNotification->message }} 
                                                                                     {{ $newNotification->surname }}</small>
                                                                             </div>
                                                                             <div class="flex-shrink-0">

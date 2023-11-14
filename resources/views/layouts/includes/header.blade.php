@@ -286,11 +286,15 @@
                     <a class="dropdown-item" href="{{ route('index.friendship') }}"><i
                             class="uil-user-plus text-muted font-size-20 align-middle me-1"></i> <span
                             class="align-middle">Arkadaş Ekle</span></a>
-
+                           
 
                     <a class="dropdown-item" href="{{ route('request-box.friendship') }}"><i
                             class="bx bx-heart text-muted font-size-20 align-middle me-1"></i> <span
                             class="align-middle">İstek Kutusu</span></a>
+
+                            <a class="dropdown-item" href="{{ route('index.notification') }}"><i
+                                class=" bx bx-bell icon-sm text-muted font-size-20 align-middle me-1"></i> <span
+                                class="align-middle">Bildirimler</span></a>
 
                     <div class="dropdown-divider"></div>
                     {{-- <a class="dropdown-item" href="#"><i

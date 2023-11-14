@@ -2,6 +2,7 @@
 
 namespace App\Models\Teacher;
 
+use App\Models\Grup\Grup;
 use App\Traits\TaskTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,11 +13,15 @@ class Task extends Model
 {
     use HasFactory, TaskTrait;
     protected $table = 'tasks';
-    protected $fillable = ['note', 'finished_at', 'status', 'title'];
+    protected $fillable = ['note', 'finished_at', 'status', 'title','grup_id'];
     protected  $appends = ['task_of_grup', 'first_letter', 'status_color', 'mini_note', 'status_tr', 'date_counter', 'percent_time'];
 
 
 
+    public function grupInfo()
+    {
+        return $this->belongsTo(Grup::class, 'grup_id', 'id');
+    }
 
     public function teacher()
     {

@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth', 'isRole']], function () {
 
 
    // Notifications Route
-   Route::group(['prefix' => 'bildirimler'], function () {
+   Route::group(['prefix' => 'notifications'], function () {
 
 
 Route::get('/', [App\Http\Controllers\Notification\NotificationController::class, 'index'])->name('index.notification');

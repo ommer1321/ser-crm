@@ -7,12 +7,95 @@ use App\Models\Grup\Member;
 
 trait GrupNotification
 {
-    // public function newNotification($grup_id, $shared_item_id)
-    // {
-    //     $user_id = auth()->user()->id;
-    //     $message = $this->modelMessage();
-    // }
 
+
+
+    public function modelAttributeTransform($data)
+    {
+
+        if (count($data) > 0) {
+            // if (count($data) > 0)
+
+
+            $notifications = $data['notifications'];
+            $newNotifications =  $data['newNotifications'];
+            if (count($notifications) > 0) {
+
+
+
+
+                foreach ($notifications as $notification) {
+                    switch ($notification->model) {
+                        case 'task':
+                            $notification->model  =  'tasks';
+                            break;
+
+                        case 'task_comment':
+                            $notification->model  =  'tasks';
+                            break;
+
+
+                        case 'news':
+                            $notification->model  =  'grup';
+                            break;
+
+                        case 'news_comment':
+                            $notification->model  =  'grup';
+                            break;
+
+
+
+                        case 'friendship_request':
+                            // $message_of_model = 'friendship_request mesajı';
+                            break;
+
+
+                        default:
+                            $this->attributes['model']  =  'details.task';
+                            break;
+                    }
+                }
+            }
+
+
+            if (count($newNotifications) > 0) {
+                foreach ($newNotifications as $newNotification) {
+
+
+
+                    switch ($newNotification->model) {
+                        case 'task':
+                            $newNotification->model  =  'tasks';
+                            break;
+
+                        case 'task_comment':
+                            $newNotification->model  =  'tasks';
+                            break;
+
+
+                        case 'news':
+                            // $message_of_model = 'news  mesajı';
+                            break;
+
+                        case 'friendship_request':
+                            // $message_of_model = 'friendship_request mesajı';
+                            break;
+
+
+                        default:
+                            $this->attributes['model']  =  'details.task';
+                            break;
+                    }
+                }
+            }
+            $data['notifications'] = $notifications;
+            $data['newNotifications'] = $newNotifications;
+            return $data;
+        } else {
+
+            return  $data;
+        }
+    }
 
 
 
@@ -20,6 +103,8 @@ trait GrupNotification
     {
 
         $model = class_basename(get_called_class());
+
+
         switch ($model) {
             case 'TaskNotificationObserver':
                 $name_of_model = 'task';
@@ -32,8 +117,13 @@ trait GrupNotification
                 break;
 
 
-            case 'asd':
+            case 'NewsNotificationObserver':
                 $name_of_model = 'news';
+                return $name_of_model;
+                break;
+
+            case 'NewsCommentNotificationObserver':
+                $name_of_model = 'news_comment';
                 return $name_of_model;
                 break;
 
@@ -52,19 +142,93 @@ trait GrupNotification
 
 
 
-    public function modelMessage($modelType)
+    public function modelMessageCreate($modelType, $model_data)
     {
-        // $Notification->message =   auth()->user()->name . ' ' . auth()->user()->surname . 'adlı kullanıcı ' . $task->grup_id . 'grubuna sizin için bir görev ekledi';
-
 
         switch ($modelType) {
             case 'task':
-                $message_of_model = 'task mesajı';
+                $message_of_model = auth()->user()->name . ' ' . auth()->user()->surname . ' adlı kullanıcı ' .  $model_data->grupInfo->name . ' görevine sizi ekledi';
                 return $message_of_model;
                 break;
 
             case 'task_comment':
-                $message_of_model = 'task_comment  mesajı';
+                $message_of_model =  $model_data->who_comment_user->name . ' ' . $model_data->who_comment_user->surname . ' kişisi ' . $model_data->which_task->title . ' taskına yorum yaptı. ';
+                return $message_of_model;
+                break;
+
+
+            case 'news':
+                $message_of_model = auth()->user()->name . ' ' . auth()->user()->surname . ' adlı kullanıcı ' . $model_data->grup_info->name . ' grubunda bir gönderi paylaştı.';
+                return $message_of_model;
+                break;
+
+
+
+            case 'news_comment':
+                $message_of_model = auth()->user()->name . ' ' . auth()->user()->surname . ' adlı kullanıcı ' . $model_data->which_grup->name . ' grubundaki bir gönderiye yorum yaptı.';
+                return $message_of_model;
+                break;
+
+
+            case 'friendship_request':
+                $message_of_model = 'friendship_request mesajı';
+                return $message_of_model;
+                break;
+
+
+            default:
+                return 'boş mesaj';
+                break;
+        }
+    }
+
+
+    public function modelMessageUpdate($modelType, $model_data)
+    {
+
+        switch ($modelType) {
+            case 'task':
+                $message_of_model = auth()->user()->name . ' ' . auth()->user()->surname . ' adlı kullanıcı ' .  $model_data->grupInfo->name . ' grubundaki ' . $model_data->title . ' görevinde bir güncelleme yaptı';
+
+
+                return $message_of_model;
+                break;
+
+            case 'task_comment':
+                $message_of_model =  $model_data->who_comment_user->name . ' ' . $model_data->who_comment_user->surname . ' kişisi (' . $model_data->which_task->title . ') taskına yorum yaptı. ';
+                return $message_of_model;
+                break;
+
+
+            case 'news':
+                $message_of_model = 'news  mesajı';
+                return $message_of_model;
+                break;
+
+            case 'friendship_request':
+                $message_of_model = 'friendship_request mesajı';
+                return $message_of_model;
+                break;
+
+
+            default:
+                return 'boş mesaj';
+                break;
+        }
+    }
+    public function modelMessageDelete($modelType, $model_data)
+    {
+
+        switch ($modelType) {
+            case 'task':
+                $message_of_model = auth()->user()->name . ' ' . auth()->user()->surname . ' adlı kullanıcı ' .  $model_data->grupInfo->name . ' grubundaki ' . $model_data->title . ' görevini kaldırdı.';
+
+
+                return $message_of_model;
+                break;
+
+            case 'task_comment':
+                $message_of_model =  $model_data->who_comment_user->name . ' ' . $model_data->who_comment_user->surname . ' kişisi (' . $model_data->which_task->title . ') taskına yorum yaptı. ';
                 return $message_of_model;
                 break;
 
@@ -98,6 +262,8 @@ trait GrupNotification
 
     function notification_is_sended($notifications)
     {
+        $newNotifications = [];
+
         foreach ($notifications as $key => $notification) {
             if ($notification->is_sended == 1) {
                 $newNotifications[] = $notification;

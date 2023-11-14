@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Friendship;
 use App\Models\FriendshipAllowStatus;
 use App\Models\Grup\Grup;
+use App\Models\Grup\GrupNews;
+use App\Models\Grup\GrupNewsComments;
 use App\Models\Grup\Member;
 use App\Models\Teacher\Task;
 use App\Models\Teacher\TaskComment;
@@ -19,9 +21,10 @@ use App\Observers\Logs\GrupObserver;
 use App\Observers\Logs\MemberObserver;
 use App\Observers\Logs\TaskObserver;
 use App\Observers\Logs\UserObserver;
+use App\Observers\Notifications\NewsCommentNotificationObserver;
 use App\Observers\Notifications\TaskNotificationObserver;
 use App\Observers\Notifications\TaskCommentNotificationObserver;
-
+use App\Observers\Notifications\NewsNotificationObserver;
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -49,6 +52,11 @@ class EventServiceProvider extends ServiceProvider
         Task::observe(TaskObserver::class);
         Task::observe(TaskNotificationObserver::class);
         TaskComment::observe(TaskCommentNotificationObserver::class);
+        GrupNews::observe(NewsNotificationObserver::class);
+        GrupNewsComments::observe(NewsCommentNotificationObserver::class);
+
+        
+        
     }
 
     /**

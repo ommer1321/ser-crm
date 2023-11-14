@@ -27,6 +27,12 @@ class GrupNewsComments extends Model
         return $this->belongsTo(User::class,'who_commenter_id','id');
     }
 
+    
+    public function which_grup()
+    {
+        return $this->belongsTo(Grup::class,'grup_id');
+    }
+
 
 
 

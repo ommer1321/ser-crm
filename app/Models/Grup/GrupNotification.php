@@ -20,7 +20,7 @@ class GrupNotification extends Model
         'model',
         'model_id',
         'is_sended',
-              
+
     ];
     protected static function boot()
     {
@@ -30,7 +30,7 @@ class GrupNotification extends Model
             $model->notification_uuid = Str::uuid();
         });
     }
-    
+
 
     public function userInfo()
     {
@@ -38,4 +38,32 @@ class GrupNotification extends Model
     }
 
 
+    // Get Methods
+
+    // public function getModelAttribute()
+    // {
+    //     switch ($this->attributes['model']) {
+    //         case 'task':
+    //             return   $this->attributes['model']  =  'tasks';
+    //             break;
+
+    //         case 'task_comment':
+    //             return     $this->attributes['model']  =  'tasks';
+    //             break;
+
+
+    //         case 'news':
+    //             // $message_of_model = 'news  mesajı';
+    //             break;
+
+    //         case 'friendship_request':
+    //             // $message_of_model = 'friendship_request mesajı';
+    //             break;
+
+
+    //         default:
+    //             $this->attributes['model']  =  'details.task';
+    //             break;
+    //     }
+    // }
 }

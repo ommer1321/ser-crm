@@ -15,9 +15,11 @@ class NotificationController extends Controller
 
     public function index()
     {
-        $data =   $this->listNotifications();
-        $notifications = $data['notifications'];
-        $newNotifications = $data['newNotifications'];
+         $data =   $this->listNotifications();
+            $data =    $this->modelAttributeTransform($data);
+
+            $notifications = $data['notifications'];
+         $newNotifications = $data['newNotifications'];
 
 
 
@@ -72,7 +74,7 @@ class NotificationController extends Controller
 
         $notification =     GrupNotification::where('notification_uuid', $request->notification)->first();
         $res = $this->markOneNotification($notification);
-    
+
         if ($res) {
 
             return redirect()->back()->with('success', ' Bilirim Okundu İşaretlendi');
@@ -80,9 +82,6 @@ class NotificationController extends Controller
 
             return redirect()->back()->with('warning', ' Zaten Bilirim Okunmuş');
         }
-
-
-      
     }
 
 

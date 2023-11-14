@@ -30,8 +30,10 @@ class TaskNotificationObserver
                         $Notification->grup_id =  $task->grup_id;
                         $Notification->sender_id =  auth()->user()->id;
                         $Notification->user_id =  $user->id;
+                        $Notification->model_uuid =  $task->task_id;
+
                         $Notification->model =   $this->modelType(class_basename(get_called_class()));
-                        $Notification->message =   $this->modelMessage( $this->modelType(class_basename(get_called_class())));
+                        $Notification->message =   $this->modelMessageCreate( $this->modelType(class_basename(get_called_class())),$task);
                         $Notification->save();
                     }
                 }
@@ -49,7 +51,30 @@ class TaskNotificationObserver
      */
     public function updated(Task $task): void
     {
-        //
+        if ($task && isset($task->grup_id)) {
+
+            if (isset($task->tagged_users)) {
+                $tagged_users_uuıd = json_decode($task->tagged_users);
+
+                foreach ($tagged_users_uuıd as $tagged_user) {
+
+                    $user =  User::where('user_id', $tagged_user)->first();
+                    if ($user) {
+
+                        $Notification = new GrupNotification();
+                        $Notification->grup_id =  $task->grup_id;
+                        $Notification->sender_id =  auth()->user()->id;
+                        $Notification->user_id =  $user->id;
+                        $Notification->model_uuid =  $task->task_id;
+
+                        $Notification->model =   $this->modelType(class_basename(get_called_class()));
+                        $Notification->message =   $this->modelMessageUpdate( $this->modelType(class_basename(get_called_class())),$task);
+                        $Notification->save();
+                    }
+                }
+            }
+        }
+
     }
 
     /**
@@ -57,7 +82,29 @@ class TaskNotificationObserver
      */
     public function deleted(Task $task): void
     {
-        //
+        if ($task && isset($task->grup_id)) {
+
+            if (isset($task->tagged_users)) {
+                $tagged_users_uuıd = json_decode($task->tagged_users);
+
+                foreach ($tagged_users_uuıd as $tagged_user) {
+
+                    $user =  User::where('user_id', $tagged_user)->first();
+                    if ($user) {
+
+                        $Notification = new GrupNotification();
+                        $Notification->grup_id =  $task->grup_id;
+                        $Notification->sender_id =  auth()->user()->id;
+                        $Notification->user_id =  $user->id;
+                        $Notification->model_uuid =  $task->task_id;
+
+                        $Notification->model =   $this->modelType(class_basename(get_called_class()));
+                        $Notification->message =   $this->modelMessageDelete( $this->modelType(class_basename(get_called_class())),$task);
+                        $Notification->save();
+                    }
+                }
+            }
+        }
     }
 
     /**

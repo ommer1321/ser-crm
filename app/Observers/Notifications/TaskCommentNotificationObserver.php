@@ -21,7 +21,7 @@ class TaskCommentNotificationObserver
      
         if ($taskComment && isset($taskComment->which_task->grup_id)) {
         
-           
+            
 
             if (isset($taskComment->which_task->tagged_users)) {
 
@@ -36,8 +36,11 @@ class TaskCommentNotificationObserver
                         $Notification->grup_id =  $taskComment->which_task->grup_id;
                         $Notification->sender_id =  auth()->user()->id;
                         $Notification->user_id =  $user->id;
+                        $Notification->model_uuid =  $taskComment->which_task->task_id;
+                        
                         $Notification->model =   $this->modelType(class_basename(get_called_class()));
-                        $Notification->message =   $this->modelMessage($Notification->model);
+                      
+                        $Notification->message =   $this->modelMessageCreate($Notification->model,$taskComment);
                         
               
 
